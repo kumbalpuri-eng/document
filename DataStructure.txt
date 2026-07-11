@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Structures: Stacks</title>
+    <style>
+        :root {
+            --bg-color: #ffffff;
+            --text-color: #2c3e50;
+            --heading-color: #c0392b; /* Professional Red Theme */
+            --accent-color: #ecf0f1;
+            --nav-bg: #e74c3c; /* Red Navigation */
+            --nav-text: #ffffff;
+            --story-bg: #fdfefe;
+            --story-border: #f39c12; /* Golden yellow for story emphasis */
+            --box-bg: #fadbd8;
+            --box-border: #c0392b;
+            --table-border: #bdc3c7;
+            --table-head-bg: #c0392b;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        #presentation-container {
+            width: 90vw;
+            height: 85vh;
+            background-color: var(--bg-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide {
+            display: none;
+            padding: 50px 80px;
+            height: 100%;
+            box-sizing: border-box;
+            animation: fadeIn 0.4s ease-in-out;
+            overflow-y: auto;
+            padding-bottom: 90px; 
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        h1 {
+            color: var(--heading-color);
+            font-size: 3em;
+            margin-bottom: 0.5em;
+            text-align: center;
+            margin-top: 5%;
+        }
+
+        h2 {
+            color: var(--heading-color);
+            font-size: 2.2em;
+            border-bottom: 3px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+        }
+
+        h3 {
+            color: #34495e;
+            font-size: 1.6em;
+            margin-bottom: 15px;
+        }
+
+        p, li {
+            font-size: 1.35em;
+            color: var(--text-color);
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+        }
+
+        /* Story Slide Formatting */
+        .story-slide {
+            background-color: var(--story-bg);
+            border-left: 8px solid var(--story-border);
+            padding: 40px 60px !important;
+            box-shadow: inset 0 0 15px rgba(243, 156, 18, 0.05);
+        }
+        .story-title { color: #d35400; font-size: 2.4em; margin-bottom: 15px; }
+        .highlight { font-weight: bold; color: var(--heading-color); }
+
+        /* Navigation Controls */
+        #controls {
+            position: absolute;
+            bottom: 20px;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 40px;
+            box-sizing: border-box;
+            align-items: center;
+        }
+        button {
+            background-color: var(--nav-bg);
+            color: var(--nav-text);
+            border: none;
+            padding: 12px 28px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.1s;
+        }
+        button:hover {
+            background-color: #922b21;
+            transform: scale(1.05);
+        }
+        button:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+        #progress {
+            font-size: 1.2em;
+            color: #7f8c8d;
+            font-weight: bold;
+        }
+        
+        /* Grid Layouts */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; }
+
+        /* Custom Diagram CSS */
+        .diagram-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: #fdfefe;
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #ecf0f1;
+        }
+        
+        .box {
+            background-color: var(--box-bg);
+            border: 2px solid var(--box-border);
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            color: #922b21;
+            flex: 1;
+            min-width: 130px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .process-arrow {
+            font-size: 2em;
+            color: var(--heading-color);
+        }
+
+        .formula-box {
+            background: #f9ebea;
+            border-left: 5px solid var(--heading-color);
+            padding: 20px;
+            font-family: monospace;
+            font-size: 1.4em;
+            color: #2c3e50;
+            margin: 20px 0;
+            text-align: left;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid var(--table-border);
+            padding: 12px;
+            text-align: left;
+            font-size: 1.1em;
+        }
+        th {
+            background-color: var(--table-head-bg);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div id="presentation-container">
+
+    <!-- Slide 1: Title -->
+    <div class="slide active">
+        <h1>Data Structures</h1>
+        <h2 style="text-align: center; border: none; color: #7f8c8d;">Unit 3: Stacks – Concepts and Applications</h2>
+        <p style="text-align: center; margin-top: 50px;">A Comprehensive Guide for Computer Science Students</p>
+    </div>
+
+    <!-- Slide 2: Learning Objectives -->
+    <div class="slide">
+        <h2>Learning Objectives</h2>
+        <p>After completing this unit, learners will be able to:</p>
+        <ul>
+            <li>Explain the <strong>LIFO (Last In First Out)</strong> principle and its relevance in stack operations.</li>
+            <li>Describe the physical structure and representation of a stack in memory (Arrays vs Linked Lists).</li>
+            <li>Perform basic stack operations (<strong>push, pop, and peek</strong>).</li>
+            <li>Analyze stack operations in terms of <strong>time and space complexity</strong>.</li>
+            <li>Apply stacks to real-world problems like expression evaluation and function call handling.</li>
+        </ul>
+    </div>
+
+    <!-- Slide 3: Structure of the Module -->
+    <div class="slide">
+        <h2>Structure of the Module</h2>
+        <div class="grid-2">
+            <div>
+                <h3>1. Fundamentals</h3>
+                <ul>
+                    <li>3.1 Stack: LIFO Principle</li>
+                    <li>Concept and Characteristics</li>
+                    <li>Importance in Data Management</li>
+                </ul>
+                <h3>2. Operations & Implementation</h3>
+                <ul>
+                    <li>3.1.2 Representation of Stack (Arrays/Lists)</li>
+                    <li>3.2 Operations (Push, Pop, Peek)</li>
+                    <li>Handling Overflow/Underflow</li>
+                </ul>
+            </div>
+            <div>
+                <h3>3. Real-World Applications</h3>
+                <ul>
+                    <li>3.3 Applications of Stacks</li>
+                    <li>Function Call Handling</li>
+                    <li>Expression Evaluation (Prefix/Postfix)</li>
+                    <li>Undo/Redo & Backtracking</li>
+                </ul>
+                <h3>4. Conclusion</h3>
+                <ul>
+                    <li>3.4 Summary & 3.5 Keywords</li>
+                    <li>3.6 Self-Assessment Questions</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 4: 3.1 Stack: LIFO Principle -->
+    <div class="slide">
+        <h2>3.1 The Stack: LIFO Principle</h2>
+        <p><strong>What is a Stack?</strong></p>
+        <ul>
+            <li>A stack is a fundamental linear data structure.</li>
+            <li>Unlike arrays or linked lists where <em>any</em> element may be accessed directly, a stack restricts access based on the <strong>Last In, First Out (LIFO)</strong> principle.</li>
+            <li><strong>LIFO:</strong> The last element inserted is mathematically guaranteed to be the very first one removed.</li>
+        </ul>
+    </div>
+
+    <!-- Slide 5: STORY 1 -->
+    <div class="slide story-slide">
+        <h2 class="story-title">📖 Real-Life Context: The Cafeteria Trays</h2>
+        <h3>Understanding LIFO</h3>
+        <p>Imagine a spring-loaded tray dispenser in a busy cafeteria.</p>
+        <p>A worker brings a stack of 10 freshly washed trays and pushes them down onto the top of the pile. When a customer walks up to get lunch, they don't dig to the bottom to get the oldest tray. They grab the tray sitting right on top.</p>
+        <p><strong>The Lesson:</strong> The very last tray the worker put down is the very first tray the customer takes. This is the exact physical embodiment of the <span class="highlight">Last In, First Out (LIFO)</span> principle that governs Stack data structures.</p>
+    </div>
+
+    <!-- Slide 6: Characteristics of a Stack -->
+    <div class="slide">
+        <h2>Characteristics of a Stack</h2>
+        <ul>
+            <li><strong>Restricted access:</strong> Only one end of the structure allows interaction. This end is called the <strong>top</strong>.</li>
+            <li><strong>Abstract Data Type (ADT):</strong> Stacks are defined by their behavior (LIFO) rather than their specific memory implementation (they can be built using Arrays or Linked Lists).</li>
+            <li><strong>Dynamic behavior:</strong> Depending on the implementation, the stack size can grow or shrink dynamically at runtime.</li>
+        </ul>
+    </div>
+
+    <!-- Slide 7: Importance in Data Management -->
+    <div class="slide">
+        <h2>Importance in Data Management</h2>
+        <p>Stacks are foundational in academic instruction and software development:</p>
+        <ul>
+            <li><strong>Memory Management:</strong> Managing the function call stack.</li>
+            <li><strong>Syntax Parsing:</strong> Evaluating mathematical expressions (PEMDAS/BODMAS) and bracket matching.</li>
+            <li><strong>Algorithmic Control:</strong> Used heavily in graph traversals (Depth-First Search) and backtracking algorithms.</li>
+            <li><strong>Software Tools:</strong> Building "Undo" and "Redo" systems in text editors.</li>
+        </ul>
+    </div>
+
+    <!-- Slide 8: 3.1.2 Representation of Stack -->
+    <div class="slide">
+        <h2>3.1.2 Representation of Stack</h2>
+        <p>Stacks can be implemented using static or dynamic memory models. In both, the <strong>stack pointer (top)</strong> is crucial.</p>
+        <div class="grid-2">
+            <div>
+                <h3 style="color: var(--heading-color);">Array-Based (Static)</h3>
+                <p>Uses a fixed-size array. <code>top</code> is an integer index starting at -1. Operations increment/decrement this index.</p>
+            </div>
+            <div>
+                <h3 style="color: var(--heading-color);">Linked List-Based (Dynamic)</h3>
+                <p>Uses dynamically allocated nodes. <code>top</code> is a pointer to the latest node. Operations update the pointer reference.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 9: Advantages and Limitations -->
+    <div class="slide">
+        <h2>Advantages and Limitations</h2>
+        <p><strong>Benefits of Stacks:</strong></p>
+        <ul>
+            <li>Simplicity and ease of use. Extremely efficient (O(1) constant time for operations).</li>
+            <li>Structured control reduces logic errors compared to random-access arrays.</li>
+        </ul>
+        <p><strong>Limitations:</strong></p>
+        <ul>
+            <li><strong>Restricted Access:</strong> Random access to middle elements is impossible.</li>
+            <li><strong>Overflow:</strong> Occurs when attempting to push onto a full array-based stack.</li>
+            <li><strong>Underflow:</strong> Occurs when attempting to pop from an empty stack.</li>
+        </ul>
+    </div>
+
+    <!-- Slide 10: 3.2 Operations on Stacks -->
+    <div class="slide">
+        <h2>3.2 Operations on Stacks</h2>
+        <p>Stacks support a limited but highly powerful set of operations that define their behavior:</p>
+        <div class="diagram-container">
+            <div class="box"><strong>PUSH</strong><br><span style="font-size:0.7em;">Insert at Top</span></div>
+            <div class="box"><strong>POP</strong><br><span style="font-size:0.7em;">Remove from Top</span></div>
+            <div class="box"><strong>PEEK</strong><br><span style="font-size:0.7em;">View Top Element</span></div>
+        </div>
+        <p style="margin-top: 20px;"><em>Every operation must be implemented with strict attention to boundary conditions (Overflow/Underflow).</em></p>
+    </div>
+
+    <!-- Slide 11: 3.2.1 Push Operation -->
+    <div class="slide">
+        <h2>3.2.1 Push Operation</h2>
+        <p>Adds a new element to the top of the stack.</p>
+        <div class="formula-box">
+            1. Check if stack is full (Overflow).<br>
+            2. If not, increment <code>top</code> by 1.<br>
+            3. Assign the new value to <code>stack[top]</code>.
+        </div>
+        <ul>
+            <li><strong>Time Complexity:</strong> O(1) - Constant time.</li>
+            <li>In Linked Lists, you allocate a new node, point its <em>next</em> to the current <em>top</em>, and update the <em>top</em> pointer.</li>
+        </ul>
+    </div>
+
+    <!-- Slide 12: Stepwise Illustration: Push -->
+    <div class="slide">
+        <h2>Stepwise Illustration: Push</h2>
+        <p>Array of size 5. Initial state: <code>top = -1</code>.</p>
+        <ul>
+            <li><strong>Push(10):</strong> <code>top</code> becomes 0. Stack: [10, _, _, _, _]</li>
+            <li><strong>Push(20):</strong> <code>top</code> becomes 1. Stack: [10, 20, _, _, _]</li>
+            <li><strong>Push(30):</strong> <code>top</code> becomes 2. Stack: [10, 20, 30, _, _]</li>
+        </ul>
+        <p><em>Notice how <code>top</code> always points to the most recently added element!</em></p>
+    </div>
+
+    <!-- Slide 13: 3.2.2 Pop Operation -->
+    <div class="slide">
+        <h2>3.2.2 Pop Operation</h2>
+        <p>Removes and returns the element at the top of the stack. Adheres to LIFO.</p>
+        <div class="formula-box">
+            1. Check if stack is empty (Underflow).<br>
+            2. Access the element at <code>stack[top]</code>.<br>
+            3. Decrement <code>top</code> by 1.<br>
+            4. Return the element.
+        </div>
+        <ul>
+            <li><strong>Time Complexity:</strong> O(1).</li>
+            <li>In Arrays, the data remains in memory but is "logically" deleted because <code>top</code> moved down.</li>
+        </ul>
+    </div>
+
+    <!-- Slide 14: Stepwise Illustration: Pop -->
+    <div class="slide">
+        <h2>Stepwise Illustration: Pop</h2>
+        <p>Current Stack: [10, 20, 30, _, _]. <code>top = 2</code>.</p>
+        <ul>
+            <li><strong>Pop():</strong> Retrieves 30. <code>top</code> becomes 1. Stack logically: [10, 20]</li>
+            <li><strong>Pop():</strong> Retrieves 20. <code>top</code> becomes 0. Stack logically: [10]</li>
+            <li><strong>Pop():</strong> Retrieves 10. <code>top</code> becomes -1. Stack is empty.</li>
+        </ul>
+        <p><em>If you call Pop() right now, the program will throw an Underflow exception!</em></p>
+    </div>
+
+    <!-- Slide 15: 3.2.3 Peek Operation -->
+    <div class="slide">
+        <h2>3.2.3 Peek Operation</h2>
+        <p>Also known as <code>top()</code>. Used to retrieve the top element <em>without modifying</em> the stack's contents.</p>
+        <ul>
+            <li>It is a <strong>non-destructive</strong> operation.</li>
+            <li>Plays a vital role in read-only inspections.</li>
+            <li>Must still check for Underflow (if <code>top == -1</code>).</li>
+            <li><strong>Use Case:</strong> Checking the operator precedence during mathematical expression conversion.</li>
+        </ul>
+    </div>
+
+    <!-- Slide 16: Comparative View -->
+    <div class="slide">
+        <h2>Comparative View: Array vs Linked List</h2>
+        <table>
+            <tr>
+                <th>Feature</th>
+                <th>Array-Based Stack</th>
+                <th>Linked List-Based Stack</th>
+            </tr>
+            <tr>
+                <td><strong>Memory Allocation</strong></td>
+                <td>Static (Fixed size)</td>
+                <td>Dynamic (Grows/Shrinks)</td>
+            </tr>
+            <tr>
+                <td><strong>Overflow Possibility</strong></td>
+                <td>Yes (If array is full)</td>
+                <td>No (Until system RAM exhausted)</td>
+            </tr>
+            <tr>
+                <td><strong>Implementation</strong></td>
+                <td>Simple</td>
+                <td>More complex (Pointer management)</td>
+            </tr>
+            <tr>
+                <td><strong>Operation Speed</strong></td>
+                <td>Faster (Direct indexing)</td>
+                <td>Slightly slower (Pointer dereferencing)</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Slide 17: 3.3 Applications of Stacks -->
+    <div class="slide">
+        <h2>3.3 Applications of Stacks</h2>
+        <p>Stacks play a foundational role in multiple areas of computing beyond basic data storage. We will explore:</p>
+        <ol>
+            <li><strong>Function Call Handling</strong> (Recursion & Memory)</li>
+            <li><strong>Expression Evaluation</strong> (Infix, Postfix, Prefix)</li>
+            <li><strong>Undo/Redo Mechanisms</strong></li>
+            <li><strong>Syntax Parsing</strong> (Compilers)</li>
+            <li><strong>Backtracking Algorithms</strong> (Maze Solving)</li>
+        </ol>
+    </div>
+
+    <!-- Slide 18: STORY 2 -->
+    <div class="slide story-slide">
+        <h2 class="story-title">📖 Story Time: The "Inception" Dream</h2>
+        <h3>Function Call Handling</h3>
+        <p>If you've seen the movie <em>Inception</em>, you know they go into a dream, inside a dream, inside a dream.</p>
+        <p>To wake up safely, they cannot just jump from Dream Level 3 back to Reality. They must wake up from Level 3 into Level 2, then Level 2 into Level 1, and finally back to Reality.</p>
+        <p><strong>The Lesson:</strong> This is exactly how computers handle <span class="highlight">Recursive Function Calls</span>. The computer pushes "Dream 1" onto the Call Stack, then "Dream 2". When the innermost function finishes, the computer "Pops" the stack to resume exactly where it left off in the previous function.</p>
+    </div>
+
+    <!-- Slide 19: 3.3.1 Function Call Handling -->
+    <div class="slide">
+        <h2>3.3.1 Function Call Handling</h2>
+        <p>Function calls depend entirely on a stack to manage execution order, parameter tracking, and return addresses.</p>
+        <ul>
+            <li>Each time a function is invoked, its context is saved on the <strong>Call Stack</strong> in the form of an <strong>Activation Record</strong>.</li>
+            <li>This ensures isolation between nested function calls and proper sequencing.</li>
+            <li>If recursive calls go too deep (e.g., an infinite loop), the call stack exceeds its memory limit, resulting in a <strong>Stack Overflow</strong> error!</li>
+        </ul>
+    </div>
+
+    <!-- Slide 20: Anatomy of an Activation Record -->
+    <div class="slide">
+        <h2>Anatomy of an Activation Record</h2>
+        <p>When a function is pushed onto the stack, the memory block contains:</p>
+        <div class="formula-box" style="text-align: center; font-size: 1.1em;">
+            +----------------------+<br>
+            | Return Address       |<br>
+            | Parameters           |<br>
+            | Local Variables      |<br>
+            | Saved Frame Pointer  |<br>
+            +----------------------+
+        </div>
+        <p>These records preserve the execution state of each function, enabling correct resumption of program control after a "Pop".</p>
+    </div>
+
+    <!-- Slide 21: 3.3.2 Expression Evaluation -->
+    <div class="slide">
+        <h2>3.3.2 Expression Evaluation</h2>
+        <p>Stacks are widely used in evaluating mathematical and logical expressions, especially managing operator precedence and parentheses.</p>
+        <div class="grid-2">
+            <div>
+                <h3 style="color: var(--heading-color);">Infix Notation</h3>
+                <p>Operators are written <em>between</em> operands. <code>A + B</code>. High readability for humans, but complex for computers (requires parentheses).</p>
+            </div>
+            <div>
+                <h3 style="color: var(--heading-color);">Postfix Notation</h3>
+                <p>Operators <em>follow</em> operands. <code>A B +</code>. Low readability for humans, but perfect for computers (no parentheses needed!).</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 22: Converting Infix to Postfix -->
+    <div class="slide">
+        <h2>Converting Infix to Postfix</h2>
+        <p>Compilers use stacks to convert human-readable math into computer-executable logic.</p>
+        <ul>
+            <li><strong>Algorithm:</strong> Read from left to right.</li>
+            <li>If it's an operand (A, B), add it to the output string.</li>
+            <li>If it's an operator (+, *), check precedence. Push it onto the stack.</li>
+            <li>If it's a right parenthesis ')', pop operators off the stack until you hit the left parenthesis '('.</li>
+        </ul>
+        <p><em>Example:</em> <code>(A + B) * C</code> becomes <code>A B + C *</code></p>
+    </div>
+
+    <!-- Slide 23: Evaluating Postfix Expressions -->
+    <div class="slide">
+        <h2>Evaluating Postfix Expressions</h2>
+        <p>Once converted, how does the computer solve <code>5 6 2 + *</code>?</p>
+        <ol>
+            <li>Scan left to right. Push operands (5, 6, 2) onto the stack.</li>
+            <li>When the operator <code>+</code> is hit, <strong>Pop</strong> the top two operands (6 and 2).</li>
+            <li>Apply the operator: 6 + 2 = 8. <strong>Push</strong> the result (8) back onto the stack.</li>
+            <li>When <code>*</code> is hit, Pop 8 and 5. Apply operator: 5 * 8 = 40. Push 40.</li>
+            <li><strong>Result:</strong> 40 is the final answer at the top of the stack!</li>
+        </ol>
+    </div>
+
+    <!-- Slide 24: STORY 3 -->
+    <div class="slide story-slide">
+        <h2 class="story-title">📖 Story Time: The "Oops" Button</h2>
+        <h3>Undo/Redo Operations</h3>
+        <p>You are typing a highly important essay in Microsoft Word. You accidentally delete a massive paragraph. You immediately hit <code>Ctrl+Z</code> (Undo), and the paragraph magically reappears.</p>
+        <p>How did Word remember what you did? It uses <span class="highlight">Two Separate Stacks</span>.</p>
+        <p>Every time you type or delete, the action is <strong>Pushed</strong> onto the Undo Stack. When you press Ctrl+Z, Word <strong>Pops</strong> the most recent action off the Undo Stack, reverses it, and pushes it onto the Redo Stack. Stacks make modern UI usability possible!</p>
+    </div>
+
+    <!-- Slide 25: 3.3.3 Syntax Parsing in Compilers -->
+    <div class="slide">
+        <h2>Syntax Parsing in Compilers</h2>
+        <p>Stacks are responsible for verifying that source code follows grammatical rules.</p>
+        <ul>
+            <li><strong>Parenthesis Matching:</strong> Stacks validate correct opening and closing brackets <code>(), {}, []</code>.</li>
+            <li>When a left symbol <code>{</code> is encountered, it is Pushed.</li>
+            <li>When a right symbol <code>}</code> is encountered, the stack is Peeked. If it matches the top, it is Popped. If not, the compiler throws a <strong>Syntax Error</strong>!</li>
+        </ul>
+    </div>
+
+    <!-- Slide 26: Backtracking Algorithms -->
+    <div class="slide">
+        <h2>Backtracking Algorithms</h2>
+        <p>An algorithmic strategy used for exploring paths and reversing decisions when a path fails.</p>
+        <ul>
+            <li><strong>Maze Solving:</strong> Every step taken is pushed onto the stack. If a dead-end is hit, the algorithm <em>pops</em> the previous move to backtrack and try a new direction.</li>
+            <li><strong>N-Queens Problem:</strong> Placing chess queens on a board. If a placement causes a conflict, the algorithm backtracks to reposition the previous queen.</li>
+            <li><strong>Depth-First Search (DFS):</strong> Uses a stack to keep track of visited nodes in graph traversal.</li>
+        </ul>
+    </div>
+
+    <!-- Slide 27: 3.4 Summary (Part 1) -->
+    <div class="slide">
+        <h2>3.4 Summary (Part 1)</h2>
+        <ul>
+            <li>A <strong>Stack</strong> is a linear data structure adhering to the Last In, First Out (LIFO) principle.</li>
+            <li>It restricts access, allowing insertion (push) and deletion (pop) of elements at one end only (the top).</li>
+            <li>Stacks can be implemented using <strong>Arrays</strong> (static, fast indexing, risk of overflow) or <strong>Linked Lists</strong> (dynamic, no overflow, extra pointer memory).</li>
+        </ul>
+    </div>
+
+    <!-- Slide 28: 3.4 Summary (Part 2) -->
+    <div class="slide">
+        <h2>3.4 Summary (Part 2)</h2>
+        <ul>
+            <li>Core operations (Push, Pop, Peek) execute with high efficiency in <strong>O(1) constant time</strong>.</li>
+            <li>Stacks are the engine behind system-level operations like <strong>Function Call Handling</strong> (Activation Records) and <strong>Syntax Parsing</strong>.</li>
+            <li>They are essential for algorithmic problem solving, enabling Postfix expression evaluation and <strong>Backtracking</strong> (Maze solving, Undo/Redo features).</li>
+        </ul>
+    </div>
+
+    <!-- Slide 29: 3.5 Keywords -->
+    <div class="slide">
+        <h2>3.5 Keywords</h2>
+        <div class="grid-2">
+            <div>
+                <ul>
+                    <li><strong>Stack:</strong> Linear structure using LIFO principle.</li>
+                    <li><strong>Push / Pop:</strong> Inserting/removing the top element.</li>
+                    <li><strong>Peek:</strong> Viewing the top element non-destructively.</li>
+                    <li><strong>Overflow:</strong> Pushing onto a full stack.</li>
+                </ul>
+            </div>
+            <div>
+                <ul>
+                    <li><strong>Underflow:</strong> Popping an empty stack.</li>
+                    <li><strong>Call Stack:</strong> System memory tracking function calls.</li>
+                    <li><strong>Backtracking:</strong> Reversing previous algorithmic decisions.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slide 30: 3.6 Self-Assessment Questions -->
+    <div class="slide">
+        <h2>3.6 Self-Assessment Questions</h2>
+        <ol>
+            <li>What is a stack, and how does the Last In, First Out (LIFO) principle govern its behavior?</li>
+            <li>Explain the push and pop operations with stepwise examples using an array implementation.</li>
+            <li>How are stacks used to manage recursive function calls in programming languages?</li>
+            <li>Discuss how stacks help in evaluating postfix mathematical expressions.</li>
+            <li>Compare array-based and linked list-based stack implementations in terms of memory usage and overflow risk.</li>
+        </ol>
+    </div>
+
+    <!-- Slide 31: End -->
+    <div class="slide">
+        <h1 style="margin-top: 15%;">Thank You!</h1>
+        <h2 style="text-align: center; border: none; color: #7f8c8d;">Any Questions?</h2>
+        <p style="text-align: center; margin-top: 40px; font-style: italic;">"Understanding stacks is the first step to understanding how computers truly 'think'."</p>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div id="controls">
+        <button id="prevBtn" onclick="changeSlide(-1)">&#8592; Previous</button>
+        <span id="progress">Slide 1 of 31</span>
+        <button id="nextBtn" onclick="changeSlide(1)">Next &#8594;</button>
+    </div>
+
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    
+    function updateUI() {
+        slides.forEach(slide => slide.classList.remove('active'));
+        slides[currentSlide].classList.add('active');
+        
+        document.getElementById('progress').innerText = `Slide ${currentSlide + 1} of ${totalSlides}`;
+        
+        document.getElementById('prevBtn').disabled = currentSlide === 0;
+        document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+    }
+
+    function changeSlide(direction) {
+        currentSlide += direction;
+        
+        if (currentSlide < 0) currentSlide = 0;
+        if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+        
+        updateUI();
+    }
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'ArrowRight' || event.key === ' ') {
+            changeSlide(1);
+        } else if (event.key === 'ArrowLeft') {
+            changeSlide(-1);
+        }
+    });
+
+    updateUI();
+</script>
+
+</body>
+</html>
