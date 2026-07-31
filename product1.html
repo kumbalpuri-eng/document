@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VacMaster Pro X1 — Product Dossier</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.1/package/dist/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3f4f7;--card:#fff;--tx:#1a1d26;--txs:#6b7280;--ac:#d97706;--acl:#b45309;--acd:#fef3c7;--bd:#e2e5eb;--ok:#16a34a;--err:#dc2626;--inf:#0891b2}
+*{margin:0;padding:0;box-sizing:border-box;scrollbar-width:thin;scrollbar-color:var(--bd) transparent}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-thumb{background:var(--bd);border-radius:3px}
+body{background:var(--bg);color:var(--tx);font-family:'Space Grotesk',sans-serif;overflow:hidden;height:100vh;width:100vw}
+.sidebar{position:fixed;top:0;left:0;width:230px;height:100vh;background:var(--card);border-right:1px solid var(--bd);overflow-y:auto;z-index:40;box-shadow:2px 0 12px rgba(0,0,0,.05)}
+.sidebar .logo{padding:12px 14px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px}
+.sidebar .logo-icon{width:32px;height:32px;border-radius:8px;background:var(--ac);display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px}
+.sidebar .logo-text{font-size:12px;font-weight:700;color:var(--tx);line-height:1.2}
+.sidebar .logo-sub{font-size:10px;color:var(--txs)}
+.nav-grp{padding:6px 10px 2px;font-size:9px;font-weight:700;color:var(--txs);text-transform:uppercase;letter-spacing:1.2px}
+.nav-link{display:block;padding:4px 10px 4px 14px;font-size:11px;color:var(--txs);border-left:3px solid transparent;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:all .15s;text-decoration:none}
+.nav-link:hover{color:var(--tx);background:var(--bg);border-left-color:var(--txs)}
+.nav-link.active{color:var(--acl);background:var(--acd);border-left-color:var(--ac);font-weight:600}
+#slidesWrap{position:fixed;top:0;left:230px;right:0;bottom:44px;overflow:hidden}
+.slide{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .25s}
+.slide.active{opacity:1;visibility:visible;pointer-events:auto;z-index:1}
+.slide-inner{width:100%;height:100%;overflow:auto;padding:16px 20px}
+.slide-title{font-size:15px;font-weight:700;color:var(--acl);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.slide-title .n{font-size:10px;font-weight:600;background:var(--ac);color:#fff;width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center}
+.slide-sub{font-size:11px;font-weight:600;color:var(--txs);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+.cw{background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:12px;margin:6px 0;overflow-x:auto}
+.mermaid{display:flex;justify-content:center}
+.mermaid svg{max-width:100%;height:auto}
+table{border-collapse:collapse;width:100%;font-size:10.5px}
+th{text-align:left;padding:6px 8px;font-weight:600;color:var(--acl);border-bottom:2px solid var(--ac);font-size:9.5px;text-transform:uppercase;letter-spacing:.4px;background:var(--acd);white-space:nowrap}
+td{padding:5px 8px;border-bottom:1px solid var(--bd);color:var(--tx)}
+tr:hover td{background:rgba(217,119,6,.04)}
+.badge{display:inline-block;padding:1px 8px;border-radius:12px;font-size:9.5px;font-weight:600}
+.b-ok{background:rgba(22,163,74,.1);color:var(--ok)}
+.b-err{background:rgba(220,38,38,.1);color:var(--err)}
+.b-warn{background:rgba(217,119,6,.1);color:var(--acl)}
+.b-inf{background:rgba(8,145,178,.1);color:var(--inf)}
+.sc{background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:10px 14px;text-align:center}
+.sc .v{font-size:22px;font-weight:800;color:var(--acl)}
+.sc .l{font-size:9px;color:var(--txs);text-transform:uppercase;letter-spacing:.6px;margin-top:2px}
+.ev-row{display:grid;grid-template-columns:150px 1fr;border-bottom:1px solid var(--bd)}
+.ev-row .k{padding:7px 12px;font-weight:600;color:var(--acl);font-size:10px;text-transform:uppercase;letter-spacing:.4px;background:var(--acd)}
+.ev-row .val{padding:7px 12px;font-size:11px;color:var(--tx)}
+.info-box{border-left:3px solid var(--ac);background:var(--acd);border-radius:0 6px 6px 0;padding:10px 14px;font-size:11px;color:var(--tx);margin:8px 0}
+.info-box.err{border-left-color:var(--err);background:rgba(220,38,38,.04)}
+.info-box.ok{border-left-color:var(--ok);background:rgba(22,163,74,.04)}
+.card-box{background:var(--bg);border:1px solid var(--bd);border-radius:8px;padding:10px 12px}
+.card-box .ct{font-size:11px;font-weight:700;color:var(--tx);margin-bottom:3px}
+.card-box .cd{font-size:10px;color:var(--txs);margin-bottom:5px}
+#bottomNav{position:fixed;bottom:0;left:230px;right:0;height:44px;background:var(--card);border-top:1px solid var(--bd);display:flex;align-items:center;justify-content:center;gap:16px;z-index:30}
+#bottomNav button{background:none;border:1px solid var(--bd);border-radius:6px;padding:4px 12px;font-size:11px;font-family:inherit;color:var(--txs);cursor:pointer;transition:all .15s}
+#bottomNav button:hover{border-color:var(--ac);color:var(--acl)}
+#bottomNav .counter{font-size:11px;color:var(--txs);font-variant-numeric:tabular-nums;min-width:60px;text-align:center}
+#fab{position:fixed;bottom:52px;right:16px;display:flex;flex-direction:column;gap:6px;z-index:50}
+#fab button{border:none;border-radius:10px;padding:8px 16px;font-family:inherit;font-size:11px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;transition:all .2s;box-shadow:0 3px 12px rgba(0,0,0,.12)}
+#fab button:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(0,0,0,.18)}
+#fab button:disabled{opacity:.5;cursor:wait;transform:none}
+#fab .fb-pdf{background:linear-gradient(135deg,#d97706,#b45309);color:#fff}
+#fab .fb-xls{background:linear-gradient(135deg,#16a34a,#15803d);color:#fff}
+#fab .fb-doc{background:linear-gradient(135deg,#0891b2,#0e7490);color:#fff}
+#loader{position:fixed;inset:0;background:var(--card);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+#loader .spinner{width:36px;height:36px;border:3px solid var(--bd);border-top-color:var(--ac);border-radius:50%;animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+@media(max-width:1024px){
+  .sidebar{transform:translateX(-100%);z-index:50}
+  .sidebar.open{transform:translateX(0)}
+  #slidesWrap{left:0}
+  #bottomNav{left:0}
+  .grid-2,.grid-3,.grid-4{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<div id="loader"><div class="spinner"></div><div style="font-size:13px;color:var(--txs)">Loading diagrams...</div></div>
+<aside class="sidebar" id="sidebar">
+  <div class="logo"><div class="logo-icon"><i class="fas fa-cogs"></i></div><div><div class="logo-text">VacMaster Pro X1</div><div class="logo-sub">Product Dossier v2.0</div></div></div>
+  <nav id="sideNav"></nav>
+  <div style="padding:8px 14px;border-top:1px solid var(--bd);font-size:9px;color:var(--txs)">IATF 16949 | ISO 9001:2015<br>BS6 / Euro6 Compliant</div>
+</aside>
+<button onclick="document.getElementById('sidebar').classList.toggle('open')" style="position:fixed;top:8px;left:8px;z-index:55;background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:6px 10px;cursor:pointer;display:none" id="menuBtn"><i class="fas fa-bars" style="color:var(--txs)"></i></button>
+<div id="slidesWrap"><div id="slidesContainer"></div></div>
+<div id="bottomNav">
+  <button onclick="go(-1)"><i class="fas fa-chevron-left"></i> Prev</button>
+  <div class="counter" id="counter">1 / 1</div>
+  <button onclick="go(1)">Next <i class="fas fa-chevron-right"></i></button>
+</div>
+<div id="fab">
+  <button class="fb-pdf" onclick="genPDF(this)"><i class="fas fa-file-pdf"></i> PDF</button>
+  <button class="fb-xls" onclick="genXLS()"><i class="fas fa-file-excel"></i> Excel</button>
+  <button class="fb-doc" onclick="genDOC()"><i class="fas fa-file-word"></i> Word</button>
+</div>
+
+<script>
+/* ===== SLIDE DATA ===== */
+const S = [
+/* 0 */ {g:'Overview',t:'01 Product Overview',type:'hero',title:'VacMaster Pro X1',sub:'VMP-X1 — Dual-Function Assembly (Oil Pump + Vacuum Pump)',desc:'Exhaustive documentation covering product architecture, engineering specifications, manufacturing processes, quality systems, supply chain, cost structure, and operational excellence for the VMP-X1 platform serving Maruti Suzuki, Tata Motors, and Ford Mexico.',stats:[{v:'500K',l:'Annual Volume'},{v:'₹120Cr',l:'Revenue'},{v:'98.5%',l:'First Pass Yield'},{v:'88%',l:'OEE'}],badges:['IATF 16949 Certified','ISO 9001:2015','BS6 / Euro6 Compliance']},
+/* 1 */ {g:'Overview',t:'01 Product Variants',type:'tc',sub:'Product Variants',th:['Variant','Application','Volume','Revenue'],tr:[['VMP-X1-L','1.2L Engines','200,000','₹48 Cr'],['VMP-X1-H','1.5L Engines','250,000','₹60 Cr'],['VMP-X1-E','1.5L (Ford Export)','50,000','₹12 Cr']],chart:'pie'},
+/* 2 */ {g:'Overview',t:'02 Oil Pump Function',type:'m',sub:'Oil Pump — How It Works',mc:`flowchart TD\nA[Oil Sump] -->|Oil Inlet| B[Oil Pump Housing]\nB -->|Gear Rotation| C[Drive Gear]\nC -->|Meshing| D[Driven Gear]\nD -->|Pressurized Oil| E[Pressure Relief Valve]\nE -->|Regulated Pressure| F[Engine Components]\nF -->|Return Flow| A`},
+/* 3 */ {g:'Overview',t:'02 Vacuum Pump Function',type:'m',sub:'Vacuum Pump — How It Works',mc:`flowchart TD\nA[Engine Intake] -->|Air Inlet| B[Vacuum Chamber]\nB -->|Rotor Rotation| C[Vanes]\nC -->|Vacuum Generation| D[Vacuum Outlet]\nD -->|Brake Booster| E[Brake System]\nD -->|EVAP System| F[Emission Control]`},
+/* 4 */ {g:'Overview',t:'02 Failure Mode Analysis',type:'t',sub:'Failure Mode Impact Analysis',th:['Failure Mode','Impact on Engine','Impact on Vehicle','Severity','Detection'],tr:[['Oil Pump Seizure','Catastrophic engine failure','Vehicle breakdown','<span class="badge b-err">10</span>','Vibration Sensor, Oil Pressure Gauge'],['Vacuum Leak','Hard brake pedal','Increased stopping distance','<span class="badge b-err">8</span>','Vacuum Gauge, Brake Test'],['Oil Pressure Drop','Accelerated engine wear','Overheating, reduced lifespan','<span class="badge b-err">9</span>','Oil Pressure Sensor'],['Gear Tooth Breakage','Noise, vibration','Driver discomfort','<span class="badge b-warn">7</span>','Noise Test, Visual Inspection'],['Vane Wear','Reduced vacuum efficiency','Brake assist failure','<span class="badge b-err">8</span>','Functional Test, Vacuum Gauge']]},
+/* 5 */ {g:'Overview',t:'03 Oil Pump Architecture',type:'m',sub:'Exploded View: Oil Pump Assembly',mc:`flowchart TD\nA[Oil Pump Assembly] --> B[Pump Housing]\nA --> C[Drive Gear]\nA --> D[Driven Gear]\nA --> E[Shaft]\nA --> F[Pressure Relief Valve]\nA --> G[Oil Seal x2]\nA --> H[Bearings x2]\nB -->|A356 Aluminum| I[Casting]\nC -->|20MnCr5 Steel| J[Machining + Heat Treatment]\nD -->|20MnCr5 Steel| J\nE -->|EN8 Steel| J\nF -->|Spring Steel| K[Bought-Out]\nG -->|Nitrile Rubber| K\nH -->|Chrome Steel| K`},
+/* 6 */ {g:'Overview',t:'03 Vacuum Pump Architecture',type:'m',sub:'Exploded View: Vacuum Pump Assembly',mc:`flowchart TD\nA[Vacuum Pump Assembly] --> B[Vacuum Chamber]\nA --> C[Rotor]\nA --> D[Vane x4]\nA --> E[Vacuum Seal]\nA --> F[Spring]\nB -->|A356 Aluminum| G[Casting]\nC -->|Carbon Graphite| H[Machining]\nD -->|Phenolic Resin| I[Bought-Out]\nE -->|Fluorocarbon| I\nF -->|Spring Steel| I`},
+/* 7 */ {g:'Overview',t:'03 BOM Cost Breakdown',type:'c',sub:'BOM Cost Breakdown (₹2,800/unit)',chart:'bom'},
+/* 8 */ {g:'Overview',t:'04 Critical Dimensions',type:'t',sub:'Critical Dimensions & GD&T',th:['Part','Dimension','Nominal (mm)','Tolerance','GD&T Symbol','GD&T Value','Tool'],tr:[['Pump Housing','Bore Diameter','50.00','±0.01','⌀ MMC','—','CMM'],['Gears','Center Distance','40.00','±0.02','Position','⌀0.02','CMM'],['Rotor','Eccentricity','0.05','±0.005','Concentricity','—','Optical Comparator'],['Shaft','Radial Runout','—','—','Circularity','0.01','Roundness Tester'],['Vane','Thickness','—','2.00±0.02','Flatness','0.01','Micrometer']]},
+/* 9 */ {g:'Overview',t:'04 Materials & Heat Treatment',type:'t',sub:'Material Specifications & Heat Treatment',th:['Part','Material','Grade','Hardness','Heat Treatment','Supplier','Cost (₹/kg)'],tr:[['Pump Housing','Aluminum','A356','80-90 HB','T6 Solution','Hindalco','250'],['Drive/Driven Gear','Steel','20MnCr5','58-62 HRC','Carburizing+Quench','Tata Steel','120'],['Shaft','Steel','EN8','25-30 HRC','Normalizing','JSW Steel','80'],['Vacuum Rotor','Carbon Graphite','CG-200','—','None','Schunk Carbon','1,500'],['Vacuum Vane','Phenolic Resin','Grade P5','—','None','Polyplastics India','800']]},
+/* 10 */ {g:'Overview',t:'04 Surface Finish',type:'t',sub:'Surface Finish Requirements',th:['Part','Surface','Ra (µm)','Process','Inspection'],tr:[['Pump Housing','Internal Bore','0.4','Honing','Surface Roughness Tester'],['Gear Teeth','Tooth Flanks','0.8','Grinding','Profilometer'],['Shaft','Journal Surface','0.2','Superfinishing','Surface Roughness Tester'],['Vacuum Chamber','Internal Surface','0.6','Lapping','Visual + Tactile'],['Rotor','Rotor Face','0.5','Polishing','Surface Roughness Tester']]},
+/* 11 */ {g:'Manufacturing',t:'05 Main Process Flow',type:'m',sub:'End-to-End Manufacturing Process Flow',mc:`flowchart TD\nA[Raw Material Incoming] --> B[Incoming Inspection]\nB --> C[Material Storage]\nC --> D[Machining: Housing]\nD --> E[Machining: Gears/Shaft]\nE --> F[Deburring]\nF --> G[Heat Treatment]\nG --> H[Surface Finish]\nH --> I[Balancing]\nI --> J[Sub-Assembly: Oil Pump]\nJ --> K[Sub-Assembly: Vacuum Pump]\nK --> L[Final Assembly]\nL --> M[Testing: Leak/Functional]\nM --> N[Packaging]\nN --> O[Finished Goods Storage]\nO --> P[Dispatch]\nQ[Rejected Material] --> R[Quarantine]\nR --> S[Rework/Scrap]\nstyle A fill:#fef3c7,stroke:#d97706\nstyle P fill:#e0f2fe,stroke:#0891b2\nstyle Q fill:#fee2e2,stroke:#dc2626`},
+/* 12 */ {g:'Manufacturing',t:'05 Oil Pump Assembly',type:'m',sub:'Oil Pump Sub-Assembly Process',mc:`flowchart TD\nA[Start] --> B[Press Bearings into Housing]\nB --> C[Insert Shaft]\nC --> D[Mount Drive Gear]\nD --> E[Mount Driven Gear]\nE --> F[Apply Loctite 242]\nF --> G[Assemble Relief Valve]\nG --> H[Install Oil Seals]\nH --> I[Torque: M6 10Nm M8 20Nm]\nI --> J[Apply Molykote G-Rapid]\nJ --> K[Dimensional Check]\nK --> L[End: Oil Pump Sub-Assembly]`},
+/* 13 */ {g:'Manufacturing',t:'05 Vacuum Pump Assembly',type:'m',sub:'Vacuum Pump Sub-Assembly Process',mc:`flowchart TD\nA[Start] --> B[Insert Rotor into Chamber]\nB --> C[Assemble Vanes + Spring]\nC --> D[Install Vacuum Seal]\nD --> E[Torque: M6 8Nm]\nE --> F[Apply Molykote G-Rapid]\nF --> G[Vacuum Test]\nG --> H[End: Vacuum Sub-Assembly]`},
+/* 14 */ {g:'Manufacturing',t:'05 Final Assembly',type:'m',sub:'Final Assembly & Testing Process',mc:`flowchart TD\nA[Start] --> B[Mount Oil Pump on Bracket]\nB --> C[Mount Vacuum Pump on Bracket]\nC --> D[Connect Oil Pipes]\nD --> E[Connect Vacuum Pipes]\nE --> F[Final Torque Check]\nF --> G[Leak Test: Oil 1bar/30s]\nG --> H[Leak Test: Vac 500mmHg/1m]\nH --> I[Oil Flow: 12L/min@6kRPM]\nI --> J[Vacuum: 500mmHg]\nJ --> K[Noise: less than 60dB]\nK --> L[End: Complete]\nM[Fail Leak] --> N[Quarantine]\nN --> O[Replace Seals/Valves]\nO --> G\nP[Fail Func] --> Q[Quarantine]\nQ --> R[Check Components]\nR --> I`},
+/* 15 */ {g:'Manufacturing',t:'06 Machine Layout',type:'m',sub:'Machine Layout on Shop Floor',mc:`flowchart TD\nsubgraph MA["Machining Area"]\nA[CNC Center 1 - Housing] --> B[Deburring Station]\nC[CNC Center 2 - Gears/Shaft] --> B\nend\nsubgraph HT["Heat Treatment Area"]\nB --> D[Furnace 1]\nB --> E[Furnace 2]\nend\nsubgraph SF["Surface Finish Area"]\nD --> F[Honing Machine]\nE --> F\nD --> G[Grinding Machine]\nE --> G\nend\nsubgraph AS["Assembly Area"]\nF --> H[Oil Pump Assembly Line]\nG --> H\nH --> I[Vacuum Pump Assembly Line]\nI --> J[Final Assembly Line]\nend\nsubgraph TE["Testing Area"]\nJ --> K[Leak Test Machine]\nK --> L[Functional Test Machine]\nL --> M[Noise Test Booth]\nend\nsubgraph PK["Packaging Area"]\nM --> N[Packaging Station]\nN --> O[Finished Goods Storage]\nend\nstyle MA fill:#fef3c7,stroke:#d97706\nstyle HT fill:#dcfce7,stroke:#16a34a\nstyle SF fill:#ccfbf1,stroke:#0d9488\nstyle AS fill:#fce7f3,stroke:#db2777\nstyle TE fill:#e0e7ff,stroke:#4f46e5\nstyle PK fill:#fef9c3,stroke:#ca8a04`},
+/* 16 */ {g:'Manufacturing',t:'06 Machine Specs & OEE',type:'t',sub:'Machine Specifications & OEE',th:['Machine','Model','Capacity','OEE','MTBF','MTTR','Power','Critical Spares'],tr:[['CNC Center 1','Haas VF-2','200/shift','<span class="badge b-ok">88%</span>','1,200h','2h','15kW','Cutting Tools, Spindle'],['CNC Center 2','Haas VF-2','200/shift','<span class="badge b-ok">87%</span>','1,100h','2h','15kW','Cutting Tools, Spindle'],['HT Furnace 1','Ipsen T6','50 batch','<span class="badge b-ok">90%</span>','2,000h','4h','50kW','Heating Elements'],['HT Furnace 2','Ipsen T6','50 batch','<span class="badge b-ok">89%</span>','1,900h','4h','50kW','Heating Elements'],['Honing Machine','Sunnen MBB-1660','100/shift','<span class="badge b-ok">92%</span>','1,500h','1h','7.5kW','Honing Stones'],['Grinding Machine','J&S 1300','80/shift','<span class="badge b-warn">85%</span>','1,000h','3h','10kW','Grinding Wheels'],['Leak Test','Cosmo AT-500','120/shift','<span class="badge b-ok">92%</span>','1,500h','3h','5kW','Pressure Sensors'],['Functional Test','AVL PUMA Open','100/shift','<span class="badge b-ok">90%</span>','1,200h','2h','10kW','Flow Meters'],['Noise Test Booth','B&K 4206','50/shift','<span class="badge b-ok">95%</span>','2,000h','1h','2kW','Microphones']]},
+/* 17 */ {g:'Manufacturing',t:'07 Tooling Flow',type:'m',sub:'Tooling Flow Chart',mc:`flowchart TD\nA[Tool Crib] --> B[Assembly Fixtures]\nA --> C[Torque Tools]\nA --> D[Leak Test Fixtures]\nA --> E[Gear Meshing Fixtures]\nA --> F[Vacuum Pump Jigs]\nB -->|Used in| G[Oil Pump Assembly Line]\nC -->|Used in| G\nE -->|Used in| G\nF -->|Used in| H[Vacuum Pump Assembly Line]\nD -->|Used in| I[Testing Area]\nG -->|Returns to| A\nH -->|Returns to| A\nI -->|Returns to| A`},
+/* 18 */ {g:'Manufacturing',t:'07 Tooling Inventory',type:'t',sub:'Tooling Inventory & Life Cycle',th:['Tool','ID','Purpose','Life','Used','% Left','Change','Poka-Yoke'],tr:[['Assembly Fixture','TF-001','Locate Housing+Gears','50,000','12,000','<span class="badge b-ok">76%</span>','6 mo','Pin-Based Alignment'],['Torque Wrench M6','TW-002','Fastener 10Nm','10,000','8,000','<span class="badge b-err">20%</span>','3 mo','Digital Torque Feedback'],['Torque Wrench M8','TW-003','Fastener 20Nm','10,000','6,000','<span class="badge b-warn">40%</span>','3 mo','Digital Torque Feedback'],['Leak Test Fixture','LF-004','Seal Testing','20,000','5,000','<span class="badge b-ok">75%</span>','12 mo','Pressure Interlock'],['Gear Meshing Fixture','GF-005','Gear Alignment','30,000','15,000','<span class="badge b-warn">50%</span>','6 mo','Laser Alignment'],['Vacuum Pump Jig','VJ-006','Rotor-Vane Assembly','40,000','20,000','<span class="badge b-warn">50%</span>','6 mo','Color-Coded Slots'],['Honing Mandrel','HM-007','Bore Honing','15,000','10,000','<span class="badge b-err">33%</span>','4 mo','Diameter Gauge'],['Grinding Wheel','GW-008','Tooth Grinding','5,000','3,000','<span class="badge b-err">40%</span>','2 mo','Dressing Alignment']]},
+/* 19 */ {g:'Quality',t:'08 QC Process Flow',type:'m',sub:'Quality Control Process Flow',mc:`flowchart TD\nA[Incoming Material] --> B[Incoming Inspection]\nB -->|Pass| C[Material Storage]\nB -->|Fail| D[Quarantine]\nD --> E[Supplier Feedback]\nC --> F[Machining]\nF --> G[In-Process Inspection]\nG -->|Pass| H[Next Process]\nG -->|Fail| I[Rework/Scrap]\nH --> J[Heat Treatment]\nJ --> K[In-Process Inspection]\nK -->|Pass| L[Surface Finish]\nK -->|Fail| I\nL --> M[Assembly]\nM --> N[In-Process Inspection]\nN -->|Pass| O[Final Assembly]\nN -->|Fail| I\nO --> P[Final Testing]\nP -->|Pass| Q[Packaging]\nP -->|Fail| I\nQ --> R[Dispatch]`},
+/* 20 */ {g:'Quality',t:'08 PFMEA: Gear Machining',type:'m',sub:'PFMEA: Gear Machining',mc:`flowchart TD\nA[Gear Machining] --> B[Failure: Incorrect Tooth Profile]\nB --> C[Effect: Noise/Vibration]\nC --> D[Severity: 8]\nD --> E[Cause: Worn Cutting Tool]\nE --> F[Occurrence: 3]\nF --> G[Detection: 2]\nG --> H[RPN: 48]\nH --> I[Controls: In-Process Gauging CMM]\nI --> J[Action: Tool Life Monitoring]\nA --> K[Failure: Gear Crack]\nK --> L[Effect: Catastrophic Failure]\nL --> M[Severity: 10]\nM --> N[Cause: Improper Heat Treatment]\nN --> O[Occurrence: 2]\nO --> P[Detection: 3]\nP --> Q[RPN: 60]\nQ --> R[Controls: Hardness Test Visual]\nR --> S[Action: 100% Hardness Check]`},
+/* 21 */ {g:'Quality',t:'08 Control Plan',type:'t',sub:'Control Plan Matrix',th:['Process Step','Characteristic','Specification','Control Method','Frequency','Reaction Plan'],tr:[['Incoming (Aluminum)','Hardness','80-90 HB','Rockwell Tester','100%','Reject batch'],['Machining (Housing)','Bore Diameter','50.00±0.01mm','CMM','Every 2 hrs','Stop, check tool wear'],['Heat Treatment (Gears)','Case Depth','0.8-1.2mm','Metallography','Every batch','Re-run batch'],['Assembly (Oil Pump)','Torque (M6)','10±1 Nm','Digital Torque Wrench','100%','Re-torque'],['Testing (Leak)','Pressure Decay','<0.5 bar in 30s','Pressure Decay Test','100%','Quarantine, check seals']]},
+/* 22 */ {g:'Quality',t:'09 Defect Pareto',type:'c',sub:'Defect Pareto Chart (Last 12 Months)',chart:'defects'},
+/* 23 */ {g:'Quality',t:'09 5-Why: Oil Seal Leak',type:'m',sub:'Root Cause: Oil Seal Leakage (5-Why)',mc:`flowchart TD\nA[Defect: Oil Seal Leakage] --> B[Why? Improper Seating]\nB --> C[Why? Fixture Misalignment]\nC --> D[Why? Worn Locating Pins]\nD --> E[Why? No PM Schedule for Fixture]\nE --> F[Why? No Standard PM Procedure]\nF --> G[Root Cause: Lack of PM for Fixture]\nG --> H[Corrective: Implement PM Schedule]\nH --> I[Preventive: Add to Daily Checklist]`},
+/* 24 */ {g:'Quality',t:'09 5-Why: Gear Noise',type:'m',sub:'Root Cause: Gear Noise (5-Why)',mc:`flowchart TD\nA[Defect: Gear Noise] --> B[Why? Incorrect Tooth Profile]\nB --> C[Why? Worn Cutting Tool]\nC --> D[Why? Tool Life Not Monitored]\nD --> E[Why? No Tool Life Tracking System]\nE --> F[Root Cause: No Tool Life Tracking]\nF --> G[Corrective: Implement Tool Life Monitoring]\nG --> H[Preventive: Train Operators on Tool Inspection]`},
+/* 25 */ {g:'Quality',t:'10 Testing Flow',type:'m',sub:'Testing Process Flow',mc:`flowchart TD\nA[Final Assembly Complete] --> B[Leak Test: Oil Pump]\nB -->|Pass| C[Leak Test: Vacuum Pump]\nB -->|Fail| D[Quarantine]\nD --> E[Replace Oil Seals]\nE --> B\nC -->|Pass| F[Functional: Oil Flow]\nC -->|Fail| G[Quarantine]\nG --> H[Check Vacuum Seal]\nH --> C\nF -->|Pass| I[Functional: Vacuum]\nF -->|Fail| J[Quarantine]\nJ --> K[Check Gear Meshing]\nK --> F\nI -->|Pass| L[Noise Test]\nI -->|Fail| M[Quarantine]\nM --> N[Check Rotor/Vane Clearance]\nN --> I\nL -->|Pass| O[Endurance Test 10%]\nL -->|Fail| P[Quarantine]\nP --> Q[Check Assembly Torque]\nQ --> L\nO -->|Pass| R[Packaging]\nO -->|Fail| S[Scrap]`},
+/* 26 */ {g:'Quality',t:'10 Test Parameters',type:'t',sub:'Test Parameters & Acceptance Criteria',th:['Test','Method','Sampling','Acceptance','Equipment'],tr:[['Leak Test (Oil)','Pressure Decay @1bar 30s','100%','<0.5 bar drop','Cosmo AT-500'],['Leak Test (Vac)','Vacuum Hold @500mmHg 1min','100%','<10 mmHg drop','Cosmo AT-500'],['Functional (Oil)','Flow Meter @6000RPM','100%','12±0.5 L/min','AVL PUMA Open'],['Functional (Vac)','Vacuum Gauge','100%','≥500 mmHg','AVL PUMA Open'],['Pressure Relief','Hydraulic @1bar','10%','0.8±0.05 MPa','Hydraulic Bench'],['Noise Test','Sound Level @1m','10%','<60 dB','B&K 4206'],['Endurance','200hr @6000RPM','1/1000','No failure','Custom Rig']]},
+/* 27 */ {g:'Supply Chain',t:'11 Material Flow',type:'m',sub:'End-to-End Material Flow',mc:`flowchart TD\nsubgraph SUP["Suppliers"]\nA[Hindalco: Aluminum - 15d] --> B[Incoming Inspection]\nC[Tata Steel: Steel - 20d] --> B\nD[Schunk Carbon: Rotor - 45d] --> B\nE[Karnataka Springs: Valve - 10d] --> B\nF[NBR Seals: Seals - 7d] --> B\nG[Fasteners Ltd: Fasteners - 5d] --> B\nend\nB --> H[Raw Material Storage]\nH --> I[Machining]\nI --> J[Heat Treatment]\nJ --> K[Surface Finish]\nK --> L[Sub-Assembly]\nL --> M[Final Assembly]\nM --> N[Testing]\nN --> O[Packaging]\nO --> P[Finished Goods]\nP --> Q[Maruti Suzuki]\nP --> R[Tata Motors]\nP --> S[Ford Mexico]\nstyle SUP fill:#fef3c7,stroke:#d97706`},
+/* 28 */ {g:'Supply Chain',t:'11 Kanban System',type:'m',sub:'Kanban System Flow',mc:`flowchart TD\nsubgraph SM["Supermarket"]\nA[Aluminum Casting] -->|Kanban Card| B[Machining Area]\nC[Steel Bars] -->|Kanban Card| B\nend\nsubgraph MR["Milk Run"]\nD[Seals] -->|Milk Run| E[Assembly Line]\nF[Fasteners] -->|Milk Run| E\nend\nB -->|2-Bin System| G[Heat Treatment]\nG -->|2-Bin System| H[Surface Finish]\nH -->|2-Bin System| E\nE --> I[Final Assembly]\nI --> J[Testing]\nJ --> K[Packaging]\nstyle SM fill:#dcfce7,stroke:#16a34a\nstyle MR fill:#e0e7ff,stroke:#4f46e5`},
+/* 29 */ {g:'Supply Chain',t:'11 Inventory Layout',type:'m',sub:'Inventory Storage Layout',mc:`flowchart TD\nA[Raw Material Storage] -->|Aluminum| B[Rack A1-A10]\nA -->|Steel| C[Rack B1-B10]\nA -->|Imported| D[Secure Cage C1]\nE[WIP Storage] -->|Oil Pump Sub| F[Rack D1-D5]\nE -->|Vacuum Pump Sub| G[Rack D6-D10]\nH[Finished Goods] -->|Packaged| I[Pallet Racks E1-E20]\nI -->|FIFO| J[Dispatch Area]`},
+/* 30 */ {g:'Supply Chain',t:'12 Supply Network',type:'m',sub:'Supply Chain Network',mc:`flowchart TD\nsubgraph T1["Tier 1 Suppliers"]\nA[Hindalco: Aluminum - Local] --> B[Plant]\nC[Tata Steel: Steel - Local] --> B\nD[Schunk Carbon: Rotor - Import] --> B\nend\nsubgraph T2["Tier 2 Suppliers"]\nE[Bharat Forge: Al Backup] --> A\nF[JSW Steel: Steel Backup] --> C\nG[Graphite India: Rotor Backup] --> D\nend\nB --> H[Production]\nH --> I[Finished Goods]\nI -->|Domestic| J[Maruti Suzuki]\nI -->|Domestic| K[Tata Motors]\nI -->|Export| L[Ford Mexico]\nstyle T1 fill:#fef3c7,stroke:#d97706\nstyle T2 fill:#dcfce7,stroke:#16a34a`},
+/* 31 */ {g:'Supply Chain',t:'12 Supplier Scorecard',type:'t',sub:'Supplier Performance Scorecard',th:['Supplier','Material','OTD','PPM','Rating','Lead Time','Risk'],tr:[['Hindalco','Aluminum A356','96%','120','<span class="badge b-ok">A</span>','15 days','<span class="badge b-ok">Low</span>'],['Tata Steel','20MnCr5/EN8','94%','85','<span class="badge b-ok">A</span>','20 days','<span class="badge b-ok">Low</span>'],['Schunk Carbon','CG-200 Rotor','82%','350','<span class="badge b-warn">B</span>','45 days','<span class="badge b-err">High</span>'],['Karnataka Springs','Relief Valve','98%','60','<span class="badge b-ok">A+</span>','10 days','<span class="badge b-ok">Low</span>'],['NBR Seals','Nitrile/FKM','92%','200','<span class="badge b-warn">B</span>','7 days','<span class="badge b-warn">Medium</span>']]},
+/* 32 */ {g:'Finance',t:'13 Cost Breakdown',type:'m',sub:'Cost Breakdown Flow (₹4,000/unit)',mc:`flowchart TD\nA[Total: 4000/unit] --> B[BOM: 2800 - 70%]\nA --> C[Conversion: 800 - 20%]\nA --> D[Packaging: 50 - 1.25%]\nA --> E[Freight: 100 - 2.5%]\nA --> F[Warranty: 50 - 1.25%]\nB --> G[Aluminum: 600]\nB --> H[Steel: 670]\nB --> I[Carbon Rotor: 300]\nB --> J[Seals: 120]\nB --> K[Fasteners: 80]\nB --> L[Bearings: 179]\nB --> M[Other: 199]\nC --> N[Labour: 300]\nC --> O[Overheads: 350]\nC --> P[Testing: 100]\nC --> Q[Other: 50]`},
+/* 33 */ {g:'Finance',t:'13 Cost Reduction',type:'m',sub:'Cost Reduction Roadmap',mc:`flowchart TD\nA[Current: 4000/unit] --> B[Target: 3500/unit]\nB --> C[Localize Carbon Rotor: -100]\nC --> D[Automate Assembly: -90]\nD --> E[Material Optimization: -30]\nE --> F[Supplier Negotiation: -20]\nF --> G[Energy Saving: -10]\nG --> H[Total Savings: 250/unit]`},
+/* 34 */ {g:'Finance',t:'14 OEE Breakdown',type:'c',sub:'OEE Breakdown (88%)',chart:'oee'},
+/* 35 */ {g:'Finance',t:'14 KPI Trends',type:'c',sub:'KPI Trends (2026)',chart:'kpi'},
+/* 36 */ {g:'Operations',t:'15 TPM Strategy',type:'m',sub:'TPM Maintenance Strategy',mc:`flowchart TD\nA[TPM Framework] --> B[Autonomous Maintenance]\nA --> C[Preventive Maintenance]\nA --> D[Predictive Maintenance]\nA --> E[Corrective Maintenance]\nB --> B1[Daily Cleaning/Lubrication]\nB --> B2[Operator Inspection]\nB --> B3[Basic Tightening]\nC --> C1[Weekly PM Schedule]\nC --> C2[Monthly Calibration]\nC --> C3[Quarterly Overhaul]\nD --> D1[Vibration Monitoring]\nD --> D2[Thermal Imaging]\nD --> D3[Oil Analysis]\nE --> E1[Breakdown Response Team]\nE --> E2[RCFA Post-Repair]\nE --> E3[Spare Parts Mgmt]`},
+/* 37 */ {g:'Operations',t:'15 PM Schedule',type:'t',sub:'PM Schedule Overview',th:['Machine','Daily','Weekly','Monthly','Quarterly','Annual'],tr:[['CNC 1&2','Coolant, chip evac','Tool wear, way lube','Spindle align, backlash','Full calibration','Major overhaul'],['HT Furnace 1&2','Temp log','Thermocouple verify','Element inspection','Atmosphere analysis','Lining check'],['Honing','Stones, coolant','Mandrel wear','Pressure cal','Full system check','Hydraulic fluid'],['Leak Test','Seal, zero cal','Sensor cal','Fixture inspect','Pneumatic check','Full validation'],['Noise Booth','BG noise check','Mic cal','Panel inspect','Acoustic validation','Software update']]},
+/* 38 */ {g:'Operations',t:'16 Safety Risks',type:'ts',sub:'Safety Risk Assessment',th:['Hazard','Area','Risk','Control','PPE','Audit'],tr:[['Rotating Parts','CNC/Grinding','<span class="badge b-err">High</span>','Guards, interlocks','Safety glasses, gloves','Weekly'],['Hot Surfaces','Heat Treatment','<span class="badge b-err">High</span>','Thermal barriers','Heat gloves, face shield','Weekly'],['Chemical Exposure','Assembly','<span class="badge b-warn">Med</span>','Fume extraction','Chemical gloves, mask','Monthly'],['Noise','Testing/Grinding','<span class="badge b-warn">Med</span>','Acoustic enclosures','Ear protection','Monthly'],['Ergonomic','Assembly Line','<span class="badge b-inf">Low</span>','Ergo workstations','Anti-fatigue mats','Quarterly'],['Material Handling','Storage','<span class="badge b-warn">Med</span>','Cranes, trolleys','Safety shoes, gloves','Monthly']],stats:[{v:'287',l:'LTI-Free Days'},{v:'12',l:'Near-Miss (MTD)'},{v:'100%',l:'Safety Training'}],info:'<strong>Zero LTI</strong> achieved for 287 consecutive days. Target: 365 days by Q2 2026.'},
+/* 39 */ {g:'Operations',t:'17 Value Stream Map',type:'m',sub:'Value Stream Map — Current State',mc:`flowchart LR\nsubgraph RAW["Raw Material"]\nA[Al+Steel Inbound] -->|15-20d| B[Incoming: 4h]\nend\nsubgraph MFG["Manufacturing"]\nB -->|WIP:2d| C[CNC: 8h]\nC -->|WIP:.5d| D[HT: 6h]\nD -->|WIP:.5d| E[Surface: 4h]\nend\nsubgraph ASM["Assembly"]\nE -->|WIP:1d| F[Sub-Assembly: 2h]\nF -->|WIP:.5d| G[Final Assembly: 1.5h]\nend\nsubgraph TST["Testing"]\nG -->|WIP:.25d| H[Leak+Func: 30m]\nH -->|WIP:.1d| I[Noise: 10m]\nend\nsubgraph OUT["Output"]\nI -->|FG:2d| J[Packaging: 15m]\nJ -->|FG:3d| K[Dispatch]\nend\nstyle RAW fill:#fef3c7,stroke:#d97706\nstyle MFG fill:#e0e7ff,stroke:#4f46e5\nstyle ASM fill:#dcfce7,stroke:#16a34a\nstyle TST fill:#fce7f3,stroke:#db2777\nstyle OUT fill:#ccfbf1,stroke:#0d9488`},
+/* 40 */ {g:'Operations',t:'17 Lean Initiatives',type:'t',sub:'Lean Initiatives & Results',th:['Initiative','Area','Before','After','Improvement','Status'],tr:[['5S Implementation','Shop Floor','Score: 2.1/5','Score: 4.3/5','<span class="badge b-ok">+105%</span>','<span class="badge b-ok">Sustained</span>'],['SMED (Changeover)','CNC Centers','45 min','12 min','<span class="badge b-ok">-73%</span>','<span class="badge b-ok">Complete</span>'],['Kanban (Seals/Fasteners)','Assembly','3-day stock','0.5-day stock','<span class="badge b-ok">-83% WIP</span>','<span class="badge b-ok">Running</span>'],['Cell Layout Redesign','Assembly','Walk: 8min/unit','Walk: 3min/unit','<span class="badge b-ok">-63%</span>','<span class="badge b-ok">Complete</span>'],['Andon System','All Lines','No visibility','Real-time boards','<span class="badge b-inf">New</span>','<span class="badge b-warn">In Progress</span>'],['Heijunka','Final Assembly','Batch: 500','Batch: 100','<span class="badge b-ok">-80%</span>','<span class="badge b-warn">In Progress</span>']]},
+/* 41 */ {g:'Operations',t:'18 Digital Architecture',type:'m',sub:'Digital Infrastructure Architecture',mc:`flowchart TD\nsubgraph SHOP["Shop Floor Layer"]\nA[IoT Sensors] --> B[PLC Controllers]\nB --> C[SCADA System]\nC --> D[Andon Displays]\nend\nsubgraph MES["MES Layer"]\nE[Production Tracking] --> F[Quality Data]\nF --> G[OEE Monitoring]\nG --> H[Traceability]\nend\nsubgraph ERP["ERP Layer"]\nI[SAP S/4HANA] --> J[Procurement]\nJ --> K[Inventory]\nK --> L[Finance]\nL --> M[Sales & Distribution]\nend\nsubgraph ANA["Analytics Layer"]\nN[Power BI Dashboards] --> O[Predictive Quality]\nO --> P[Energy Monitoring]\nP --> Q[Supply Chain Analytics]\nend\nC --> E\nE --> I\nI --> N\nstyle SHOP fill:#e0e7ff,stroke:#4f46e5\nstyle MES fill:#dcfce7,stroke:#16a34a\nstyle ERP fill:#fef3c7,stroke:#d97706\nstyle ANA fill:#fce7f3,stroke:#db2777`},
+/* 42 */ {g:'Operations',t:'18 System Integration',type:'t',sub:'System Integration Matrix',th:['System','Vendor','Purpose','Users','Uptime','Last Upgrade'],tr:[['SAP S/4HANA','SAP','ERP, Finance, Procurement','45','<span class="badge b-ok">99.8%</span>','Jan 2026'],['MES (Custom)','In-house','Production, Traceability','120','<span class="badge b-ok">99.5%</span>','Mar 2026'],['SCADA','Siemens WinCC','Machine Monitoring','8','<span class="badge b-ok">99.9%</span>','Dec 2025'],['Power BI','Microsoft','Analytics Dashboards','30','<span class="badge b-ok">99.7%</span>','Feb 2026'],['CMM Software','Zeiss Calypso','Quality Measurement','6','<span class="badge b-ok">99.9%</span>','Nov 2025']]},
+/* 43 */ {g:'Finance',t:'19 P&L Summary',type:'te',sub:'P&L Summary — VMP-X1 (FY 2025-26)',th:['Line Item','Amount (₹ Cr)','% Revenue','YoY'],tr:[['Net Revenue','120.00','100%','<span class="badge b-ok">+18%</span>'],['Cost of Materials','84.00','70.0%','<span class="badge b-err">+20%</span>'],['Conversion Cost','24.00','20.0%','<span class="badge b-ok">+8%</span>'],['Packaging & Freight','4.50','3.8%','<span class="badge b-warn">+12%</span>'],['Warranty Provision','1.50','1.3%','<span class="badge b-ok">-25%</span>'],['Gross Margin','6.00','5.0%','<span class="badge b-ok">+15%</span>'],['Selling & Admin','2.40','2.0%','<span class="badge b-inf">Flat</span>'],['R&D','1.20','1.0%','<span class="badge b-err">+30%</span>'],['EBITDA','2.40','2.0%','<span class="badge b-ok">+20%</span>']],stats:[{v:'5.0%',l:'Gross Margin'},{v:'2.0%',l:'EBITDA Margin'},{v:'₹2.4Cr',l:'EBITDA'},{v:'₹250',l:'Target Save/Unit'}]},
+/* 44 */ {g:'People & Risk',t:'20 Customer VOC',type:'ti',sub:'Voice of Customer Summary',th:['Customer','Requirement','Current','Gap','Action'],tr:[['Maruti Suzuki','Zero PPM in 6mo','45 PPM','<span class="badge b-warn">45 PPM</span>','Enhanced SPC on bore'],['Maruti Suzuki','JIS Delivery','96% OTD','<span class="badge b-warn">4%</span>','Logistics partner review'],['Tata Motors','Cost -5% YoY','3.2% reduction','<span class="badge b-warn">1.8%</span>','Accelerate localization'],['Tata Motors','Noise <55 dB','58 dB avg','<span class="badge b-err">3 dB</span>','Gear profile optimization'],['Ford Mexico','PPAP Level 3','In progress','<span class="badge b-inf">Timeline</span>','Dedicated PPAP team']],info:'<strong>Critical:</strong> Tata Motors noise requirement (55 dB) is the top escalation. Cross-functional team formed.'},
+/* 45 */ {g:'People & Risk',t:'21 Org Structure',type:'m',sub:'Organization Structure — VMP-X1',mc:`flowchart TD\nA[Plant Head] --> B[Production Manager]\nA --> C[Quality Manager]\nA --> D[Engineering Manager]\nA --> E[Supply Chain Manager]\nA --> F[HR & Safety Manager]\nB --> B1[Shift A: 32 Ops]\nB --> B2[Shift B: 30 Ops]\nB --> B3[Maint Lead: 8 Techs]\nC --> C1[Incoming QC: 4]\nC --> C2[In-Process QC: 6]\nC --> C3[Final Test: 8]\nD --> D1[Process Eng: 3]\nD --> D2[Product Eng: 2]\nD --> D3[Quality Eng: 2]\nE --> E1[Procurement: 3]\nE --> E2[Warehouse: 6]\nE --> E3[Logistics: 2]\nF --> F1[Safety Officer]\nF --> F2[Training Coord]`},
+/* 46 */ {g:'People & Risk',t:'21 Workforce & Training',type:'ts2',sub:'Workforce & Training Plan',th:['Training','Target','Duration','Frequency','Assessment'],tr:[['GD&T Interpretation','QC, Machinists','8h','Quarterly','Written + Practical'],['TPM Level 1','All Operators','16h','Annual','Practical demo'],['FMEA Methodology','Engineers','12h','Bi-annual','Case study'],['SPC & Capability','QC, Engineers','16h','Quarterly','Live data analysis'],['Safety — Hazards','All Staff','4h','Monthly','Workplace audit']],stats:[{v:'112',l:'Total Headcount'},{v:'8.2%',l:'Attrition YTD'},{v:'24h',l:'Training/Person/Yr'},{v:'92%',l:'Skill Matrix'}]},
+/* 47 */ {g:'People & Risk',t:'22 Risk Register',type:'ti2',sub:'Risk Register — Top Risks',th:['Risk','Category','L','I','Score','Mitigation','Owner'],tr:[['Schunk supply disruption','Supply Chain','4','5','<span class="badge b-err">20</span>','Qualify Graphite India; 60-day buffer','SCM'],['CNC spindle failure','Equipment','3','5','<span class="badge b-err">15</span>','Spare spindle; vibration monitoring','Maint'],['Tata noise non-compliance','Quality','4','4','<span class="badge b-err">16</span>','Gear profile optimization','Quality'],['Key operator attrition','People','3','4','<span class="badge b-warn">12</span>','Retention bonus; cross-training','HR'],['Al price +12%','Financial','4','3','<span class="badge b-warn">12</span>','Long-term contract; value engg','Finance'],['Ford PPAP delay','Commercial','3','4','<span class="badge b-warn">12</span>','Dedicated team; weekly tracking','Engg']],info:'<strong>Critical:</strong> Schunk Carbon single-source dependency. 45-day lead + import logistics. Graphite India qualification: Q2 2026.'},
+/* 48 */ {g:'People & Risk',t:'23 CAPA & Kaizen',type:'tk',sub:'Active CAPA & CI Projects',th:['ID','Project','Type','Target','Progress','Due','Status'],tr:[['CI-001','Reduce Oil Seal PPM','CAPA','<10 PPM','65%','Jun 26','<span class="badge b-warn">On Track</span>'],['CI-002','Gear Noise Reduction','CI','<55 dB','40%','Sep 26','<span class="badge b-warn">On Track</span>'],['CI-003','SMED Phase 2','CI','<8 min','80%','May 26','<span class="badge b-ok">Ahead</span>'],['CI-004','Carbon Rotor Localize','CI','Qualify GI','25%','Aug 26','<span class="badge b-warn">On Track</span>'],['CI-005','Automate Assembly','CI','-30% cycle','15%','Dec 26','<span class="badge b-inf">Planning</span>'],['CI-006','Energy Optimization','CI','-10% energy','55%','Jul 26','<span class="badge b-ok">Ahead</span>']],cards:[{t:'Assembly Layout',d:'Walking distance -63%. 5-day Kaizen.',b:'Completed — ₹8L/yr'},{t:'CNC Tool Mgmt',d:'Tool life tracking. Breakage -40%.',b:'Completed — ₹4L/yr'},{t:'Packing 5S',d:'Packing time 15→11 min/unit.',b:'Completed — ₹3L/yr'}]},
+/* 49 */ {g:'People & Risk',t:'24 Tier Meetings',type:'m',sub:'Tier Meeting Structure',mc:`flowchart TD\nA[Tier 1: Line Level - 7:15 AM] -->|Escalation| B[Tier 2: Shift Level - 8:00 AM]\nB -->|Escalation| C[Tier 3: Plant Level - 9:00 AM]\nC -->|Weekly| D[Tier 4: Mgmt Review - Friday]\nA --- A1[Operators + TL]\nA --- A2[Safety Quality Output 5S]\nB --- B1[Supervisor QC Maint]\nB --- B2[Shift perf issues resources]\nC --- C1[Plant Head + Managers]\nC --- C2[KPIs risks CI customer]\nD --- D1[BU Head + Plant Head]\nD --- D2[Weekly trends escalations strategy]`},
+/* 50 */ {g:'People & Risk',t:'24 Daily Board',type:'t',sub:'Daily Production Board Metrics',th:['Metric','Target','Shift A','Shift B','Yesterday','Trend'],tr:[['Production Output','820 units','815','—','830','<span class="badge b-ok">Stable</span>'],['First Pass Yield','98.5%','98.8%','—','98.3%','<span class="badge b-ok">Up</span>'],['OEE','88%','89.2%','—','87.5%','<span class="badge b-ok">Up</span>'],['Safety Incidents','0','0','—','0','<span class="badge b-ok">Green</span>'],['Absenteeism','<5%','3.2%','—','4.1%','<span class="badge b-ok">Improved</span>']]},
+/* 51 */ {g:'Summary',t:'25 Plant Head Review',type:'e',sub:'Plant Head Review — Q4 FY 2025-26',ev:[['Review Period','Q4 FY 2025-26 (Jan–Mar 2026)'],['Volume vs Plan','126,500 / 125,000 (<span class="badge b-ok">+1.2%</span>)'],['Quality (PPM)','45 PPM — Target: <50 PPM (<span class="badge b-ok">Met</span>)'],['Customer Complaints','2 (Tata:1, Maruti:1) — Closed in 48h'],['OEE','88.1% — Target: 88% (<span class="badge b-ok">Met</span>)'],['Cost per Unit','₹4,012 — Target: ₹4,000 (<span class="badge b-err">+0.3%</span>) Al price driven'],['Safety','Zero LTI, 12 near-miss reported & addressed'],['People','Attrition 8.2%; 3 key machinists for retention'],['Key Decisions','1) CNC spindle replacement ₹12L 2) Graphite India qualification 3) Escalate Al pricing']]},
+/* 52 */ {g:'Summary',t:'26 Executive Summary',type:'e',sub:'Executive Summary',ev:[['Product','VacMaster Pro X1 — Dual-Function Oil + Vacuum Pump Assembly'],['Customers','Maruti Suzuki (40%), Tata Motors (50%), Ford Mexico (10%)'],['Annual Volume','500,000 units across 3 variants (L, H, E)'],['Revenue','₹120 Crore (FY 2025-26), +18% YoY'],['Profitability','Gross: 5.0% | EBITDA: ₹2.4Cr (2.0%) — Target 3.5% by FY28'],['Quality','45 PPM, 98.5% FPY, IATF 16949 & ISO 9001:2015'],['Operational','OEE: 88%, PM: 94%, Zero LTI: 287 days'],['Lean','5S: 4.3/5, SMED: -73%, Kanban: -83% WIP'],['Digital','SAP ERP + MES + SCADA + Power BI — Full digital thread'],['Top Risks','1) Single-source carbon rotor 2) Tata noise gap 3dB 3) Al price'],['Priorities','1) Localize rotor (-₹100) 2) Automate assembly (-₹90) 3) 55dB noise 4) Ford PPAP'],['Next Review','Q1 FY27 — Target: ₹130Cr, 35PPM, 89% OEE, 3.0% EBITDA']],info:'<strong>Confidentiality:</strong> Proprietary information. Distribution restricted to authorized personnel only.'}
+];
+
+/* ===== RENDER SLIDES ===== */
+let cur = 0;
+const container = document.getElementById('slidesContainer');
+const nav = document.getElementById('sideNav');
+
+S.forEach((s, i) => {
+  /* Slide element */
+  const div = document.createElement('div');
+  div.className = 'slide' + (i === 0 ? ' active' : '');
+  div.dataset.slide = i;
+  div.innerHTML = renderSlide(s, i);
+  container.appendChild(div);
+
+  /* Nav link */
+  if (i === 0 || S[i].g !== S[i-1].g) {
+    const grp = document.createElement('div');
+    grp.className = 'nav-grp';
+    grp.textContent = s.g;
+    nav.appendChild(grp);
+  }
+  const a = document.createElement('a');
+  a.className = 'nav-link' + (i === 0 ? ' active' : '');
+  a.href = '#';
+  a.dataset.slide = i;
+  a.textContent = s.t;
+  a.onclick = e => { e.preventDefault(); goTo(i); };
+  nav.appendChild(a);
+});
+
+function renderSlide(s, i) {
+  const n = s.t.split(' ')[0];
+  let h = `<div class="slide-inner">`;
+  if (s.type === 'hero') {
+    h += `<div style="background:linear-gradient(135deg,#fffbeb,#fef3c7,#fde68a);border-radius:12px;padding:24px 28px;margin-bottom:12px;border:1px solid rgba(217,119,6,.2)">
+      <div style="font-size:10px;font-weight:600;color:var(--acl);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px">Detailed Product Dossier</div>
+      <div style="font-size:28px;font-weight:800;color:var(--tx);margin-bottom:4px">${s.title}</div>
+      <div style="font-size:12px;color:var(--txs);font-family:'JetBrains Mono',monospace;margin-bottom:10px">${s.sub}</div>
+      <div style="font-size:12px;color:var(--txs);max-width:600px;line-height:1.5">${s.desc}</div>
+    </div>
+    <div class="grid-4">${s.stats.map(x=>`<div class="sc"><div class="v">${x.v}</div><div class="l">${x.l}</div></div>`).join('')}</div>
+    <div class="grid-3" style="margin-top:10px">${s.badges.map(x=>`<div class="card-box" style="font-size:11px;color:var(--txs)"><i class="fas fa-check-circle" style="color:var(--ac);margin-right:6px"></i>${x}</div>`).join('')}</div>`;
+  } else if (s.type === 'm') {
+    h += `<div class="slide-title"><span class="n">${n}</span>${s.t.substring(s.t.indexOf(' '))}</div><div class="slide-sub">${s.sub}</div><div class="cw"><pre class="mermaid">${s.mc}</pre></div>`;
+  } else if (s.type === 't') {
+    h += `<div class="slide-title"><span class="n">${n}</span>${s.t.substring(s.t.indexOf(' '))}</div><div class="slide-sub">${s.sub}</div><div class="cw"><table><thead><tr>${s.th.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${s.tr.map(x=>`<tr>${x.map(y=>`<td>${y}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  } else if (s.type === 'tc') {
+    h += `<div class="slide-title"><span class="n">${n}</span>${s.t.substring(s.t.indexOf(' '))}</div><div class="slide-sub">${s.sub}</div><div class="grid-2"><div class="cw"><table><thead><tr>${s.th.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${s.tr.map(x=>`<tr>${x.map(y=>`<td>${y}</td>`).join('')}</tr>`).join('')}</tbody></table></div><div class="cw"><canvas id="ch_${s.chart}" style="max-height:280px"></canvas></div></div>`;
+  } else if (s.type === 'c') {
+    h += `<div class="slide-title"><span class="n">${n}</span>${s.t.substring(s.t.indexOf(' '))}</div><div class="slide-sub">${s.sub}</div><div class="cw" style="max-width:500px;margin:0 auto"><canvas id="ch_${s.chart}" style="max-height:calc(100vh - 120px)"></canvas></div>`;
+  } else if (s.type === 'ts') {
+    h += `<div class="slide-title"><span class="n">${n}</span>${s.t.substring(s.t.indexOf(' '))}</div><div class="slide-sub">${s.sub}</div><div class="cw"><table><thead><tr>${s.th.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${s.tr.map(x=>`<tr>${x.map(y=>`<td>${y}</td>`).join('')}</tr>`).join('')}</tbody></table></div><div class="grid-3" style="margin-top:8px">${s.stats.map(x=>`<div class="sc"><div class="v">${x.v}</div><div class="l">${x.l}</div></div>`).join('')}</div><div class="info-box ok" style="margin-top:8px"><i class="fas fa-check-circle" style="color:var(--ok);margin-right:6px"></i>${s.info}</div>`;
+  } else if (s.type === 'ts2') {
+    h += `<div class="slide-title"><span class="n">${n}</span>${s.t.substring(s.t.indexOf(' '))}</div><div class="slide-sub">${s.sub}</div><div class="grid-4" style="margin-bottom:8px">${s.stats.map(x=>`<div class="sc"><div class="v">${x.v}</div><div class="l">${x.l}</div></div>`).join('')}</div><div class="cw"><table><thead><tr>${s.th.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${s.tr.map(x=>`<tr>${x.map(y=>`<td>${y}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  } else if (s.type === 'ti') {
+    h += `<div class="slide-title"><span class="n">${n}</span>${s.t.substring(s.t.indexOf(' '))}</div><div class="slide-sub">${s.sub}</div><div class="cw"><table><thead><tr>${s.th.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${s.tr.map(x=>`<tr>${x.map(y=>`<td>${y}</td>`).join('')}</tr>`).join('')}</tbody></table></div><div class="info-box" style="margin-top:8px"><i class="fas fa-exclamation-triangle" style="color:var(--ac);margin-right:6px"></i>${s.info}</div>`;
+  } else if (s.type === 'ti2') {
+    h += `<div class="slide-title"><span class="n">${n}</span>${s.t.substring(s.t.indexOf(' '))}</div><div class="slide-sub">${s.sub}</div><div class="cw"><table><thead><tr>${s.th.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${s.tr.map(x=>`<tr>${x.map(y=>`<td>${y}</td>`).join('')}</tr>`).join('')}</tbody></table></div><div class="info-box err" style="margin-top:8px"><i class="fas fa-exclamation-circle" style="color:var(--err);margin-right:6px"></i>${s.info}</div>`;
+  } else if (s.type === 'te') {
+    h += `<div class="slide-title"><span class="n">${n}</span>${s.t.substring(s.t.indexOf(' '))}</div><div class="slide-sub">${s.sub}</div><div class="cw"><table><thead><tr>${s.th.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${s.tr.map((x,ri)=>`<tr>${x.map((y,ci)=>{if(ri===5||ri===8) return `<td style="background:var(--acd);font-weight:700">${y}</td>`; return `<td>${y}</td>`;}).join('')}</tr>`).join('')}</tbody></table></div><div class="grid-4" style="margin-top:8px">${s.stats.map(x=>`<div class="sc"><div class="v">${x.v}</div><div class="l">${x.l}</div></div>`).join('')}</div>`;
+  } else if (s.type === 'tk') {
+    h += `<div class="slide-title"><span class="n">${n}</span>${s.t.substring(s.t.indexOf(' '))}</div><div class="slide-sub">${s.sub}</div><div class="cw"><table><thead><tr>${s.th.map(x=>`<th>${x}</th>`).join('')}</tr></thead><tbody>${s.tr.map(x=>`<tr>${x.map(y=>`<td>${y}</td>`).join('')}</tr>`).join('')}</tbody></table></div><div class="slide-sub" style="margin-top:10px">Kaizen Events — Last 6 Months</div><div class="grid-3">${s.cards.map(x=>`<div class="card-box"><div class="ct">${x.t}</div><div class="cd">${x.d}</div><span class="badge b-ok">${x.b}</span></div>`).join('')}</div>`;
+  } else if (s.type === 'e') {
+    h += `<div class="slide-title"><span class="n">${n}</span>${s.t.substring(s.t.indexOf(' '))}</div><div class="slide-sub">${s.sub}</div><div style="border:1px solid var(--bd);border-radius:8px;overflow:hidden">${s.ev.map(x=>`<div class="ev-row"><div class="k">${x[0]}</div><div class="val">${x[1]}</div></div>`).join('')}</div>`;
+    if (s.info) h += `<div class="info-box" style="margin-top:8px"><i class="fas fa-lock" style="color:var(--ac);margin-right:6px"></i>${s.info}</div>`;
+  }
+  h += `</div>`;
+  return h;
+}
+
+/* ===== NAVIGATION ===== */
+function goTo(i) {
+  if (i < 0 || i >= S.length) return;
+  document.querySelectorAll('.slide').forEach((s, idx) => s.classList.toggle('active', idx === i));
+  document.querySelectorAll('.nav-link').forEach((a, idx) => a.classList.toggle('active', idx === i));
+  cur = i;
+  document.getElementById('counter').textContent = `${i + 1} / ${S.length}`;
+  /* Scroll sidebar link into view */
+  const activeLink = nav.querySelector('.nav-link.active');
+  if (activeLink) activeLink.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+}
+function go(d) { goTo(cur + d); }
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') go(1);
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') go(-1);
+  if (e.key === 'Home') goTo(0);
+  if (e.key === 'End') goTo(S.length - 1);
+});
+/* Mobile menu */
+const mb = document.getElementById('menuBtn');
+if (window.innerWidth <= 1024) mb.style.display = 'block';
+window.addEventListener('resize', () => { mb.style.display = window.innerWidth <= 1024 ? 'block' : 'none'; });
+goTo(0);
+
+/* ===== MERMAID INIT ===== */
+mermaid.initialize({
+  startOnLoad: false,
+  theme: 'base',
+  themeVariables: {
+    primaryColor: '#fef3c7', primaryTextColor: '#1a1d26', primaryBorderColor: '#d97706',
+    lineColor: '#9ca3af', secondaryColor: '#e0e7ff', tertiaryColor: '#dcfce7',
+    fontFamily: 'Space Grotesk, sans-serif', fontSize: '11px'
+  }
+});
+mermaid.run({ nodes: document.querySelectorAll('.mermaid') }).then(() => {
+  document.getElementById('loader').style.display = 'none';
+  initCharts();
+});
+
+/* ===== CHARTS ===== */
+Chart.defaults.color = '#6b7280';
+Chart.defaults.borderColor = '#e2e5eb';
+Chart.defaults.font.family = "'Space Grotesk',sans-serif";
+Chart.defaults.font.size = 10;
+
+function initCharts() {
+  /* Customer Pie */
+  const pieEl = document.getElementById('ch_pie');
+  if (pieEl) new Chart(pieEl, { type:'doughnut', data:{ labels:['Maruti ₹48Cr','Tata ₹60Cr','Ford ₹12Cr'], datasets:[{data:[48,60,12],backgroundColor:['#d97706','#0891b2','#7c3aed'],borderWidth:2,borderColor:'#fff'}]}, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:10,usePointStyle:true,pointStyle:'circle',font:{size:10}}}}} });
+
+  /* BOM */
+  const bomEl = document.getElementById('ch_bom');
+  if (bomEl) new Chart(bomEl, { type:'doughnut', data:{ labels:['Al ₹600','Steel ₹670','Rotor ₹300','Seals ₹120','Fasteners ₹80','Bearings ₹179','Other ₹199'], datasets:[{data:[600,670,300,120,80,179,199],backgroundColor:['#d97706','#0891b2','#dc2626','#7c3aed','#16a34a','#ca8a04','#9ca3af'],borderWidth:2,borderColor:'#fff'}]}, options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:8,usePointStyle:true,pointStyle:'circle',font:{size:9}}}}} });
+
+  /* Defects Pareto */
+  const defEl = document.getElementById('ch_defects');
+  if (defEl) new Chart(defEl, { type:'bar', data:{ labels:['Oil Seal','Gear Noise','Bore Oversize','Vac Leak','Torque Fail','Surface','Other'], datasets:[{label:'Count',data:[42,28,18,12,8,5,7],backgroundColor:'rgba(217,119,6,.7)',borderColor:'#d97706',borderWidth:1,borderRadius:3,order:2},{label:'Cumulative %',data:[32.8,54.7,68.8,78.1,84.4,88.3,100],type:'line',borderColor:'#dc2626',pointBackgroundColor:'#dc2626',pointRadius:3,borderWidth:2,yAxisID:'y1',order:1}]}, options:{responsive:true,maintainAspectRatio:false,scales:{y:{beginAtZero:true,title:{display:true,text:'Count',font:{size:9}}},y1:{position:'right',min:0,max:100,title:{display:true,text:'Cum %',font:{size:9}},grid:{drawOnChartArea:false}}},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,font:{size:9}}}}} });
+
+  /* OEE */
+  const oeeEl = document.getElementById('ch_oee');
+  if (oeeEl) new Chart(oeeEl, { type:'bar', data:{ labels:['Availability','Performance','Quality'], datasets:[{label:'Current %',data:[94.5,95.2,97.9],backgroundColor:'rgba(217,119,6,.7)',borderColor:'#d97706',borderWidth:1,borderRadius:4},{label:'World Class %',data:[95,95,99],backgroundColor:'rgba(22,163,74,.25)',borderColor:'#16a34a',borderWidth:1,borderRadius:4}]}, options:{responsive:true,maintainAspectRatio:false,scales:{y:{min:85,max:100,title:{display:true,text:'%',font:{size:9}}}},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,font:{size:9}}}}} });
+
+  /* KPI Trends */
+  const kpiEl = document.getElementById('ch_kpi');
+  if (kpiEl) new Chart(kpiEl, { type:'line', data:{ labels:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'], datasets:[{label:'OEE %',data:[85.2,86.1,86.8,87,87.5,87.2,87.8,88,88.1,88.5,88.3,88.8],borderColor:'#d97706',backgroundColor:'rgba(217,119,6,.06)',fill:true,tension:.3,pointRadius:2,borderWidth:2},{label:'FPY %',data:[97.8,98,98.1,98.2,98,98.3,98.4,98.5,98.3,98.6,98.5,98.8],borderColor:'#16a34a',backgroundColor:'rgba(22,163,74,.06)',fill:true,tension:.3,pointRadius:2,borderWidth:2},{label:'OTD %',data:[93,93.5,94,94.2,95,95.2,95.8,96,95.5,96.2,96.5,97],borderColor:'#0891b2',backgroundColor:'rgba(8,145,178,.06)',fill:true,tension:.3,pointRadius:2,borderWidth:2}]}, options:{responsive:true,maintainAspectRatio:false,scales:{y:{min:90,max:100,title:{display:true,text:'%',font:{size:9}}}},plugins:{legend:{position:'bottom',labels:{usePointStyle:true,font:{size:9}}}}} });
+}
+
+/* ===== PDF GENERATION ===== */
+async function genPDF(btn) {
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Wait...';
+
+  /* Hide UI */
+  document.getElementById('sidebar').style.display = 'none';
+  document.getElementById('bottomNav').style.display = 'none';
+  document.getElementById('fab').style.display = 'none';
+  document.getElementById('menuBtn').style.display = 'none';
+
+  /* Stack slides vertically */
+  const wrap = document.getElementById('slidesWrap');
+  const slides = wrap.querySelectorAll('.slide');
+  wrap.style.position = 'relative';
+  wrap.style.height = 'auto';
+  wrap.style.overflow = 'visible';
+  wrap.style.bottom = '0';
+  slides.forEach(s => {
+    s.style.position = 'relative';
+    s.style.visibility = 'visible';
+    s.style.opacity = '1';
+    s.style.height = 'auto';
+    s.style.minHeight = '100vh';
+    s.style.pageBreakBefore = 'always';
+    s.style.pageBreakInside = 'avoid';
+  });
+  slides[0].style.pageBreakBefore = 'auto';
+
+  try {
+    await html2pdf().set({
+      margin: [4, 4, 4, 4],
+      filename: 'VMP-X1_Product_Dossier.pdf',
+      image: { type: 'jpeg', quality: 0.92 },
+      html2canvas: { scale: 1.5, useCORS: true, logging: false, windowWidth: wrap.scrollWidth },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      pagebreak: { mode: ['css', 'legacy'], before: '.slide' }
+    }).from(wrap).save();
+  } catch (e) {
+    console.error(e);
+    alert('PDF generation failed. Try Ctrl+P as fallback.');
+  }
+
+  /* Restore */
+  slides.forEach((s, i) => {
+    s.style.position = 'absolute';
+    s.style.height = '100%';
+    s.style.minHeight = '';
+    s.style.pageBreakBefore = '';
+    s.style.pageBreakInside = '';
+    if (i !== cur) { s.style.visibility = 'hidden'; s.style.opacity = '0'; }
+  });
+  wrap.style.position = 'fixed';
+  wrap.style.height = 'calc(100vh - 44px)';
+  wrap.style.overflow = 'hidden';
+  wrap.style.bottom = '44px';
+  document.getElementById('sidebar').style.display = '';
+  document.getElementById('bottomNav').style.display = '';
+  document.getElementById('fab').style.display = '';
+  if (window.innerWidth <= 1024) document.getElementById('menuBtn').style.display = 'block';
+
+  btn.disabled = false;
+  btn.innerHTML = '<i class="fas fa-file-pdf"></i> PDF';
+}
+
+/* ===== EXCEL TEMPLATE ===== */
+function genXLS() {
+  const wb = XLSX.utils.book_new();
+  const sheets = {
+    'Product Overview': [['Product Name',''],['Part Number',''],['Customer(s)',''],['Annual Volume',''],['Revenue (₹ Cr)',''],['First Pass Yield',''],['OEE',''],['Certifications',''],['','','','',''],'Variant','Application','Volume','Revenue','','','','VMP-X1-L','1.2L Engines','','','VMP-X1-H','1.5L Engines','','','VMP-X1-E','Export',''],
+    'Product Function': [['Failure Mode','Impact on Engine','Impact on Vehicle','Severity','Detection Method','','','','','','']],
+    'Architecture': [['Component','Material','Grade','Hardness','Heat Treatment','Supplier','Cost (₹/kg)','','','','','','','','']],
+    'Engineering': [['Part','Dimension','Nominal (mm)','Tolerance','GD&T Symbol','GD&T Value','Inspection Tool','','','','','','','',''],['Part','Surface','Ra (µm)','Process','Inspection','','','','','','','','','']],
+    'Manufacturing': [['Step','Process','Parameters','Time','Equipment','','','','','','','','','','']],
+    'Machines & Equipment': [['Machine','Model','Capacity','OEE','MTBF','MTTR','Power (kW)','Critical Spares','','','','','','','']],
+    'Tooling': [['Tool','ID','Purpose','Tool Life','Current Usage','% Remaining','Change Freq','Poka-Yoke','','','','','','','']],
+    'Quality Control': [['Process Step','Characteristic','Specification','Control Method','Frequency','Reaction Plan','','','','','','','','','']],
+    'Defects': [['Defect','Count','% Total','Root Cause','Corrective Action','Status','','','','','','','','','']],
+    'Testing': [['Test','Method','Sampling','Acceptance Criteria','Equipment','','','','','','','','','','']],
+    'Supply Chain': [['Supplier','Material','OTD %','PPM','Rating','Lead Time','Risk Level','','','','','','','','']],
+    'Cost Structure': [['Cost Item','Amount (₹/unit)','% of Total','Notes','','','','','','','','','','','']],
+    'KPIs': [['KPI','Target','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']],
+    'Maintenance': [['Machine','Daily','Weekly','Monthly','Quarterly','Annual','','','','','','','','','']],
+    'Safety': [['Hazard','Area','Risk Level','Control Measure','PPE Required','Audit Freq','','','','','','','','','']],
+    'Lean': [['Initiative','Area','Before','After','Improvement','Status','','','','','','','','','']],
+    'Digital Systems': [['System','Vendor','Purpose','Users','Uptime','Last Upgrade','','','','','','','','','']],
+    'Finance': [['Line Item','Amount (₹ Cr)','% Revenue','YoY Change','','','','','','','','','','','']],
+    'Customer VOC': [['Customer','Requirement','Current Performance','Gap','Action','','','','','','','','','','']],
+    'People': [['Role','Count','Shift','Skills','Training Status','','','','','','','','','','']],
+    'Risks': [['Risk','Category','Likelihood (1-5)','Impact (1-5)','Score','Mitigation','Owner','','','','','','','','']],
+    'Improvement': [['ID','Project','Type','Target','Progress','Due Date','Status','','','','','','','','']],
+    'Daily Management': [['Metric','Target','Shift A','Shift B','Yesterday','Trend','','','','','','','','','']],
+    'Executive Summary': [['Item','Details','','','','','','','','','','','','','','']]
+  };
+  Object.entries(sheets).forEach(([name, data]) => {
+    const ws = XLSX.utils.aoa_to_sheet(data);
+    ws['!cols'] = data[0].map(() => ({ wch: 18 }));
+    XLSX.utils.book_append_sheet(wb, ws, name.substring(0, 31));
+  });
+  XLSX.writeFile(wb, 'Product_Dossier_Template.xlsx');
+}
+
+/* ===== WORD TEMPLATE ===== */
+function genDOC() {
+  const sections = ['Product Overview','Product Function','Product Architecture','Engineering','Manufacturing Process','Machines & Equipment','Tooling','Quality Control','Defects Analysis','Testing','Material Flow','Supply Chain','Cost Structure','Production KPIs','Maintenance','Safety','Lean Manufacturing','Digital Systems','Finance','Customer Perspective','People & Organization','Risks','Continuous Improvement','Daily Management','Plant Head Review','Executive Summary'];
+  let html = `<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="utf-8"><title>Product Dossier Template</title><style>
+body{font-family:Calibri,sans-serif;font-size:11pt;margin:20mm;color:#1a1d26}
+h1{font-size:20pt;color:#b45309;border-bottom:2px solid #d97706;padding-bottom:6pt;margin-top:24pt}
+h2{font-size:14pt;color:#b45309;margin-top:18pt;border-bottom:1px solid #e2e5eb;padding-bottom:4pt}
+table{border-collapse:collapse;width:100%;margin:8pt 0}
+th{background:#fef3c7;color:#b45309;border:1px solid #d97706;padding:4pt 8pt;font-size:9pt;text-align:left;font-weight:bold}
+td{border:1px solid #ddd;padding:4pt 8pt;font-size:10pt}
+.ph{color:#999;font-style:italic}
+.note{background:#fef3c7;border-left:3px solid #d97706;padding:8pt 12pt;margin:8pt 0;font-size:10pt}
+</style></head><body>
+<h1>[PRODUCT NAME] — Product Dossier</h1>
+<p class="ph">[Company Name] | [Date] | IATF 16949 | ISO 9001:2015 | Confidential</p>
+<p class="ph">[Brief product description — 2-3 sentences]</p>`;
+  sections.forEach(sec => {
+    html += `<h2>${sec}</h2>`;
+    if (['Product Function','Defects Analysis','Improvement'].includes(sec)) {
+      html += `<p class="ph">[Insert flowchart / 5-Why diagram — use SmartArt or insert image]</p>`;
+    }
+    html += `<table><tr><th class="ph">[Column 1]</th><th class="ph">[Column 2]</th><th class="ph">[Column 3]</th><th class="ph">[Column 4]</th><th class="ph">[Column 5]</th></tr>`;
+    for (let r = 0; r < 3; r++) {
+      html += '<tr>';
+      for (let c = 0; c < 5; c++) html += `<td class="ph">[Enter data]</td>`;
+      html += '</tr>';
+    }
+    html += '</table>';
+    if (sec === 'Executive Summary') {
+      html += `<div class="note"><strong>Confidentiality:</strong> This document contains proprietary information. Distribution restricted to authorized personnel only.</div>`;
+    }
+  });
+  html += '</body></html>';
+  const blob = new Blob([html], { type: 'application/msword' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'Product_Dossier_Template.doc';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+</script>
+</body>
+</html>
