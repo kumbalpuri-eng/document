@@ -1,0 +1,2718 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panther VP — Product Dossier</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f1f5f9;--card:#fff;--accent:#059669;--accent2:#0891b2;--accent3:#d97706;--accent4:#dc2626;--accent5:#7c3aed;--accent6:#e11d48;--text:#0f172a;--muted:#64748b;--border:#e2e8f0;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);overflow:hidden;height:100vh;}
+::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:4px;}
+.sidebar{position:fixed;left:0;top:0;width:218px;height:100vh;background:linear-gradient(180deg,#0d9488,#047857);z-index:100;display:flex;flex-direction:column;overflow-y:auto;overflow-x:hidden;}
+.sidebar::-webkit-scrollbar{width:3px;}.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.2);border-radius:3px;}
+.sidebar .logo{padding:12px;border-bottom:1px solid rgba(255,255,255,.15);display:flex;align-items:center;gap:8px;}
+.sidebar .logo .ic{width:32px;height:32px;background:#fff;color:#059669;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:11px;flex-shrink:0;}
+.sidebar .logo .tx h2{font-size:11px;font-weight:700;color:#fff;line-height:1.2;}
+.sidebar .logo .tx span{font-size:8px;color:rgba(255,255,255,.5);}
+.ng{padding:10px 12px 2px;font-size:7px;text-transform:uppercase;letter-spacing:1.3px;color:rgba(255,255,255,.28);font-weight:600;}
+.nl{display:flex;align-items:center;gap:7px;padding:7px 12px;color:rgba(255,255,255,.55);cursor:pointer;transition:all .2s;border-left:3px solid transparent;font-size:10px;font-weight:500;}
+.nl:hover{color:#fff;background:rgba(255,255,255,.08);}
+.nl.on{color:#fff;background:rgba(255,255,255,.18);border-left-color:#fbbf24;}
+.nl i{width:14px;text-align:center;font-size:9px;flex-shrink:0;}
+.sf{margin-top:auto;padding:8px 12px;border-top:1px solid rgba(255,255,255,.1);font-size:8px;color:rgba(255,255,255,.3);}
+.main{margin-left:218px;height:100vh;overflow-y:auto;overflow-x:hidden;}
+.ps{display:none;padding:20px 24px;min-height:100vh;animation:si .35s ease;}
+.ps.on{display:block;}
+@keyframes si{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+.sh{margin-bottom:16px;}.sh h1{font-size:20px;font-weight:800;display:flex;align-items:center;gap:8px;}.sh h1 .d{width:8px;height:8px;border-radius:50%;flex-shrink:0;}.sh p{color:var(--muted);font-size:10px;margin-top:2px;}
+.c{background:var(--card);border-radius:10px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid var(--border);margin-bottom:10px;}
+.ct{font-size:11px;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:5px;}.ct i{font-size:9px;}
+.mg{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:14px;}
+.m{border-radius:8px;padding:12px;color:#fff;position:relative;overflow:hidden;}
+.m::after{content:'';position:absolute;top:-10px;right:-10px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.1);}
+.m .l{font-size:7px;text-transform:uppercase;letter-spacing:.8px;opacity:.85;margin-bottom:3px;}
+.m .v{font-size:20px;font-weight:800;font-family:'JetBrains Mono',monospace;}
+.m .s{font-size:8px;opacity:.8;margin-top:1px;}
+.tb{overflow-x:auto;border-radius:6px;border:1px solid var(--border);}
+table{width:100%;border-collapse:collapse;font-size:9px;}
+thead{background:#f8fafc;}th{padding:6px 8px;text-align:left;font-weight:700;font-size:7px;text-transform:uppercase;letter-spacing:.4px;color:var(--muted);border-bottom:2px solid var(--border);}
+td{padding:5px 8px;border-bottom:1px solid var(--border);}tbody tr:hover{background:#f0fdf4;}
+.b{display:inline-block;padding:1px 4px;border-radius:3px;font-size:7px;font-weight:700;}
+.bo{background:#dcfce7;color:#166534;}.bn{background:#fee2e2;color:#991b1b;}
+.bw{background:#fef3c7;color:#92400e;}.bi{background:#cffafe;color:#155e75;}.bp{background:#f3e8ff;color:#6b21a8;}
+.mw{background:var(--card);border-radius:10px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.04);border:1px solid var(--border);margin-bottom:10px;overflow-x:auto;position:relative;cursor:pointer;transition:box-shadow .2s;}
+.mw:hover{box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.mw:hover .zoom-hint{opacity:1;}
+.zoom-hint{position:absolute;top:8px;right:8px;background:rgba(0,0,0,.6);color:#fff;padding:3px 8px;border-radius:4px;font-size:8px;font-weight:600;opacity:0;transition:opacity .2s;pointer-events:none;z-index:2;}
+.chw{position:relative;width:100%;max-height:310px;}.chw canvas{width:100%!important;max-height:310px;}
+.tabs{display:flex;gap:2px;margin-bottom:10px;border-bottom:2px solid var(--border);}
+.tab{padding:5px 10px;font-size:9px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-2px;transition:all .15s;}
+.tab:hover{color:var(--text);}.tab.on{color:var(--accent);border-bottom-color:var(--accent);}
+.tc{display:none;}.tc.on{display:block;animation:si .25s ease;}
+.qa{border-left:3px solid var(--accent);padding:8px 10px;margin-bottom:6px;background:#f0fdf4;border-radius:0 6px 6px 0;}
+.qa .q{font-size:9px;font-weight:700;color:var(--accent);margin-bottom:2px;}
+.qa .a{font-size:9px;color:var(--text);line-height:1.4;}
+.hb{position:fixed;top:8px;left:8px;z-index:200;width:32px;height:32px;background:var(--accent);border:none;border-radius:6px;display:none;align-items:center;justify-content:center;cursor:pointer;color:#fff;font-size:12px;box-shadow:0 2px 8px rgba(5,150,105,.3);}
+
+/* ZOOM MODAL */
+#zoomModal{display:none;position:fixed;inset:0;z-index:1000;background:rgba(0,0,0,.7);align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+#zoomWin{width:85vw;height:85vh;min-width:300px;min-height:200px;background:var(--card);border-radius:12px;box-shadow:0 25px 80px rgba(0,0,0,.3);display:flex;flex-direction:column;overflow:hidden;resize:both;}
+#zoomBar{display:flex;align-items:center;justify-content:space-between;padding:8px 14px;background:linear-gradient(90deg,#059669,#047857);color:#fff;flex-shrink:0;}
+#zoomBar span{font-size:11px;font-weight:600;}
+#zoomBar .btns{display:flex;gap:4px;}
+#zoomBar .btns button{background:rgba(255,255,255,.2);border:none;color:#fff;width:28px;height:28px;border-radius:5px;cursor:pointer;font-size:12px;font-weight:700;transition:background .15s;}
+#zoomBar .btns button:hover{background:rgba(255,255,255,.35);}
+#zoomBody{flex:1;overflow:auto;padding:20px;position:relative;}
+#zoomInner{transform-origin:top left;transition:transform .2s ease;display:inline-block;min-width:100%;}
+#zoomInner svg{max-width:none!important;}
+
+/* ===== PRODUCT OVERVIEW MINDMAP ===== */
+.mm-wrap{display:flex;flex-direction:column;align-items:center;gap:0;padding:10px 0;}
+.mm-core{background:linear-gradient(135deg,#059669,#047857);color:#fff;padding:16px 28px;border-radius:14px;text-align:center;box-shadow:0 4px 20px rgba(5,150,105,.3);position:relative;z-index:2;}
+.mm-core h2{font-size:16px;font-weight:800;letter-spacing:.5px;}
+.mm-core span{font-size:11px;opacity:.75;font-family:'JetBrains Mono',monospace;}
+.mm-stem{width:3px;height:28px;background:var(--border);}
+.mm-branches{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%;max-width:800px;position:relative;}
+.mm-branches::before{content:'';position:absolute;top:0;left:15%;right:15%;height:3px;background:var(--border);border-radius:2px;}
+.mm-branch{display:flex;flex-direction:column;align-items:center;position:relative;}
+.mm-branch::before{content:'';width:3px;height:20px;background:var(--border);}
+.mm-card{background:var(--card);border:2px solid var(--border);border-radius:10px;padding:12px;width:100%;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:all .25s;}
+.mm-card:hover{transform:translateY(-3px);box-shadow:0 6px 20px rgba(0,0,0,.08);}
+.mm-card-title{font-size:12px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px;padding-bottom:6px;border-bottom:2px solid var(--border);}
+.mm-card-title .mm-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.mm-leaf{font-size:10px;color:var(--muted);padding:2px 0;display:flex;align-items:center;gap:5px;line-height:1.4;}
+.mm-leaf::before{content:'•';color:var(--border);font-weight:700;flex-shrink:0;}
+.mm-full{grid-column:1/-1;}
+
+/* ===== PUMP ANIMATION ===== */
+.pump-scene{width:380px;margin:0 auto 10px;position:relative;}
+.pump-svg{width:100%;height:auto;display:block;}
+.pump-rotor-group{transform-origin:200px 195px;animation:pumpRotate 6s linear infinite;}
+@keyframes pumpRotate{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.pl-induction{animation:phasePulse 6s ease-in-out infinite;animation-delay:0s;}
+.pl-isolation{animation:phasePulse 6s ease-in-out infinite;animation-delay:1.5s;}
+.pl-compression{animation:phasePulse 6s ease-in-out infinite;animation-delay:3s;}
+.pl-exhaust{animation:phasePulse 6s ease-in-out infinite;animation-delay:4.5s;}
+@keyframes phasePulse{0%,20%{opacity:1;transform:scale(1.06);}28%,100%{opacity:.35;transform:scale(1);}}
+.zone-induction{animation:zonePulse 6s ease-in-out infinite;animation-delay:0s;}
+.zone-isolation{animation:zonePulse 6s ease-in-out infinite;animation-delay:1.5s;}
+.zone-compression{animation:zonePulse 6s ease-in-out infinite;animation-delay:3s;}
+.zone-exhaust{animation:zonePulse 6s ease-in-out infinite;animation-delay:4.5s;}
+@keyframes zonePulse{0%,20%{opacity:.15;}28%,100%{opacity:.03;}}
+.air-flow{animation:airDash 2s linear infinite;}
+@keyframes airDash{to{stroke-dashoffset:-72;}}
+.pump-subtitle{text-align:center;font-size:10px;font-weight:600;color:var(--muted);margin-bottom:20px;letter-spacing:.5px;text-transform:uppercase;}
+
+/* 4-Stage Cards */
+.pump-stages{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;}
+.ps-card{background:var(--card);border-radius:12px;padding:16px;border:2px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,.04);position:relative;overflow:hidden;transition:all .4s ease;}
+.ps-card::before{content:'';position:absolute;top:0;left:0;width:5px;height:100%;border-radius:12px 0 0 12px;transition:width .3s;}
+.ps-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.1);}
+.ps-card:hover::before{width:7px;}
+.ps-card.ps-active{box-shadow:0 4px 16px rgba(0,0,0,.12);}
+.ps-card .ps-num{position:absolute;top:10px;right:12px;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;box-shadow:0 2px 6px rgba(0,0,0,.15);}
+.ps-card h3{font-size:14px;font-weight:800;margin-bottom:4px;padding-right:36px;}
+.ps-card p{font-size:10px;color:var(--muted);line-height:1.55;}
+.ps1{border-color:rgba(5,150,105,.2);}.ps1::before{background:#059669;}.ps1 .ps-num{background:#059669;}
+.ps2{border-color:rgba(8,145,178,.2);}.ps2::before{background:#0891b2;}.ps2 .ps-num{background:#0891b2;}
+.ps3{border-color:rgba(217,119,6,.2);}.ps3::before{background:#d97706;}.ps3 .ps-num{background:#d97706;}
+.ps4{border-color:rgba(220,38,38,.2);}.ps4::before{background:#dc2626;}.ps4 .ps-num{background:#dc2626;}
+.ps1.ps-active{border-color:#059669;background:#f0fdf4;}
+.ps2.ps-active{border-color:#0891b2;background:#ecfeff;}
+.ps3.ps-active{border-color:#d97706;background:#fffbeb;}
+.ps4.ps-active{border-color:#dc2626;background:#fef2f2;}
+
+/* ===== BOM TREE ===== */
+.bom-actions{display:flex;gap:6px;margin-bottom:12px;}
+.bom-btn{padding:6px 14px;border-radius:6px;border:1px solid var(--border);background:var(--card);font-size:10px;font-weight:600;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;color:var(--text);}
+.bom-btn:hover{background:#f0fdf4;border-color:var(--accent);color:var(--accent);}
+.bom-tree{padding:0;}
+.bom-root>.bom-grp{border:2px solid var(--accent);border-radius:8px;overflow:hidden;margin-bottom:6px;}
+.bom-grp{margin-bottom:2px;}
+.bom-hd{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;transition:background .15s;user-select:none;}
+.bom-hd:hover{filter:brightness(.93);}
+.bom-hd .arr{font-size:11px;color:rgba(255,255,255,.7);transition:transform .25s;width:16px;text-align:center;flex-shrink:0;}
+.bom-hd .arr.collapsed{transform:rotate(-90deg);}
+.bom-hd .gn{font-size:11px;font-weight:700;color:#fff;flex:1;}
+.bom-hd .gc{font-size:9px;color:rgba(255,255,255,.8);background:rgba(255,255,255,.18);padding:2px 8px;border-radius:10px;}
+.bom-kids{padding-left:20px;border-left:2px solid var(--border);margin-left:18px;overflow:hidden;transition:max-height .35s ease,opacity .35s ease;max-height:800px;opacity:1;}
+.bom-kids.collapsed{max-height:0;opacity:0;}
+.bom-leaf{display:flex;align-items:center;gap:10px;padding:7px 12px;font-size:13px;border-bottom:1px solid var(--border);transition:background .15s;}
+.bom-leaf:hover{background:#f0fdf4;}
+.bom-leaf:last-child{border-bottom:none;}
+.bom-leaf .pn{font-family:'JetBrains Mono',monospace;color:var(--accent2);font-size:11px;}
+.bom-leaf .qt{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--accent);margin-left:auto;font-size:12px;}
+
+/* ===== PROCESS FLOW GRID ===== */
+.pf-container{position:relative;}
+.pf-row{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:0;}
+.pf-station{background:var(--card);border:2px solid var(--border);border-radius:10px;padding:14px 16px;min-width:180px;max-width:220px;text-align:center;position:relative;cursor:pointer;transition:all .3s ease;flex-shrink:0;}
+.pf-station:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.12);z-index:10;}
+.pf-station.bottleneck{border-color:var(--accent4);border-width:3px;box-shadow:0 0 0 3px rgba(220,38,38,.1);}
+.pf-st-num{font-size:9px;font-weight:700;padding:2px 8px;border-radius:4px;color:#fff;display:inline-block;margin-bottom:4px;}
+.pf-st-name{font-size:12px;font-weight:700;margin-bottom:2px;}
+.pf-st-time{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;}
+.pf-st-bn{font-size:8px;font-weight:700;color:var(--accent4);margin-top:3px;text-transform:uppercase;letter-spacing:.5px;}
+.pf-arrow-h{display:flex;align-items:center;justify-content:center;width:40px;flex-shrink:0;color:var(--muted);font-size:16px;font-weight:700;}
+.pf-tooltip{display:none;position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;border-radius:10px;padding:14px 18px;width:300px;z-index:100;box-shadow:0 12px 40px rgba(0,0,0,.25);text-align:left;font-size:10px;line-height:1.5;pointer-events:none;}
+.pf-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:8px solid transparent;border-top-color:#0f172a;}
+.pf-station:hover .pf-tooltip{display:block;animation:tooltipIn .25s ease;}
+@keyframes tooltipIn{from{opacity:0;transform:translateX(-50%) translateY(6px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
+.pf-tooltip .tt-title{font-size:12px;font-weight:700;margin-bottom:6px;display:flex;align-items:center;gap:6px;}
+.pf-tooltip .tt-row{display:flex;justify-content:space-between;padding:2px 0;border-bottom:1px solid rgba(255,255,255,.08);}
+.pf-tooltip .tt-row:last-child{border:none;}
+.pf-tooltip .tt-label{color:rgba(255,255,255,.5);font-size:9px;}
+.pf-tooltip .tt-val{font-weight:600;font-size:10px;}
+.pf-tooltip .tt-section{margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,.15);}
+.pf-tooltip .tt-section-title{font-size:9px;font-weight:700;color:var(--accent3);margin-bottom:3px;text-transform:uppercase;letter-spacing:.5px;}
+
+/* ===== QUALITY PIPELINE ===== */
+.qp{position:relative;padding:0;}
+.qp-line{position:absolute;left:52px;top:0;bottom:0;width:4px;background:linear-gradient(to bottom,#10b981,#059669);border-radius:2px;z-index:0;}
+.qp-gate{display:flex;align-items:stretch;margin-bottom:6px;position:relative;z-index:1;min-height:48px;}
+.qp-ok-dot{width:24px;height:24px;border-radius:50%;background:#059669;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;flex-shrink:0;margin:12px 8px 12px 36px;box-shadow:0 0 0 4px rgba(5,150,105,.15);z-index:2;}
+.qp-card{flex:1;background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:10px;box-shadow:0 1px 3px rgba(0,0,0,.04);transition:box-shadow .15s;}
+.qp-card:hover{box-shadow:0 2px 8px rgba(0,0,0,.08);}
+.qp-st{font-size:10px;font-weight:700;min-width:42px;padding:3px 6px;border-radius:4px;color:#fff;flex-shrink:0;}
+.qp-chk{font-size:9px;color:var(--text);flex:1;line-height:1.3;}
+.qp-nok{display:flex;align-items:center;gap:4px;font-size:8px;font-weight:700;color:var(--accent4);margin-left:6px;flex-shrink:0;white-space:nowrap;}
+
+/* ===== ORGANIZATION ===== */
+.org-section{margin-bottom:20px;}
+.org-section-title{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;padding:8px 16px;border-radius:8px;color:#fff;margin-bottom:14px;display:flex;align-items:center;gap:8px;}
+.org-core-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:20px;}
+.org-core-card{background:var(--card);border-radius:12px;padding:18px 16px;text-align:center;box-shadow:0 2px 10px rgba(0,0,0,.06);border:2px solid var(--border);transition:all .3s;}
+.org-core-card:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(0,0,0,.1);}
+.org-core-card.owner{border-color:var(--accent);grid-column:1/-1;max-width:320px;justify-self:center;}
+.org-core-card .avatar{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#fff;margin:0 auto 8px;box-shadow:0 4px 12px rgba(0,0,0,.15);}
+.org-core-card .name{font-size:16px;font-weight:700;line-height:1.2;}
+.org-core-card .role{font-size:12px;color:var(--muted);margin-top:3px;font-weight:500;}
+.org-bar-ops{background:linear-gradient(90deg,var(--accent3),#fbbf24);color:#fff;padding:10px 32px;border-radius:8px;font-size:11px;font-weight:700;text-align:center;box-shadow:0 2px 8px rgba(217,119,6,.2);margin:0 auto;width:fit-content;}
+.org-support-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;}
+.org-support-card{background:var(--card);border-radius:10px;padding:16px 12px;text-align:center;border:1px solid var(--border);box-shadow:0 1px 4px rgba(0,0,0,.04);transition:all .25s;}
+.org-support-card:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(0,0,0,.08);}
+.org-support-card .icon{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;margin:0 auto 8px;box-shadow:0 3px 10px rgba(0,0,0,.1);}
+.org-support-card .fn{font-size:13px;font-weight:700;color:var(--text);}
+.org-support-card .nm{font-size:12px;color:var(--muted);margin-top:4px;line-height:1.4;}
+
+/* ===== SUPPLY CHAIN VERTICAL ===== */
+.sc-tabs{display:flex;gap:0;margin-bottom:14px;border-radius:8px;overflow:hidden;border:2px solid var(--border);}
+.sc-tab{flex:1;padding:10px;text-align:center;font-size:11px;font-weight:700;cursor:pointer;transition:all .2s;color:var(--muted);background:var(--card);}
+.sc-tab:hover{background:#f8fafc;}
+.sc-tab.on-up{background:linear-gradient(135deg,#fef3c7,#fde68a);color:#92400e;border-bottom:3px solid #d97706;}
+.sc-tab.on-in{background:linear-gradient(135deg,#d1fae5,#a7f3d0);color:#065f46;border-bottom:3px solid #059669;}
+.sc-tab.on-out{background:linear-gradient(135deg,#dbeafe,#bfdbfe);color:#1e40af;border-bottom:3px solid #3b82f6;}
+.sc-content{display:none;animation:si .3s ease;}.sc-content.on{display:block;}
+.sc-vert{display:flex;flex-direction:column;gap:0;}
+.sc-vert-group{border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:6px;background:var(--card);}
+.sc-vert-hd{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;transition:background .15s;user-select:none;}
+.sc-vert-hd:hover{background:#f8fafc;}
+.sc-vert-hd .arr{font-size:12px;color:var(--muted);transition:transform .25s;width:16px;text-align:center;flex-shrink:0;}
+.sc-vert-hd .arr.collapsed{transform:rotate(-90deg);}
+.sc-vert-hd .grp-icon{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:13px;flex-shrink:0;}
+.sc-vert-hd .grp-name{font-size:12px;font-weight:700;flex:1;}
+.sc-vert-hd .grp-count{font-size:10px;color:var(--muted);background:#f1f5f9;padding:2px 8px;border-radius:10px;font-weight:600;}
+.sc-vert-body{overflow:hidden;transition:max-height .35s ease,opacity .3s ease;max-height:600px;opacity:1;}
+.sc-vert-body.collapsed{max-height:0;opacity:0;}
+.sc-vert-item{display:flex;align-items:center;gap:12px;padding:10px 16px 10px 48px;border-top:1px solid var(--border);font-size:12px;transition:background .15s;}
+.sc-vert-item:hover{background:#f0fdf4;}
+.sc-vert-item .item-name{flex:1;font-weight:500;}
+.sc-vert-item .item-part{color:var(--muted);font-size:11px;min-width:140px;}
+.sc-vert-item .item-risk{flex-shrink:0;}
+
+/* ===== RISK MATRIX ===== */
+.rm{display:grid;grid-template-columns:28px repeat(5,1fr);grid-template-rows:repeat(5,1fr) 28px;gap:2px;max-width:340px;}
+.rc{border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;min-height:34px;cursor:pointer;transition:transform .15s;}.rc:hover{transform:scale(1.08);}
+.rl{display:flex;align-items:center;justify-content:center;font-size:7px;color:var(--muted);font-weight:600;}
+
+@media(max-width:900px){.sidebar{transform:translateX(-218px);transition:transform .3s ease;}.sidebar.open{transform:translateX(0);}.main{margin-left:0!important;}.hb{display:flex!important;}.ps{padding:14px 10px;}.mg{grid-template-columns:1fr 1fr;}.pump-scene{width:300px;}.pump-stages{grid-template-columns:1fr;}.mm-branches{grid-template-columns:1fr 1fr;}.pf-row{flex-wrap:wrap;}.pf-station{min-width:150px;}.org-core-grid{grid-template-columns:1fr 1fr;}.org-support-grid{grid-template-columns:1fr 1fr;}}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+</style>
+</head>
+<body>
+
+<button class="hb" id="hb" aria-label="Menu"><i class="fas fa-bars"></i></button>
+
+<aside class="sidebar" id="sb">
+  <div class="logo"><div class="ic">VP</div><div class="tx"><h2>Panther VP</h2><span>7.06496.03.0</span></div></div>
+  <div class="ng">OVERVIEW</div>
+  <div class="nl on" data-s="s1"><i class="fas fa-bolt"></i>Executive Summary</div>
+  <div class="nl" data-s="s2"><i class="fas fa-cube"></i>Product Overview</div>
+  <div class="nl" data-s="s3"><i class="fas fa-cogs"></i>How It Works</div>
+  <div class="nl" data-s="s4"><i class="fas fa-sitemap"></i>BOM Architecture</div>
+  <div class="ng">MANUFACTURING</div>
+  <div class="nl" data-s="s5"><i class="fas fa-industry"></i>Process Flow</div>
+  <div class="nl" data-s="s6"><i class="fas fa-check-double"></i>Quality Flow</div>
+  <div class="nl" data-s="s7"><i class="fas fa-tools"></i>Breakdown Analysis</div>
+  <div class="ng">OPERATIONS</div>
+  <div class="nl" data-s="s8"><i class="fas fa-users"></i>Organization</div>
+  <div class="nl" data-s="s9"><i class="fas fa-truck"></i>Supply Chain</div>
+  <div class="nl" data-s="s10"><i class="fas fa-chart-line"></i>KPIs</div>
+  <div class="nl" data-s="s11"><i class="fas fa-rupee-sign"></i>Cost Structure</div>
+  <div class="ng">STRATEGY</div>
+  <div class="nl" data-s="s12"><i class="fas fa-exclamation-triangle"></i>Risk Matrix</div>
+  <div class="nl" data-s="s13"><i class="fas fa-user-tie"></i>Plant Head Q&A</div>
+  <div class="sf"><span style="color:#34d399;"><i class="fas fa-circle" style="font-size:4px;vertical-align:middle;"></i> Live</span> — 30-Jul-2026</div>
+</aside>
+
+<main class="main" id="mn">
+
+<!-- S1: EXEC -->
+<section class="ps" id="s1">
+  <div class="sh"><h1><span class="d" style="background:#059669;"></span>Executive Summary</h1><p>Single-source truth at a glance</p></div>
+  <div class="mg">
+    <div class="m" style="background:linear-gradient(135deg,#059669,#10b981);"><div class="l">Product</div><div class="v" style="font-size:14px;">Panther VP</div><div class="s">7.06496.03.0</div></div>
+    <div class="m" style="background:linear-gradient(135deg,#0891b2,#22d3ee);"><div class="l">Volume</div><div class="v">200K</div><div class="s">Units/Year</div></div>
+    <div class="m" style="background:linear-gradient(135deg,#d97706,#fbbf24);"><div class="l">Revenue</div><div class="v">24 Cr</div><div class="s">INR</div></div>
+    <div class="m" style="background:linear-gradient(135deg,#dc2626,#f87171);"><div class="l">Customer</div><div class="v" style="font-size:14px;">Ford</div><div class="s">Sanand 100%</div></div>
+    <div class="m" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);"><div class="l">Takt</div><div class="v">230s</div><div class="s">9 Stations</div></div>
+    <div class="m" style="background:linear-gradient(135deg,#e11d48,#fb7185);"><div class="l">Downtime</div><div class="v">106.6h</div><div class="s">380 events</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+    <div class="c"><div class="ct" style="color:#059669;"><i class="fas fa-bullseye"></i>Primary Function</div><p style="font-size:9px;color:var(--muted);line-height:1.5;">Supplies negative pressure to power brake booster. Also operates turbo wastegate, HVAC flaps, EGR valves. Safety-critical.</p></div>
+    <div class="c"><div class="ct" style="color:#dc2626;"><i class="fas fa-exclamation-circle"></i>Top 3 Alerts</div>
+      <div style="display:flex;flex-direction:column;gap:4px;font-size:9px;">
+        <div><span class="b bn">P1</span> Station 85: 39.9% downtime</div>
+        <div><span class="b bn">P1</span> Screwing: 75 events, 25.6h</div>
+        <div><span class="b bw">P2</span> Station 70: 29 events in July</div>
+      </div>
+    </div>
+  </div>
+  <div class="c"><div class="ct" style="color:#0891b2;"><i class="fas fa-chart-pie"></i>Downtime Share</div><div class="chw" style="max-height:240px;"><canvas id="chPie"></canvas></div></div>
+</section>
+
+<!-- S2: PRODUCT OVERVIEW — Pure HTML Mindmap -->
+<section class="ps" id="s2">
+  <div class="sh"><h1><span class="d" style="background:#0891b2;"></span>Product Overview</h1><p>Metadata at a glance — no external rendering dependency</p></div>
+  <div class="mm-wrap">
+    <div class="mm-core"><h2>PANTHER VACUUM PUMP</h2><span>PN 7.06496.03.0</span></div>
+    <div class="mm-stem"></div>
+    <div class="mm-branches">
+      <div class="mm-branch">
+        <div class="mm-card">
+          <div class="mm-card-title"><span class="mm-dot" style="background:#059669;"></span>Metadata</div>
+          <div class="mm-leaf">Part Number: 7.06496.03.0</div>
+          <div class="mm-leaf">Line 2 — Technomatic</div>
+          <div class="mm-leaf">Takt Time: 230 seconds</div>
+          <div class="mm-leaf">9 Stations, 27 Parts</div>
+          <div class="mm-leaf">Type: Rotary Vane Vacuum Pump</div>
+        </div>
+      </div>
+      <div class="mm-branch">
+        <div class="mm-card">
+          <div class="mm-card-title"><span class="mm-dot" style="background:#dc2626;"></span>Customer</div>
+          <div class="mm-leaf">Ford Motor Company</div>
+          <div class="mm-leaf">Sanand Plant — Gujarat, India</div>
+          <div class="mm-leaf">100% Revenue Dependency</div>
+          <div class="mm-leaf">JIT Delivery Model</div>
+        </div>
+      </div>
+      <div class="mm-branch">
+        <div class="mm-card">
+          <div class="mm-card-title"><span class="mm-dot" style="background:#0891b2;"></span>Application</div>
+          <div class="mm-leaf">Brake Booster Assist (Safety)</div>
+          <div class="mm-leaf">Turbo Wastegate (Performance)</div>
+          <div class="mm-leaf">HVAC Climate Flaps (Comfort)</div>
+          <div class="mm-leaf">EGR / Evap Purge (Emissions)</div>
+        </div>
+      </div>
+      <div class="mm-branch">
+        <div class="mm-card">
+          <div class="mm-card-title"><span class="mm-dot" style="background:#7c3aed;"></span>Barcode 2D Matrix</div>
+          <div class="mm-leaf">GK — Plant Code</div>
+          <div class="mm-leaf">2 — Line A, Variant</div>
+          <div class="mm-leaf">YY — Year Code</div>
+          <div class="mm-leaf">D — Day of Year</div>
+          <div class="mm-leaf">S — Shift, XXXX — Serial</div>
+        </div>
+      </div>
+      <div class="mm-branch">
+        <div class="mm-card">
+          <div class="mm-card-title"><span class="mm-dot" style="background:#d97706;"></span>Financials</div>
+          <div class="mm-leaf">200,000 Units / Year</div>
+          <div class="mm-leaf">Revenue: 24 Cr INR</div>
+          <div class="mm-leaf">Revenue/Unit: 1,200 INR</div>
+          <div class="mm-leaf">COGS: ~840 INR (70%)</div>
+          <div class="mm-leaf">Gross Margin: ~30%</div>
+        </div>
+      </div>
+      <div class="mm-branch">
+        <div class="mm-card">
+          <div class="mm-card-title"><span class="mm-dot" style="background:#e11d48;"></span>Supply Chain</div>
+          <div class="mm-leaf">12 Suppliers — 7 Countries</div>
+          <div class="mm-leaf">India, Germany, Italy</div>
+          <div class="mm-leaf">Netherlands, USA, Portugal, France</div>
+          <div class="mm-leaf">High Risk: Rockman, Kern Liebers</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S3: HOW IT WORKS — Correct Single-Slider Pump Animation -->
+<section class="ps" id="s3">
+  <div class="sh"><h1><span class="d" style="background:#d97706;"></span>How It Works</h1><p>Single-slider rotary vane vacuum pump — 4-stage operating cycle</p></div>
+
+  <!-- SVG Pump Cross-Section Animation -->
+  <div class="pump-scene">
+    <svg viewBox="0 0 440 440" class="pump-svg" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <clipPath id="hClip"><circle cx="200" cy="210" r="147"/></clipPath>
+        <marker id="arrIn" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="#059669"/></marker>
+        <marker id="arrOut" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10z" fill="#dc2626"/></marker>
+        <radialGradient id="rotorGrad" cx="40%" cy="40%"><stop offset="0%" stop-color="rgba(251,191,36,.18)"/><stop offset="100%" stop-color="rgba(217,119,6,.08)"/></radialGradient>
+        <filter id="glow"><feGaussianBlur stdDeviation="3" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+
+      <!-- Zone backgrounds (4 quadrants of housing) -->
+      <path d="M200,63 A147,147 0 0,1 347,210 L200,210Z" fill="rgba(5,150,105,.06)" class="zone-induction"/>
+      <path d="M347,210 A147,147 0 0,1 200,357 L200,210Z" fill="rgba(8,145,178,.06)" class="zone-isolation"/>
+      <path d="M200,357 A147,147 0 0,1 53,210 L200,210Z" fill="rgba(217,119,6,.06)" class="zone-compression"/>
+      <path d="M53,210 A147,147 0 0,1 200,63 L200,210Z" fill="rgba(220,38,38,.06)" class="zone-exhaust"/>
+
+      <!-- Housing (outer circle) -->
+      <circle cx="200" cy="210" r="150" fill="#f8fafc" stroke="#1e293b" stroke-width="5"/>
+
+      <!-- Oil seal ring (dashed, between rotor and housing) -->
+      <circle cx="200" cy="195" r="118" fill="none" stroke="rgba(217,119,6,.18)" stroke-width="12" stroke-dasharray="4,10" class="air-flow" style="animation-direction:normal;"/>
+
+      <!-- Air flow direction indicator -->
+      <circle cx="200" cy="210" r="130" fill="none" stroke="rgba(5,150,105,.12)" stroke-width="2" stroke-dasharray="6,18" class="air-flow"/>
+
+      <!-- Inlet port (top) -->
+      <rect x="185" y="48" width="30" height="18" rx="3" fill="#d1fae5" stroke="#059669" stroke-width="2"/>
+      <line x1="200" y1="66" x2="200" y2="82" stroke="#059669" stroke-width="2.5" marker-end="url(#arrIn)"/>
+      <text x="200" y="42" text-anchor="middle" font-size="10" font-weight="700" fill="#059669" font-family="Space Grotesk">INLET</text>
+
+      <!-- Exhaust port (left side) -->
+      <rect x="38" y="201" width="18" height="30" rx="3" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+      <line x1="56" y1="216" x2="40" y2="216" stroke="#dc2626" stroke-width="2.5" marker-end="url(#arrOut)"/>
+      <text x="47" y="195" text-anchor="middle" font-size="9" font-weight="700" fill="#dc2626" font-family="Space Grotesk">EXHAUST</text>
+
+      <!-- Check valve symbol on exhaust -->
+      <polygon points="44,208 47,202 50,208" fill="#dc2626" opacity=".7"/>
+      <line x1="44" y1="224" x2="50" y2="224" stroke="#dc2626" stroke-width="1.5" opacity=".7"/>
+
+      <!-- ROTATING GROUP: Rotor + Single Slider Vane -->
+      <g class="pump-rotor-group">
+        <!-- Slider vane (extends past housing, clipped) -->
+        <rect x="196.5" y="28" width="7" height="167" rx="2" fill="#1e293b" clip-path="url(#hClip)"/>
+        <!-- Vane tip highlight (oil seal contact point) -->
+        <rect x="195" y="55" width="10" height="8" rx="2" fill="rgba(217,119,6,.6)" clip-path="url(#hClip)"/>
+        <!-- Rotor body -->
+        <circle cx="200" cy="195" r="88" fill="url(#rotorGrad)" stroke="#d97706" stroke-width="3"/>
+        <!-- Rotor slot line (shows where vane sits) -->
+        <line x1="200" y1="107" x2="200" y2="195" stroke="rgba(120,53,15,.2)" stroke-width="8" stroke-linecap="round"/>
+        <!-- Center shaft -->
+        <circle cx="200" cy="195" r="14" fill="#d97706" stroke="#92400e" stroke-width="2.5"/>
+        <circle cx="200" cy="195" r="5" fill="#78350f"/>
+        <!-- Shaft keyway -->
+        <rect x="197" y="182" width="6" height="8" rx="1" fill="#92400e"/>
+      </g>
+
+      <!-- Eccentric offset indicator (static, educational) -->
+      <line x1="200" y1="210" x2="200" y2="195" stroke="#94a3b8" stroke-width="1" stroke-dasharray="3,3"/>
+      <circle cx="200" cy="210" r="2.5" fill="#94a3b8"/>
+      <text x="210" y="205" font-size="7" fill="#94a3b8" font-family="Space Grotesk">eccentric</text>
+
+      <!-- Phase labels (outside housing) -->
+      <g class="pl-induction" style="transform-origin:355px 115px;">
+        <rect x="305" y="100" width="100" height="30" rx="8" fill="#059669" filter="url(#glow)"/>
+        <text x="355" y="120" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" font-family="Space Grotesk">1. INDUCTION</text>
+      </g>
+      <g class="pl-isolation" style="transform-origin:355px 305px;">
+        <rect x="305" y="290" width="100" height="30" rx="8" fill="#0891b2" filter="url(#glow)"/>
+        <text x="355" y="310" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" font-family="Space Grotesk">2. ISOLATION</text>
+      </g>
+      <g class="pl-compression" style="transform-origin:85px 305px;">
+        <rect x="25" y="290" width="120" height="30" rx="8" fill="#d97706" filter="url(#glow)"/>
+        <text x="85" y="310" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" font-family="Space Grotesk">3. COMPRESSION</text>
+      </g>
+      <g class="pl-exhaust" style="transform-origin:80px 115px;">
+        <rect x="25" y="100" width="110" height="30" rx="8" fill="#dc2626" filter="url(#glow)"/>
+        <text x="80" y="120" text-anchor="middle" font-size="10" font-weight="700" fill="#fff" font-family="Space Grotesk">4. EXHAUST</text>
+      </g>
+
+      <!-- Curved air flow arrows inside housing -->
+      <path d="M210,80 Q260,140 240,200" fill="none" stroke="rgba(5,150,105,.25)" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arrIn)"/>
+      <path d="M150,320 Q120,280 100,230" fill="none" stroke="rgba(220,38,38,.25)" stroke-width="1.5" stroke-dasharray="4,4" marker-end="url(#arrOut)"/>
+
+      <!-- Bottom label -->
+      <text x="220" y="425" text-anchor="middle" font-size="10" font-weight="600" fill="#64748b" font-family="Space Grotesk">Single-Slider Rotary Vane Vacuum Pump — Cross Section</text>
+    </svg>
+  </div>
+  <div class="pump-subtitle">Slider rotates continuously — each revolution completes one full Induction → Isolation → Compression → Exhaust cycle</div>
+
+  <!-- 4-Stage Detail Cards -->
+  <div class="pump-stages" id="pumpStages">
+    <div class="ps-card ps1 ps-stage" data-stage="0">
+      <div class="ps-num">1</div>
+      <h3>Induction</h3>
+      <p>As the eccentric rotor turns, the single slider passes the inlet port at the top. The chamber between the slider and the housing wall <strong>expands</strong> because the rotor moves away from the housing in this region. This expanding volume creates <strong>negative pressure (vacuum)</strong>, drawing atmospheric air in through the inlet port.</p>
+    </div>
+    <div class="ps-card ps2 ps-stage" data-stage="1">
+      <div class="ps-num">2</div>
+      <h3>Isolation</h3>
+      <p>After passing the inlet, the slider <strong>seals off</strong> the chamber. The trapped air is now completely enclosed between the slider, the housing wall, the rotor surface, and the end plates. No air can enter or escape — the chamber is <strong>fully isolated</strong> from both inlet and exhaust.</p>
+    </div>
+    <div class="ps-card ps3 ps-stage" data-stage="2">
+      <div class="ps-num">3</div>
+      <h3>Compression</h3>
+      <p>Continued rotation moves the slider into a region where the eccentric rotor <strong>approaches the housing wall</strong>. The isolated chamber volume progressively <strong>decreases</strong>, compressing the trapped air. Engine oil fills the gap between the slider tip and housing wall, ensuring an airtight seal.</p>
+    </div>
+    <div class="ps-card ps4 ps-stage" data-stage="3">
+      <div class="ps-num">4</div>
+      <h3>Exhaust</h3>
+      <p>When the slider reaches the exhaust port, the <strong>compressed air is pushed out</strong> through a one-way check valve. The check valve prevents backflow. Oil carried with the exhaust air is separated in the vehicle's oil system. The cycle repeats continuously with each revolution.</p>
+    </div>
+  </div>
+
+  <!-- Vacuum distribution reference -->
+  <div class="c" style="margin-top:16px;">
+    <div class="ct" style="color:#0891b2;"><i class="fas fa-arrows-split-up-and-left"></i>Vacuum Distribution from Check Valve</div>
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+      <div style="text-align:center;padding:10px;background:#fffbeb;border-radius:8px;border:1px solid #fde68a;">
+        <div style="font-size:18px;color:#f59e0b;margin-bottom:4px;"><i class="fas fa-car"></i></div>
+        <div style="font-size:10px;font-weight:700;">Brake Booster</div>
+        <div style="font-size:8px;color:var(--muted);">Safety-Critical</div>
+      </div>
+      <div style="text-align:center;padding:10px;background:#fef3c7;border-radius:8px;border:1px solid #fde68a;">
+        <div style="font-size:18px;color:#fbbf24;margin-bottom:4px;"><i class="fas fa-gauge-high"></i></div>
+        <div style="font-size:10px;font-weight:700;">Turbo Wastegate</div>
+        <div style="font-size:8px;color:var(--muted);">Performance</div>
+      </div>
+      <div style="text-align:center;padding:10px;background:#fff7ed;border-radius:8px;border:1px solid #fed7aa;">
+        <div style="font-size:18px;color:#fb923c;margin-bottom:4px;"><i class="fas fa-fan"></i></div>
+        <div style="font-size:10px;font-weight:700;">HVAC Flaps</div>
+        <div style="font-size:8px;color:var(--muted);">Comfort</div>
+      </div>
+      <div style="text-align:center;padding:10px;background:#fff1f2;border-radius:8px;border:1px solid #fecdd3;">
+        <div style="font-size:18px;color:#f97316;margin-bottom:4px;"><i class="fas fa-cloud"></i></div>
+        <div style="font-size:10px;font-weight:700;">EGR Solenoids</div>
+        <div style="font-size:8px;color:var(--muted);">Emissions</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- S4: BOM -->
+<section class="ps" id="s4">
+  <div class="sh"><h1><span class="d" style="background:#7c3aed;"></span>BOM Architecture</h1><p>27 child parts across 7 assembly groups</p></div>
+  <div class="bom-actions">
+    <button class="bom-btn" onclick="bomExpandAll()"><i class="fas fa-expand-alt"></i> Expand All</button>
+    <button class="bom-btn" onclick="bomCollapseAll()"><i class="fas fa-compress-alt"></i> Collapse All</button>
+  </div>
+  <div class="c" style="padding:0;overflow:visible;cursor:default;" id="bomTree"></div>
+</section>
+
+<!-- S5: PROCESS FLOW -->
+<section class="ps" id="s5">
+  <div class="sh"><h1><span class="d" style="background:#059669;"></span>Manufacturing Process Flow</h1><p>3-row x 3-column layout — 230s total. Hover any station for details.</p></div>
+  <div class="c" style="padding:20px;">
+    <div class="pf-container" id="pfGrid"></div>
+  </div>
+  <div class="c"><div class="ct" style="color:#0891b2;"><i class="fas fa-table"></i>Station Cycle Times</div>
+  <div class="tb"><table><thead><tr><th>Station</th><th>Process</th><th>Manual</th><th>Machine</th><th>Total</th><th>BN?</th></tr></thead><tbody>
+    <tr><td><span class="b bi">St.10</span></td><td>Body ID</td><td>—</td><td>—</td><td>—</td><td>—</td></tr>
+    <tr><td><span class="b bi">St.70</span></td><td>Spring and Valve</td><td>0s</td><td>45s</td><td><b>45s</b></td><td>—</td></tr>
+    <tr><td><span class="b bi">St.15</span></td><td>Leak Test and Conn</td><td>40s</td><td>0s</td><td><b>40s</b></td><td>—</td></tr>
+    <tr><td><span class="b bi">St.85</span></td><td>Rotor Vane Cover</td><td>28s</td><td>16s</td><td><b>44s</b></td><td>—</td></tr>
+    <tr><td><span class="b bi">St.130</span></td><td>Free Rotation</td><td>11s</td><td>20s</td><td><b>31s</b></td><td>—</td></tr>
+    <tr><td><span class="b bn">St.90</span></td><td>Leakage Test</td><td>8s</td><td>82s</td><td><b>90s</b></td><td><span class="b bn">BN</span></td></tr>
+    <tr><td><span class="b bi">St.110</span></td><td>Functional Test</td><td>17s</td><td>20s</td><td><b>37s</b></td><td>—</td></tr>
+    <tr><td><span class="b bi">St.140</span></td><td>Bracket and Label</td><td>41s</td><td>4s</td><td><b>45s</b></td><td>—</td></tr>
+    <tr><td><span class="b bo">100% FW</span></td><td>Firewall</td><td>40s</td><td>0s</td><td><b>40s</b></td><td>—</td></tr>
+  </tbody></table></div></div>
+</section>
+
+<!-- S6: QUALITY FLOW -->
+<section class="ps" id="s6">
+  <div class="sh"><h1><span class="d" style="background:#10b981;"></span>Quality Control Pipeline</h1><p>9 quality gates — 100% inspection</p></div>
+  <div class="mw" onclick="openZoom(this)" style="cursor:pointer;"><span class="zoom-hint"><i class="fas fa-search-plus"></i> Click to Zoom</span>
+  <div class="qp" id="qpPipeline">
+    <div class="qp-line"></div>
+    <div class="qp-gate"><div class="qp-ok-dot"><i class="fas fa-check" style="font-size:8px;"></i></div><div class="qp-card"><div class="qp-st" style="background:#10b981;">St.10</div><div class="qp-chk">Barcode visible, readable, correctly positioned</div></div><div class="qp-nok"><i class="fas fa-times-circle"></i> REJECT</div></div>
+    <div class="qp-gate"><div class="qp-ok-dot"><i class="fas fa-check" style="font-size:8px;"></i></div><div class="qp-card"><div class="qp-st" style="background:#06b6d4;">St.70</div><div class="qp-chk">Spring single no bend, Valve single, Torque 1-2 Nm, Screws OK</div></div><div class="qp-nok"><i class="fas fa-times-circle"></i> REJECT</div></div>
+    <div class="qp-gate"><div class="qp-ok-dot"><i class="fas fa-check" style="font-size:8px;"></i></div><div class="qp-card"><div class="qp-st" style="background:#3b82f6;">St.15</div><div class="qp-chk">Oil in connector, Leak less 1.5L/min, O-Ring C mark, Torque 5-6 Nm</div></div><div class="qp-nok"><i class="fas fa-times-circle"></i> REJECT</div></div>
+    <div class="qp-gate"><div class="qp-ok-dot"><i class="fas fa-check" style="font-size:8px;"></i></div><div class="qp-card"><div class="qp-st" style="background:#8b5cf6;">St.85</div><div class="qp-chk">Vane oiled clean, Torque 7-8 Nm, Height 49mm, Screws OK</div></div><div class="qp-nok"><i class="fas fa-times-circle"></i> REJECT</div></div>
+    <div class="qp-gate"><div class="qp-ok-dot"><i class="fas fa-check" style="font-size:8px;"></i></div><div class="qp-card"><div class="qp-st" style="background:#a855f7;">St.130</div><div class="qp-chk">Free rotation max 0.5 Nm at 40 RPM</div></div><div class="qp-nok"><i class="fas fa-times-circle"></i> REJECT</div></div>
+    <div class="qp-gate"><div class="qp-ok-dot"><i class="fas fa-check" style="font-size:8px;"></i></div><div class="qp-card"><div class="qp-st" style="background:#dc2626;">St.90</div><div class="qp-chk">Leak test max 1.0 mL/min at 1 bar gauge pressure</div></div><div class="qp-nok"><i class="fas fa-times-circle"></i> REJECT</div></div>
+    <div class="qp-gate"><div class="qp-ok-dot"><i class="fas fa-check" style="font-size:8px;"></i></div><div class="qp-card"><div class="qp-st" style="background:#f59e0b;">St.110</div><div class="qp-chk">Dry test Main: 2s 153, 3s 155, 4s 156 mbar. Secondary: 4 points</div></div><div class="qp-nok"><i class="fas fa-times-circle"></i> REJECT</div></div>
+    <div class="qp-gate"><div class="qp-ok-dot"><i class="fas fa-check" style="font-size:8px;"></i></div><div class="qp-card"><div class="qp-st" style="background:#f97316;">St.140</div><div class="qp-chk">Gasket single no double, Plugs present, 2D Matrix applied</div></div><div class="qp-nok"><i class="fas fa-times-circle"></i> REJECT</div></div>
+    <div class="qp-gate"><div class="qp-ok-dot"><i class="fas fa-check" style="font-size:8px;"></i></div><div class="qp-card"><div class="qp-st" style="background:#059669;">FW</div><div class="qp-chk">Final 100% visual and dimensional verification</div></div><div class="qp-nok"><i class="fas fa-times-circle"></i> REJECT</div></div>
+  </div></div>
+</section>
+
+<!-- S7: BREAKDOWN -->
+<section class="ps" id="s7">
+  <div class="sh"><h1><span class="d" style="background:#dc2626;"></span>Breakdown Analysis</h1><p>380 events, 106.63h downtime — Jan to Jul 2026</p></div>
+  <div class="mg">
+    <div class="m" style="background:linear-gradient(135deg,#dc2626,#f87171);"><div class="l">Events</div><div class="v">380</div></div>
+    <div class="m" style="background:linear-gradient(135deg,#e11d48,#fb7185);"><div class="l">Downtime</div><div class="v">106.6h</div></div>
+    <div class="m" style="background:linear-gradient(135deg,#d97706,#fbbf24);"><div class="l">Mean</div><div class="v">16.8m</div></div>
+    <div class="m" style="background:linear-gradient(135deg,#dc2626,#991b1b);"><div class="l">Worst</div><div class="v">219m</div></div>
+    <div class="m" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);"><div class="l">Zero-Time</div><div class="v">24.7%</div></div>
+    <div class="m" style="background:linear-gradient(135deg,#059669,#10b981);"><div class="l">Stations</div><div class="v">12</div></div>
+  </div>
+  <div class="tabs" id="bt"><div class="tab on" data-t="t1">Pareto</div><div class="tab" data-t="t2">Faults</div><div class="tab" data-t="t3">Monthly</div><div class="tab" data-t="t4">Severity</div><div class="tab" data-t="t5">Top 10</div><div class="tab" data-t="t6">Actions</div></div>
+  <div class="tc on" id="t1"><div class="c"><div class="chw"><canvas id="chPareto"></canvas></div></div></div>
+  <div class="tc" id="t2"><div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;"><div class="c"><div class="chw"><canvas id="chDonut"></canvas></div></div><div class="c"><div class="chw"><canvas id="chFaultBar"></canvas></div></div></div></div>
+  <div class="tc" id="t3"><div class="c"><div class="chw"><canvas id="chMonthly"></canvas></div></div></div>
+  <div class="tc" id="t4"><div class="c"><div class="chw"><canvas id="chSev"></canvas></div></div></div>
+  <div class="tc" id="t5"><div class="c"><div class="ct" style="color:#dc2626;"><i class="fas fa-exclamation-triangle"></i>8 of 10 at Station 85</div>
+  <div class="tb"><table><thead><tr><th>#</th><th>Date</th><th>Station</th><th>Type</th><th>Description</th><th>Duration</th></tr></thead><tbody>
+    <tr><td>1</td><td>04-Feb</td><td><span class="b bn">St.85</span></td><td>Mech</td><td>OIL NOT COME</td><td style="color:#dc2626;font-weight:800;">219m</td></tr>
+    <tr><td>2</td><td>29-Jun</td><td><span class="b bw">St.70</span></td><td>Mech</td><td>AIR LEAKAGE</td><td style="color:#dc2626;font-weight:800;">180m</td></tr>
+    <tr><td>3</td><td>23-Jan</td><td><span class="b bn">St.85</span></td><td>Elec</td><td>Slider poka yoke fail</td><td style="color:#dc2626;font-weight:800;">160m</td></tr>
+    <tr><td>4</td><td>11-Jul</td><td><span class="b bn">St.85</span></td><td>Elec</td><td>Screwing gun fail</td><td style="color:#dc2626;font-weight:700;">140m</td></tr>
+    <tr><td>5</td><td>06-Jan</td><td><span class="b bn">St.85</span></td><td>Mech</td><td>Screwing not start</td><td style="color:#d97706;font-weight:700;">120m</td></tr>
+    <tr><td>6</td><td>27-May</td><td><span class="b bw">St.15</span></td><td>Mech</td><td>MASTER NOK LVDT</td><td style="color:#d97706;font-weight:700;">120m</td></tr>
+    <tr><td>7</td><td>26-Apr</td><td><span class="b bi">St.110</span></td><td>Mech</td><td>TOOLING NOT UNLOCK</td><td style="color:#d97706;font-weight:700;">119m</td></tr>
+    <tr><td>8</td><td>03-Jun</td><td><span class="b bn">St.85</span></td><td>Mech</td><td>SCREWING NOK</td><td style="color:#d97706;font-weight:700;">108m</td></tr>
+    <tr><td>9</td><td>03-Jun</td><td><span class="b bn">St.85</span></td><td>Elec</td><td>Camera check fail</td><td style="color:#d97706;font-weight:600;">90m</td></tr>
+    <tr><td>10</td><td>15-Mar</td><td><span class="b bn">St.85</span></td><td>Mech</td><td>Screwing NOK</td><td style="color:#d97706;font-weight:600;">80m</td></tr>
+  </tbody></table></div></div></div>
+  <div class="tc" id="t6"><div class="c" style="border-color:#dc2626;"><div class="ct" style="color:#dc2626;"><i class="fas fa-clipboard-check"></i>Action Plan</div>
+  <div class="tb"><table><thead><tr><th>P</th><th>Action</th><th>Impact</th></tr></thead><tbody>
+    <tr><td><span class="b bn">P1</span></td><td>Station 85 RCFA deep-dive</td><td>Cut 40% ~17h saved</td></tr>
+    <tr><td><span class="b bn">P1</span></td><td>Screwing Reliability Cell</td><td>Cut 30% ~8h saved</td></tr>
+    <tr><td><span class="b bn">P1</span></td><td>Data-capture reform</td><td>Restore KPI trust</td></tr>
+    <tr><td><span class="b bn">P1</span></td><td>Station 70 emergency review</td><td>Prevent new hotspot</td></tr>
+    <tr><td><span class="b bw">P2</span></td><td>Long-tail event review</td><td>50% cut 60+min ~15h</td></tr>
+    <tr><td><span class="b bw">P2</span></td><td>Shift-startup protocol</td><td>25% cut 06-09h ~6h</td></tr>
+  </tbody></table></div></div></div>
+</section>
+
+<!-- S8: ORGANIZATION -->
+<section class="ps" id="s8">
+  <div class="sh"><h1><span class="d" style="background:#0891b2;"></span>Organization</h1><p>Mini Factory Team Structure</p></div>
+  <div class="org-section">
+    <div class="org-section-title" style="background:linear-gradient(90deg,#059669,#047857);"><i class="fas fa-shield-halved"></i> Core Mini Factory Team</div>
+    <div class="org-core-grid">
+      <div class="org-core-card owner"><div class="avatar" style="background:linear-gradient(135deg,#059669,#10b981);">RS</div><div class="name">Ramesh Sawant</div><div class="role">Mini Factory Owner</div></div>
+      <div class="org-core-card"><div class="avatar" style="background:linear-gradient(135deg,#0891b2,#22d3ee);">DK</div><div class="name">Dinesh Kuldharan</div><div class="role">Team Leader</div></div>
+      <div class="org-core-card"><div class="avatar" style="background:linear-gradient(135deg,#0891b2,#22d3ee);">SP</div><div class="name">Sagar Phadtare</div><div class="role">Team Leader</div></div>
+      <div class="org-core-card"><div class="avatar" style="background:linear-gradient(135deg,#0891b2,#22d3ee);">CD</div><div class="name">Chandrashekar Das</div><div class="role">Team Leader</div></div>
+      <div class="org-core-card"><div class="avatar" style="background:linear-gradient(135deg,#0891b2,#22d3ee);">NN</div><div class="name">Nagraj Nashpure</div><div class="role">Team Leader</div></div>
+    </div>
+    <div class="org-bar-ops"><i class="fas fa-users-gear" style="margin-right:8px;"></i>Production Operators — Shop Floor Execution</div>
+  </div>
+  <div class="org-section">
+    <div class="org-section-title" style="background:linear-gradient(90deg,#7c3aed,#5b21b6);"><i class="fas fa-puzzle-piece"></i> Cross Functional Support Team</div>
+    <div class="org-support-grid">
+      <div class="org-support-card"><div class="icon" style="background:linear-gradient(135deg,#f97316,#fb923c);"><i class="fas fa-wrench"></i></div><div class="fn">Maintenance</div><div class="nm">Shashank Adilwankar</div></div>
+      <div class="org-support-card"><div class="icon" style="background:linear-gradient(135deg,#10b981,#34d399);"><i class="fas fa-microscope"></i></div><div class="fn">Process Quality</div><div class="nm">S. Chowdhary<br>R. Rupnawar<br>S. Kumar</div></div>
+      <div class="org-support-card"><div class="icon" style="background:linear-gradient(135deg,#3b82f6,#60a5fa);"><i class="fas fa-drafting-compass"></i></div><div class="fn">Industrial Eng.</div><div class="nm">Nilesh Dithe<br>V. Bhagal</div></div>
+      <div class="org-support-card"><div class="icon" style="background:linear-gradient(135deg,#06b6d4,#67e8f9);"><i class="fas fa-inbox"></i></div><div class="fn">Incoming Quality</div><div class="nm">Hemant Rane</div></div>
+      <div class="org-support-card"><div class="icon" style="background:linear-gradient(135deg,#a855f7,#c4b5fd);"><i class="fas fa-cubes"></i></div><div class="fn">Material Planning</div><div class="nm">Raj Rathi<br>Sandeep</div></div>
+      <div class="org-support-card"><div class="icon" style="background:linear-gradient(135deg,#e11d48,#fb7185);"><i class="fas fa-handshake"></i></div><div class="fn">Customer Planning</div><div class="nm">Pratik Raskar</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- S9: SUPPLY CHAIN -->
+<section class="ps" id="s9">
+  <div class="sh"><h1><span class="d" style="background:#d97706;"></span>Supply Chain</h1><p>Vertical layout — click groups to expand/collapse</p></div>
+  <div class="sc-tabs">
+    <div class="sc-tab on-up" data-sc="sc-up" onclick="switchSC(this,'sc-up','on-up')"><i class="fas fa-boxes-stacked" style="margin-right:4px;"></i>UPSTREAM</div>
+    <div class="sc-tab" data-sc="sc-in" onclick="switchSC(this,'sc-in','on-in')"><i class="fas fa-industry" style="margin-right:4px;"></i>IN-PROCESS</div>
+    <div class="sc-tab" data-sc="sc-out" onclick="switchSC(this,'sc-out','on-out')"><i class="fas fa-truck" style="margin-right:4px;"></i>DOWNSTREAM</div>
+  </div>
+  <div class="sc-content on" id="sc-up">
+    <div style="display:flex;gap:6px;margin-bottom:12px;"><button class="bom-btn" onclick="scExpandAll('sc-up')"><i class="fas fa-expand-alt"></i> Expand All</button><button class="bom-btn" onclick="scCollapseAll('sc-up')"><i class="fas fa-compress-alt"></i> Collapse All</button></div>
+    <div class="sc-vert" id="scUpTree"></div>
+  </div>
+  <div class="sc-content" id="sc-in">
+    <div style="display:flex;gap:6px;margin-bottom:12px;"><button class="bom-btn" onclick="scExpandAll('sc-in')"><i class="fas fa-expand-alt"></i> Expand All</button><button class="bom-btn" onclick="scCollapseAll('sc-in')"><i class="fas fa-compress-alt"></i> Collapse All</button></div>
+    <div class="sc-vert" id="scInTree"></div>
+  </div>
+  <div class="sc-content" id="sc-out">
+    <div style="display:flex;gap:6px;margin-bottom:12px;"><button class="bom-btn" onclick="scExpandAll('sc-out')"><i class="fas fa-expand-alt"></i> Expand All</button><button class="bom-btn" onclick="scCollapseAll('sc-out')"><i class="fas fa-compress-alt"></i> Collapse All</button></div>
+    <div class="sc-vert" id="scOutTree"></div>
+  </div>
+</section>
+
+<!-- S10: KPIs -->
+<section class="ps" id="s10">
+  <div class="sh"><h1><span class="d" style="background:#7c3aed;"></span>KPIs</h1><p>Line performance metrics</p></div>
+  <div class="mg">
+    <div class="m" style="background:linear-gradient(135deg,#059669,#10b981);"><div class="l">Target OEE</div><div class="v">85%</div></div>
+    <div class="m" style="background:linear-gradient(135deg,#0891b2,#22d3ee);"><div class="l">Availability</div><div class="v">92%</div></div>
+    <div class="m" style="background:linear-gradient(135deg,#d97706,#fbbf24);"><div class="l">Performance</div><div class="v">95%</div></div>
+    <div class="m" style="background:linear-gradient(135deg,#7c3aed,#a78bfa);"><div class="l">Quality FPY</div><div class="v">98%</div></div>
+  </div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+    <div class="c"><div class="chw"><canvas id="chOEE"></canvas></div></div>
+    <div class="c"><div class="chw"><canvas id="chKPI"></canvas></div></div>
+  </div>
+</section>
+
+<!-- S11: COST -->
+<section class="ps" id="s11">
+  <div class="sh"><h1><span class="d" style="background:#e11d48;"></span>Cost Structure</h1><p>Unit cost breakdown</p></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+    <div class="c"><div class="chw"><canvas id="chCost"></canvas></div></div>
+    <div class="c"><div class="ct" style="color:#e11d48;"><i class="fas fa-rupee-sign"></i>Unit Economics</div>
+    <div class="tb"><table><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody>
+      <tr><td>Annual Revenue</td><td style="color:#059669;font-weight:700;">24 Cr INR</td></tr>
+      <tr><td>Volume</td><td>200,000 units</td></tr>
+      <tr><td>Revenue/Unit</td><td style="font-family:'JetBrains Mono',monospace;color:#0891b2;font-weight:700;">1,200 INR</td></tr>
+      <tr><td>COGS</td><td style="font-family:'JetBrains Mono',monospace;">~840 INR (70%)</td></tr>
+      <tr><td>Gross Margin</td><td style="color:#059669;font-weight:700;">~30%</td></tr>
+    </tbody></table></div></div>
+  </div>
+</section>
+
+<!-- S12: RISK -->
+<section class="ps" id="s12">
+  <div class="sh"><h1><span class="d" style="background:#dc2626;"></span>Risk Matrix</h1><p>Probability x Severity</p></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+    <div class="c"><div class="ct" style="color:#dc2626;"><i class="fas fa-th"></i>Matrix</div><div class="rm" id="rmGrid"></div>
+      <div style="display:flex;gap:8px;margin-top:6px;justify-content:center;font-size:7px;">
+        <div style="display:flex;align-items:center;gap:2px;"><div style="width:7px;height:7px;border-radius:2px;background:rgba(16,185,129,.4);"></div>Low</div>
+        <div style="display:flex;align-items:center;gap:2px;"><div style="width:7px;height:7px;border-radius:2px;background:rgba(245,158,11,.5);"></div>Med</div>
+        <div style="display:flex;align-items:center;gap:2px;"><div style="width:7px;height:7px;border-radius:2px;background:rgba(249,115,22,.6);"></div>High</div>
+        <div style="display:flex;align-items:center;gap:2px;"><div style="width:7px;height:7px;border-radius:2px;background:rgba(239,68,68,.6);"></div>Critical</div>
+      </div>
+    </div>
+    <div class="c"><div class="ct" style="color:#dc2626;"><i class="fas fa-list"></i>Register</div>
+    <div class="tb"><table><thead><tr><th>Risk</th><th>P</th><th>S</th><th>Mitigation</th></tr></thead><tbody>
+      <tr><td>St.85 screwing</td><td style="color:#dc2626;font-weight:800;">5</td><td style="color:#dc2626;font-weight:800;">8</td><td>RCFA cell</td></tr>
+      <tr><td>Housing porosity</td><td style="color:#d97706;font-weight:700;">3</td><td style="color:#dc2626;font-weight:800;">8</td><td>100% leak test</td></tr>
+      <tr><td>Vane seizure</td><td style="color:#d97706;font-weight:700;">3</td><td style="color:#d97706;font-weight:700;">5</td><td>Oil quality check</td></tr>
+      <tr><td>Single customer</td><td style="color:#d97706;font-weight:700;">4</td><td style="color:#d97706;font-weight:700;">7</td><td>Diversification plan</td></tr>
+      <tr><td>Import lead time</td><td style="color:#0891b2;font-weight:700;">3</td><td style="color:#d97706;font-weight:700;">6</td><td>Safety stock buffer</td></tr>
+      <tr><td>St.90 bottleneck</td><td style="color:#dc2626;font-weight:800;">5</td><td style="color:#d97706;font-weight:700;">4</td><td>Parallel test cell</td></tr>
+    </tbody></table></div></div>
+  </div>
+</section>
+
+<!-- S13: Q&A -->
+<section class="ps" id="s13">
+  <div class="sh"><h1><span class="d" style="background:#059669;"></span>Plant Head Q&A</h1><p>Key questions and answers</p></div>
+  <div class="qa"><div class="q">Q: Why is Station 85 the biggest problem?</div><div class="a">Station 85 handles rotor, vane, and cover assembly with screwing (7-8 Nm) and camera inspection. It accounts for 39.9% of total downtime (42.5h) across 75 events. Root causes are screwing gun failures, poka-yoke sensor issues, and oil supply interruptions. 8 of the top 10 worst breakdowns originated here.</div></div>
+  <div class="qa"><div class="q">Q: What is the bottleneck and can we fix it?</div><div class="a">Station 90 (Leakage Test at 1 bar, 90s) is the line bottleneck with the longest cycle time. Since it is a test station, reducing cycle time requires process engineering — possibly parallel test chambers or optimized pressure stabilization. This is a capital-intensive change with long lead time.</div></div>
+  <div class="qa"><div class="q">Q: How dependent are we on a single customer?</div><div class="a">100% revenue comes from Ford Sanand. This is a critical concentration risk. Any disruption at Ford (shutdown, model change, volume reduction) directly impacts our entire line. Mitigation: actively pursuing alternate OEM customers for similar vacuum pump platforms.</div></div>
+  <div class="qa"><div class="q">Q: What is the status of Station 70 spike in July?</div><div class="a">Station 70 (Spring/Valve Assembly) had 29 events in July alone, primarily air leakage issues. This is a new emerging hotspot. Emergency review initiated. Suspected cause: batch-level quality issue from Kern Liebers (Germany) spring supplier. IQC re-inspection of incoming stock underway.</div></div>
+  <div class="qa"><div class="q">Q: What is our OEE and is it meeting target?</div><div class="a">Target OEE is 85% (A:92% x P:95% x Q:98%). Current OEE is likely below target due to the 106.6h downtime over 7 months. The biggest drag is Availability — Station 85 alone drops it significantly. If we cut St.85 downtime by 40% (~17h), we recover approximately 1.5% OEE.</div></div>
+  <div class="qa"><div class="q">Q: What supply chain risks keep you awake at night?</div><div class="a">Three things: (1) Rockman Industries housing porosity — 100% imported from India but still has quality escapes. (2) Kern Liebers springs from Germany — long lead time, no local alternative, and now showing quality issues. (3) Single-customer dependency — if Ford Sanand stops for even one day, our entire production halts with no buffer orders.</div></div>
+</section>
+
+</main>
+
+<!-- ZOOM MODAL -->
+<div id="zoomModal">
+  <div id="zoomWin">
+    <div id="zoomBar"><span id="zoomTitle">Zoomed View</span><div class="btns"><button onclick="zoomChange(-0.2)" title="Zoom Out">−</button><button onclick="zoomReset()" title="Reset">1:1</button><button onclick="zoomChange(0.2)" title="Zoom In">+</button><button onclick="closeZoom()" title="Close"><i class="fas fa-times"></i></button></div></div>
+    <div id="zoomBody"><div id="zoomInner"></div></div>
+  </div>
+</div>
+
+<script>
+/* ===== NAVIGATION ===== */
+const nls=document.querySelectorAll('.nl'),pss=document.querySelectorAll('.ps'),sb=document.getElementById('sb'),hb=document.getElementById('hb');
+nls.forEach(n=>{n.addEventListener('click',()=>{nls.forEach(x=>x.classList.remove('on'));pss.forEach(x=>x.classList.remove('on'));n.classList.add('on');document.getElementById(n.dataset.s).classList.add('on');if(window.innerWidth<=900)sb.classList.remove('open');});});
+hb.addEventListener('click',()=>sb.classList.toggle('open'));
+
+/* ===== TABS ===== */
+document.querySelectorAll('.tabs').forEach(t=>{t.querySelectorAll('.tab').forEach(b=>{b.addEventListener('click',()=>{t.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));b.classList.add('on');const p=b.parentElement.parentElement;p.querySelectorAll('.tc').forEach(x=>x.classList.remove('on'));p.querySelector('#'+b.dataset.t).classList.add('on');});});});
+
+/* ===== ZOOM MODAL ===== */
+let zScale=1;
+function openZoom(el){const svg=el.querySelector('svg');if(!svg)return;const cl=svg.cloneNode(true);cl.style.maxWidth='none';document.getElementById('zoomInner').innerHTML='';document.getElementById('zoomInner').appendChild(cl);document.getElementById('zoomModal').style.display='flex';zScale=1;document.getElementById('zoomInner').style.transform='scale(1)';}
+function closeZoom(){document.getElementById('zoomModal').style.display='none';}
+function zoomChange(d){zScale=Math.max(.3,Math.min(3,zScale+d));document.getElementById('zoomInner').style.transform='scale('+zScale+')';}
+function zoomReset(){zScale=1;document.getElementById('zoomInner').style.transform='scale(1)';}
+document.getElementById('zoomModal').addEventListener('click',e=>{if(e.target===document.getElementById('zoomModal'))closeZoom();});
+
+/* ===== PUMP STAGE CARD SYNC ===== */
+const stageCards=document.querySelectorAll('.ps-stage');
+function syncPumpStages(){
+  const t=(Date.now()/1000)%6;
+  let active=Math.floor(t/1.5);
+  if(active>3)active=3;
+  stageCards.forEach((c,i)=>{if(i===active)c.classList.add('ps-active');else c.classList.remove('ps-active');});
+  requestAnimationFrame(syncPumpStages);
+}
+syncPumpStages();
+
+/* ===== BOM TREE ===== */
+const bomData=[
+  {name:'Body & Housing',color:'#059669',parts:[
+    {pn:'7.06496.01.01',name:'Flange Housing',qty:1},{pn:'7.06496.01.02',name:'Cover Plate',qty:1},{pn:'7.06496.01.03',name:'Body O-Ring',qty:1}]},
+  {name:'Valve Assembly',color:'#0891b2',parts:[
+    {pn:'7.06496.02.01',name:'Complete Valve',qty:1},{pn:'7.06496.02.02',name:'Compression Spring',qty:1},{pn:'7.06496.02.03',name:'Valve Element',qty:1}]},
+  {name:'Rotor & Vane',color:'#7c3aed',parts:[
+    {pn:'7.06496.03.01',name:'Precision Rotor',qty:1},{pn:'7.06496.03.02',name:'Slider Vane',qty:1}]},
+  {name:'Sealing',color:'#d97706',parts:[
+    {pn:'7.06496.04.01',name:'Sealing Ring',qty:1},{pn:'7.06496.04.02',name:'Gasket',qty:1},{pn:'7.06496.04.03',name:'O-Ring Set (3 pcs)',qty:3},{pn:'7.06496.04.04',name:'Connector O-Ring',qty:1}]},
+  {name:'Connections',color:'#e11d48',parts:[
+    {pn:'7.06496.05.01',name:'Suction Connection',qty:1},{pn:'7.06496.05.02',name:'Coupler',qty:1},{pn:'7.06496.05.03',name:'Oil Connector',qty:1}]},
+  {name:'Fasteners',color:'#dc2626',parts:[
+    {pn:'7.06496.06.01',name:'Screw M3x12 (Cover)',qty:4},{pn:'7.06496.06.02',name:'Screw M3x8 (Valve)',qty:2},{pn:'7.06496.06.03',name:'Plug (2 pcs)',qty:2}]},
+  {name:'Bracket Assembly',color:'#3b82f6',parts:[
+    {pn:'7.06496.07.01',name:'Mounting Bracket',qty:1},{pn:'7.06496.07.02',name:'Bracket Screw',qty:2},{pn:'7.06496.07.03',name:'Bracket Washer',qty:2},{pn:'7.06496.07.04',name:'Label 2D Matrix',qty:1},{pn:'7.06496.07.05',name:'Packaging Set',qty:1}]},
+];
+function buildBOM(){let h='<div class="bom-tree bom-root">';bomData.forEach(g=>{h+=`<div class="bom-grp"><div class="bom-hd" style="background:${g.color};" onclick="toggleBomGrp(this)"><i class="fas fa-chevron-down arr"></i><span class="gn">${g.name}</span><span class="gc">${g.parts.length} parts</span></div><div class="bom-kids">`;g.parts.forEach(p=>{h+=`<div class="bom-leaf"><span class="pn">${p.pn}</span><span>${p.name}</span><span class="qt">x${p.qty}</span></div>`;});h+='</div></div>';});h+='</div>';document.getElementById('bomTree').innerHTML=h;}
+function toggleBomGrp(hd){hd.querySelector('.arr').classList.toggle('collapsed');hd.nextElementSibling.classList.toggle('collapsed');}
+function bomExpandAll(){document.querySelectorAll('.bom-grp .arr').forEach(a=>a.classList.remove('collapsed'));document.querySelectorAll('.bom-kids').forEach(k=>k.classList.remove('collapsed'));}
+function bomCollapseAll(){document.querySelectorAll('.bom-grp .arr').forEach(a=>a.classList.add('collapsed'));document.querySelectorAll('.bom-kids').forEach(k=>k.classList.add('collapsed'));}
+buildBOM();
+
+/* ===== PROCESS FLOW GRID ===== */
+const stations=[
+  {id:'St.10',name:'Body ID Barcode',time:'—',color:'#10b981',bn:false,type:'Marking',manual:'—',machine:'—',detail:'2D Data Matrix barcode printed on pump body. Contains: Plant (GK), Line (A), Variant, Year, Day, Shift, Serial.',check:'Barcode visible and readable',risk:'Low'},
+  {id:'St.70',name:'Spring & Valve Assembly',time:'45s',color:'#06b6d4',bn:false,type:'Assembly + Torque',manual:'0s',machine:'45s',detail:'Spring (single, no bend) and valve assembled. Torque 1-2 Nm. Oil applied at assembly point.',check:'Spring count, valve count, torque value',risk:'HIGH — 29 events in July'},
+  {id:'St.15',name:'Leak Test Secondary Conn',time:'40s',color:'#3b82f6',bn:false,type:'Test + Assembly',manual:'40s',machine:'0s',detail:'Oil filled in connector. Leak test < 1.5 L/min. O-Ring with C-mark verified. Torque 5-6 Nm.',check:'Leak rate, O-Ring C-mark, torque',risk:'MED — MASTER NOK LVDT failure'},
+  {id:'St.85',name:'Rotor Vane Cover',time:'44s',color:'#8b5cf6',bn:false,type:'Assembly + Camera',manual:'28s',machine:'16s',detail:'Slider vane oiled and cleaned. Rotor inserted. Cover placed. Torque 7-8 Nm. Camera verification. Height 49mm.',check:'Vane condition, torque, height, camera',risk:'CRITICAL — 39.9% downtime, 75 events'},
+  {id:'St.130',name:'Free Rotation Test',time:'31s',color:'#a855f7',bn:false,type:'Test',manual:'11s',machine:'20s',detail:'Pump rotated at 40 RPM. Max allowable torque: 0.5 Nm. Checks for binding or seizure.',check:'Free rotation < 0.5 Nm at 40 RPM',risk:'Low'},
+  {id:'St.90',name:'Leakage Test',time:'90s',color:'#dc2626',bn:true,type:'Test — BOTTLENECK',manual:'8s',machine:'82s',detail:'Pressure test at 1 bar gauge. Max allowable leak: 1.0 mL/min. Longest cycle time on the line.',check:'Leak < 1.0 mL/min at 1 bar',risk:'BOTTLENECK — limits line output'},
+  {id:'St.110',name:'Functional Dry Test',time:'37s',color:'#f59e0b',bn:false,type:'Test',manual:'17s',machine:'20s',detail:'Dry vacuum test. Main: 2s=153, 3s=155, 4s=156 mbar. Secondary port: 4 test points verified.',check:'Vacuum values at specified times',risk:'MED — TOOLING NOT UNLOCK (119m)'},
+  {id:'St.140',name:'Bracket Press & Label',time:'45s',color:'#f97316',bn:false,type:'Assembly + Marking',manual:'41s',machine:'4s',detail:'Bracket pressed onto body. Gasket verified (single, no double). Plugs verified. 2D Matrix label applied.',check:'Gasket count, plug presence, label',risk:'Low'},
+  {id:'FW',name:'Firewall 100% Final',time:'40s',color:'#059669',bn:false,type:'Visual + Dimensional',manual:'40s',machine:'0s',detail:'Final 100% visual and dimensional verification. Last quality gate before packing.',check:'Complete visual and dimensional',risk:'Low'},
+];
+function buildProcessFlow(){
+  const rows=[[0,1,2],[3,4,5],[6,7,8]];let h='';
+  rows.forEach((row,ri)=>{
+    h+='<div class="pf-row">';
+    row.forEach((si,ci)=>{
+      const s=stations[si];
+      h+=`<div class="pf-station${s.bn?' bottleneck':''}" style="border-color:${s.color}20;"><div class="pf-st-num" style="background:${s.color};">${s.id}</div><div class="pf-st-name">${s.name}</div><div class="pf-st-time">${s.time}</div>${s.bn?'<div class="pf-st-bn"><i class="fas fa-exclamation-triangle"></i> Bottleneck</div>':''}<div class="pf-tooltip"><div class="tt-title"><span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${s.color};"></span>${s.id} — ${s.name}</div><div class="tt-row"><span class="tt-label">Type</span><span class="tt-val">${s.type}</span></div><div class="tt-row"><span class="tt-label">Manual</span><span class="tt-val">${s.manual}</span></div><div class="tt-row"><span class="tt-label">Machine</span><span class="tt-val">${s.machine}</span></div><div class="tt-row"><span class="tt-label">Total</span><span class="tt-val" style="color:${s.bn?'#dc2626':'#059669'};font-weight:800;">${s.time}</span></div><div class="tt-section"><div class="tt-section-title">Process Details</div><div style="font-size:9px;color:rgba(255,255,255,.8);line-height:1.4;">${s.detail}</div></div><div class="tt-section"><div class="tt-section-title">Quality Check</div><div style="font-size:9px;color:rgba(255,255,255,.8);">${s.check}</div></div><div class="tt-section"><div class="tt-section-title" style="color:${s.risk.includes('CRITICAL')||s.risk.includes('BOTTLENECK')?'#dc2626':s.risk.includes('HIGH')?'#f97316':s.risk.includes('MED')?'#d97706':'#10b981'};">Risk Assessment</div><div style="font-size:9px;color:rgba(255,255,255,.8);">${s.risk}</div></div></div></div>`;
+      if(ci<2)h+=`<div class="pf-arrow-h"><svg width="40" height="20"><line x1="0" y1="10" x2="30" y2="10" stroke="#cbd5e1" stroke-width="2"/><polygon points="30,5 40,10 30,15" fill="#cbd5e1"/></svg></div>`;
+    });
+    h+='</div>';
+    if(ri<2)h+=`<div style="display:flex;justify-content:flex-end;padding-right:100px;"><svg width="200" height="36" style="overflow:visible;"><path d="M100,0 L100,18 L-90,18 L-90,36" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="4,3"/><polygon points="-95,30 -90,36 -85,30" fill="#cbd5e1"/></svg></div>`;
+  });
+  document.getElementById('pfGrid').innerHTML=h;
+}
+buildProcessFlow();
+
+/* ===== SUPPLY CHAIN VERTICAL ===== */
+const scUpData=[
+  {name:'India',icon:'fas fa-flag',color:'#f97316',items:[{name:'Rockman Industries',part:'Flange Housing',risk:'high'},{name:'JK Maini Precision',part:'Precision Rotor',risk:'low'}]},
+  {name:'Germany',icon:'fas fa-flag',color:'#fbbf24',items:[{name:'Kern Liebers GmbH',part:'Spring + Valve',risk:'high'},{name:'Ejot',part:'Screw M3 (2 types)',risk:'low'},{name:'Gebr Wagner',part:'Mounting Bracket',risk:'low'}]},
+  {name:'Italy',icon:'fas fa-flag',color:'#10b981',items:[{name:'Forteq Srl',part:'Slider Vane',risk:'med'},{name:'Novotema',part:'Sealing Ring',risk:'low'},{name:'Erlingklinger',part:'Gasket',risk:'low'}]},
+  {name:'Netherlands',icon:'fas fa-flag',color:'#3b82f6',items:[{name:'Helvoet Rubber',part:'Complete Valve',risk:'med'}]},
+  {name:'United States',icon:'fas fa-flag',color:'#dc2626',items:[{name:'Reliance Worldwide',part:'Suction Connection',risk:'med'}]},
+  {name:'Portugal',icon:'fas fa-flag',color:'#06b6d4',items:[{name:'Ames Group',part:'Coupler',risk:'low'}]},
+  {name:'France',icon:'fas fa-flag',color:'#7c3aed',items:[{name:'LCN Automotive',part:'Cover Plate',risk:'low'}]},
+];
+const scInData=[
+  {name:'Receiving & Inspection',icon:'fas fa-clipboard-check',color:'#059669',items:[{name:'Receiving Dock',part:'Raw material intake',risk:'low'},{name:'IQC Inspection (Hemant Rane)',part:'Incoming quality check',risk:'low'}]},
+  {name:'Material Buffer',icon:'fas fa-warehouse',color:'#7c3aed',items:[{name:'Kanban Supermarket',part:'2-Day buffer stock',risk:'med'},{name:'Line Side Feeding',part:'JIT to stations',risk:'low'}]},
+  {name:'Line Operations — Row 1',icon:'fas fa-play',color:'#10b981',items:[{name:'St.10 Body ID',part:'Barcode print',risk:'low'},{name:'St.70 Spring & Valve',part:'Assembly + Torque',risk:'high'},{name:'St.15 Leak Test',part:'Secondary connection',risk:'med'}]},
+  {name:'Line Operations — Row 2',icon:'fas fa-play',color:'#8b5cf6',items:[{name:'St.85 Rotor Vane Cover',part:'Assembly + Camera',risk:'high'},{name:'St.130 Free Rotation',part:'Rotation test',risk:'low'},{name:'St.90 Leakage Test',part:'BOTTLENECK — 90s',risk:'high'}]},
+  {name:'Line Operations — Row 3',icon:'fas fa-play',color:'#f59e0b',items:[{name:'St.110 Functional Test',part:'Dry vacuum test',risk:'med'},{name:'St.140 Bracket & Label',part:'Press + 2D Matrix',risk:'low'},{name:'Firewall 100%',part:'Final inspection',risk:'low'}]},
+  {name:'Output & Dispatch',icon:'fas fa-box',color:'#3b82f6',items:[{name:'Pack & Label',part:'Final packaging',risk:'low'},{name:'Dispatch Bay',part:'Ready for shipment',risk:'low'},{name:'Line Reject',part:'Segregation area',risk:'med'}]},
+];
+const scOutData=[
+  {name:'Logistics',icon:'fas fa-truck',color:'#3b82f6',items:[{name:'Logistics Partner',part:'Third-party transport',risk:'med'},{name:'Transit Time',part:'2-4 hours to customer',risk:'low'}]},
+  {name:'Customer — Ford Sanand',icon:'fas fa-building',color:'#0f172a',items:[{name:'JIT Delivery Bay',part:'Just-In-Time receiving',risk:'med'},{name:'Vehicle Assembly Line',part:'Brake system integration',risk:'low'},{name:'End Customer Vehicle',part:'Final product',risk:'low'}]},
+  {name:'Risk Factors',icon:'fas fa-exclamation-triangle',color:'#dc2626',items:[{name:'Single Customer Dependency',part:'100% revenue from Ford',risk:'high'},{name:'No Alternate Customer',part:'Zero diversification',risk:'high'},{name:'Customer Planning',part:'Pratik Raskar — single point',risk:'med'}]},
+];
+function riskBadge(r){return{high:'<span class="b bn">High</span>',med:'<span class="b bw">Med</span>',low:'<span class="b bo">Low</span>'}[r]||r;}
+function buildSCVert(data,cid){let h='<div class="sc-vert">';data.forEach(g=>{h+=`<div class="sc-vert-group"><div class="sc-vert-hd" onclick="toggleSCGrp(this)"><i class="fas fa-chevron-down arr"></i><div class="grp-icon" style="background:${g.color};"><i class="${g.icon}"></i></div><span class="grp-name">${g.name}</span><span class="grp-count">${g.items.length}</span></div><div class="sc-vert-body">`;g.items.forEach(i=>{h+=`<div class="sc-vert-item"><span class="item-name">${i.name}</span><span class="item-part">${i.part}</span><span class="item-risk">${riskBadge(i.risk)}</span></div>`;});h+='</div></div>';});h+='</div>';document.getElementById(cid).innerHTML=h;}
+function toggleSCGrp(hd){hd.querySelector('.arr').classList.toggle('collapsed');hd.nextElementSibling.classList.toggle('collapsed');}
+function scExpandAll(id){document.querySelectorAll('#'+id+' .arr').forEach(a=>a.classList.remove('collapsed'));document.querySelectorAll('#'+id+' .sc-vert-body').forEach(b=>b.classList.remove('collapsed'));}
+function scCollapseAll(id){document.querySelectorAll('#'+id+' .arr').forEach(a=>a.classList.add('collapsed'));document.querySelectorAll('#'+id+' .sc-vert-body').forEach(b=>b.classList.add('collapsed'));}
+function switchSC(el,id,cls){document.querySelectorAll('.sc-tab').forEach(t=>t.className='sc-tab');el.classList.add(cls);document.querySelectorAll('.sc-content').forEach(c=>c.classList.remove('on'));document.getElementById(id).classList.add('on');}
+buildSCVert(scUpData,'scUpTree');buildSCVert(scInData,'scInTree');buildSCVert(scOutData,'scOutTree');
+
+/* ===== RISK MATRIX ===== */
+(function(){const risks=[{p:5,s:8,l:'R1'},{p:3,s:8,l:'R2'},{p:3,s:5,l:'R3'},{p:4,s:7,l:'R4'},{p:3,s:6,l:'R5'},{p:5,s:4,l:'R6'}];const rm={};risks.forEach(r=>rm[r.p+'-'+r.s]=r.l);let h='';for(let r=5;r>=1;r--)for(let c=1;c<=5;c++){const sc=r*c;let bg,fg='#fff';if(sc>=20){bg='rgba(239,68,68,.6)';}else if(sc>=12){bg='rgba(249,115,22,.55)';}else if(sc>=6){bg='rgba(245,158,11,.45)';fg='#0f172a';}else{bg='rgba(16,185,129,.3)';fg='#0f172a';}h+=`<div class="rc" style="background:${bg};color:${fg};" title="P${r} x S${c} = ${sc}">${rm[r+'-'+c]||''}</div>`;}for(let c=1;c<=5;c++)h+=`<div class="rl">S${c}</div>`;for(let r=5;r>=1;r--)h+=`<div class="rl">P${r}</div>`;document.getElementById('rmGrid').innerHTML=h;})();
+
+/* ===== CHARTS ===== */
+const co={responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{font:{size:9,family:'Space Grotesk'}}}}};
+new Chart(document.getElementById('chPie'),{type:'doughnut',data:{labels:['St.85 Screwing','St.70 Assembly','St.15 Leak Test','St.110 Functional','St.90 Leakage','Other'],datasets:[{data:[42.5,18.2,12.8,8.5,7.6,17.0],backgroundColor:['#dc2626','#06b6d4','#3b82f6','#f59e0b','#8b5cf6','#94a3b8'],borderWidth:0}]},options:{...co,cutout:'55%',plugins:{...co.plugins,legend:{position:'right',labels:{font:{size:8,family:'Space Grotesk'},padding:6}}}}});
+new Chart(document.getElementById('chPareto'),{type:'bar',data:{labels:['St.85','St.70','St.15','St.110','St.90','St.140','St.130','Others'],datasets:[{label:'Hours',data:[42.5,18.2,12.8,8.5,7.6,5.8,4.2,7.0],backgroundColor:['#dc2626','#06b6d4','#3b82f6','#f59e0b','#8b5cf6','#f97316','#a855f7','#94a3b8'],borderRadius:3}]},options:{...co,plugins:{...co.plugins,legend:{display:false}}}});
+new Chart(document.getElementById('chDonut'),{type:'doughnut',data:{labels:['Mechanical','Electrical','Pneumatic','Operator','Unknown'],datasets:[{data:[58,24,8,6,4],backgroundColor:['#dc2626','#f59e0b','#3b82f6','#10b981','#94a3b8'],borderWidth:0}]},options:{...co,cutout:'50%',plugins:{...co.plugins,legend:{position:'right',labels:{font:{size:8,family:'Space Grotesk'},padding:6}}}}});
+new Chart(document.getElementById('chFaultBar'),{type:'bar',data:{labels:['Screwing NOK','Oil Issues','Poka Yoke','Air Leak','Camera NOK','Tooling','LVDT','Other'],datasets:[{label:'Events',data:[75,42,35,28,22,18,15,45],backgroundColor:'#dc2626',borderRadius:3}]},options:{...co,indexAxis:'y',plugins:{...co.plugins,legend:{display:false}}}});
+new Chart(document.getElementById('chMonthly'),{type:'line',data:{labels:['Jan','Feb','Mar','Apr','May','Jun','Jul'],datasets:[{label:'Events',data:[42,58,55,48,62,68,47],borderColor:'#dc2626',backgroundColor:'rgba(220,38,38,.1)',fill:true,tension:.3,pointRadius:3},{label:'Hours',data:[14.2,18.5,15.8,13.1,17.6,19.2,8.2],borderColor:'#f59e0b',backgroundColor:'rgba(245,158,11,.1)',fill:true,tension:.3,pointRadius:3}]},options:{...co}});
+new Chart(document.getElementById('chSev'),{type:'bar',data:{labels:['<10m','10-30m','30-60m','60-120m','>120m'],datasets:[{label:'Events',data:[95,120,82,52,31],backgroundColor:['#10b981','#f59e0b','#f97316','#dc2626','#991b1b'],borderRadius:3}]},options:{...co,plugins:{...co.plugins,legend:{display:false}}}});
+new Chart(document.getElementById('chOEE'),{type:'radar',data:{labels:['Availability','Performance','Quality','OEE'],datasets:[{label:'Target',data:[92,95,98,85],borderColor:'#059669',backgroundColor:'rgba(5,150,105,.15)',pointRadius:3},{label:'Actual (est.)',data:[84,91,96,73],borderColor:'#dc2626',backgroundColor:'rgba(220,38,38,.1)',pointRadius:3}]},options:{...co,scales:{r:{min:60,max:100,ticks:{font:{size:8}},pointLabels:{font:{size:9,family:'Space Grotesk'}}}}}});
+new Chart(document.getElementById('chKPI'),{type:'bar',data:{labels:['FPY','Scrap Rate','FTY','Rework Rate','First Pass Yield'],datasets:[{label:'%',data:[98,.8,97.2,1.2,98],backgroundColor:['#059669','#dc2626','#10b981','#f59e0b','#059669'],borderRadius:3}]},options:{...co,plugins:{...co.plugins,legend:{display:false}}}});
+new Chart(document.getElementById('chCost'),{type:'doughnut',data:{labels:['Raw Material','Direct Labor','Overhead','Energy','Packaging','Logistics'],datasets:[{data:[52,15,18,5,4,6],backgroundColor:['#d97706','#059669','#7c3aed','#0891b2','#f97316','#3b82f6'],borderWidth:0}]},options:{...co,cutout:'50%',plugins:{...co.plugins,legend:{position:'right',labels:{font:{size:8,family:'Space Grotesk'},padding:6}}}}});
+
+/* ===== MERMAID (only for sections that still use it) ===== */
+mermaid.initialize({startOnLoad:true,theme:'base',themeVariables:{primaryColor:'#059669',primaryTextColor:'#fff',primaryBorderColor:'#047857',lineColor:'#64748b',secondaryColor:'#f0fdf4',tertiaryColor:'#f8fafc',fontFamily:'Space Grotesk',fontSize:'10px'}});
+</script>
+</body>
+</html>content="width=device-width, initial-scale=1.0">
+  <title>Classification and Decision Trees - Module 3 Part 1</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #FFFFFF;
+      --bg-alt: #FAFAFA;
+      --card: #F8F8F8;
+      --border: #E8E8E8;
+      --fg: #1A1A1A;
+      --muted: #666666;
+      --accent: #8B0000;
+      --accent-light: #B22222;
+      --accent-dark: #5C0000;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--fg); }
+    h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 700; }
+
+    .slide-container { position: relative; width: 100%; height: 100vh; overflow: hidden; }
+    
+    .slide {
+      position: absolute;
+      inset: 0;
+      padding: 2rem 3rem 4rem 3rem;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(20px);
+      transition: all 0.4s ease;
+    }
+    
+    .slide.active { opacity: 1; visibility: visible; transform: translateY(0); }
+    
+    @media (max-width: 768px) {
+      .slide { padding: 1.25rem 1.25rem 3.5rem 1.25rem; }
+    }
+
+    .slide-header { 
+      border-bottom: 2px solid var(--accent); 
+      padding-bottom: 0.75rem; 
+      margin-bottom: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    
+    .slide-number { 
+      font-size: 0.75rem; 
+      font-weight: 600; 
+      color: var(--accent); 
+      letter-spacing: 0.1em;
+    }
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      flex: 1;
+      min-height: 0;
+    }
+
+    @media (max-width: 768px) {
+      .content-grid { grid-template-columns: 1fr; gap: 1rem; }
+    }
+
+    .content-box {
+      background: var(--card);
+      border-left: 3px solid var(--accent);
+      padding: 1rem 1.25rem;
+    }
+
+    .bullet-list { list-style: none; }
+    .bullet-list li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+    .bullet-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0.4em;
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      transform: rotate(45deg);
+    }
+
+    .highlight-box {
+      background: var(--accent);
+      color: white;
+      padding: 1rem 1.25rem;
+    }
+
+    .example-box {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      padding: 1rem;
+    }
+    .example-label {
+      font-size: 0.65rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent);
+      margin-bottom: 0.5rem;
+    }
+
+    .formula-box {
+      background: var(--fg);
+      color: white;
+      padding: 1rem;
+      font-family: 'Courier New', monospace;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    .figure-container {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 200px;
+    }
+
+    .metric-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      transition: border-color 0.2s;
+    }
+    .metric-card:hover { border-color: var(--accent); }
+
+    .accent { color: var(--accent); font-weight: 600; }
+
+    /* Slim Navigation */
+    .nav-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 36px;
+      background: var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1rem;
+      z-index: 100;
+    }
+
+    .nav-controls { display: flex; align-items: center; gap: 0.5rem; }
+    
+    .nav-btn {
+      width: 28px;
+      height: 28px;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      border-radius: 3px;
+      color: white;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+    }
+    .nav-btn:hover:not(:disabled) { background: white; color: var(--accent); }
+    .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    .slide-counter { color: white; font-size: 0.75rem; font-weight: 600; }
+
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: var(--accent);
+      z-index: 101;
+      transition: width 0.2s;
+    }
+
+    /* TOC Overlay */
+    .toc-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(139, 0, 0, 0.97);
+      z-index: 200;
+      overflow-y: auto;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.25s;
+    }
+    .toc-overlay.open { opacity: 1; visibility: visible; }
+    .toc-content { max-width: 700px; margin: 0 auto; padding: 2rem; }
+    .toc-item {
+      display: block;
+      width: 100%;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: white;
+      padding: 0.6rem 1rem;
+      margin-bottom: 0.25rem;
+      border-radius: 3px;
+      text-align: left;
+      cursor: pointer;
+      font-size: 0.875rem;
+      transition: all 0.15s;
+    }
+    .toc-item:hover { background: white; color: var(--accent); }
+
+    .anim { opacity: 0; transform: translateY(10px); animation: fadeUp 0.35s ease forwards; }
+    .d1 { animation-delay: 0.05s; }
+    .d2 { animation-delay: 0.1s; }
+    .d3 { animation-delay: 0.15s; }
+    .d4 { animation-delay: 0.2s; }
+
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+    @media (prefers-reduced-motion: reduce) {
+      .slide, .nav-btn, .anim { transition: none; }
+      .anim { animation: none; opacity: 1; transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="progress-bar" id="progressBar"></div>
+  <div class="slide-container" id="slideContainer">
+
+    <!-- SLIDE 1 -->
+    <section class="slide" data-slide="1">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Introduction to Classification</h1>
+        <span class="slide-number">01 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <p style="margin-bottom: 1rem; color: var(--muted);">Machine Learning enables computers to learn patterns from data and make predictions.</p>
+          <p style="margin-bottom: 1rem;">One of the most common predictive tasks is <span class="accent">classification</span>.</p>
+          <div class="content-box anim">
+            <p>Classification assigns observations into predefined categories based on input features.</p>
+          </div>
+          <div class="example-box anim d1" style="margin-top: 1rem;">
+            <div class="example-label">Examples</div>
+            <ul class="bullet-list">
+              <li><strong>Email</strong> → Spam or Not Spam</li>
+              <li><strong>Loan Application</strong> → Approved or Rejected</li>
+              <li><strong>Customer</strong> → Will Buy or Not Buy</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d2">
+            <svg width="280" height="160" viewBox="0 0 280 160">
+              <rect x="10" y="50" width="60" height="40" rx="4" fill="#F8F8F8" stroke="#8B0000" stroke-width="2"/>
+              <text x="40" y="75" text-anchor="middle" fill="#1A1A1A" font-size="11" font-weight="600">Data</text>
+              <path d="M75 70 L105 70" stroke="#8B0000" stroke-width="2" marker-end="url(#arr)"/>
+              <rect x="110" y="50" width="60" height="40" rx="4" fill="#8B0000"/>
+              <text x="140" y="75" text-anchor="middle" fill="white" font-size="11" font-weight="600">Algorithm</text>
+              <path d="M175 70 L205 70" stroke="#8B0000" stroke-width="2" marker-end="url(#arr)"/>
+              <rect x="210" y="50" width="60" height="40" rx="4" fill="#F8F8F8" stroke="#8B0000" stroke-width="2"/>
+              <text x="240" y="75" text-anchor="middle" fill="#1A1A1A" font-size="11" font-weight="600">Labels</text>
+              <text x="140" y="130" text-anchor="middle" fill="#666" font-size="10">Classification Pipeline</text>
+              <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L0,8 L8,4 z" fill="#8B0000"/></marker></defs>
+            </svg>
+          </div>
+          <div class="highlight-box anim d3" style="margin-top: 1rem;">
+            <p style="font-size: 0.9rem;">Classification models help organisations make data-driven decisions across industries.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 2 -->
+    <section class="slide" data-slide="2">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Learning Objectives</h1>
+        <span class="slide-number">02 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <p style="margin-bottom: 1rem;">By the end of this module students will be able to:</p>
+          <div class="content-box anim" style="margin-bottom: 0.5rem;"><p>Define binary classification and identify business applications</p></div>
+          <div class="content-box anim d1" style="margin-bottom: 0.5rem;"><p>Explain the structure of decision trees</p></div>
+          <div class="content-box anim d2" style="margin-bottom: 0.5rem;"><p>Understand how decision trees split data</p></div>
+          <div class="content-box anim d3" style="margin-bottom: 0.5rem;"><p>Understand Gini impurity and entropy</p></div>
+        </div>
+        <div>
+          <div class="content-box anim d4" style="margin-bottom: 0.5rem;"><p>Explain the concept of random forests</p></div>
+          <div class="content-box anim d4" style="margin-bottom: 0.5rem;"><p>Evaluate feature importance in tree-based models</p></div>
+          <div class="content-box anim d4" style="margin-bottom: 0.5rem;"><p>Understand interpretability of machine learning models</p></div>
+          <div class="figure-container anim d4" style="margin-top: 1rem;">
+            <svg width="240" height="100" viewBox="0 0 240 100">
+              <circle cx="40" cy="50" r="25" fill="none" stroke="#8B0000" stroke-width="2"/>
+              <text x="40" y="55" text-anchor="middle" fill="#8B0000" font-size="9">Learn</text>
+              <path d="M70 50 L95 50" stroke="#8B0000" stroke-width="2" marker-end="url(#arr)"/>
+              <circle cx="120" cy="50" r="25" fill="none" stroke="#8B0000" stroke-width="2"/>
+              <text x="120" y="55" text-anchor="middle" fill="#8B0000" font-size="9">Apply</text>
+              <path d="M150 50 L175 50" stroke="#8B0000" stroke-width="2" marker-end="url(#arr)"/>
+              <circle cx="200" cy="50" r="25" fill="#8B0000"/>
+              <text x="200" y="55" text-anchor="middle" fill="white" font-size="9">Master</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 3 -->
+    <section class="slide" data-slide="3">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">What is Classification?</h1>
+        <span class="slide-number">03 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <div class="content-box anim">
+            <p>Classification is a <span class="accent">supervised machine learning</span> technique used to predict categorical outcomes.</p>
+          </div>
+          <ul class="bullet-list anim d1" style="margin-top: 1rem;">
+            <li>It uses historical labelled data to learn patterns</li>
+            <li>The model then predicts the class of new unseen data</li>
+          </ul>
+          <div class="example-box anim d2" style="margin-top: 1rem;">
+            <div class="example-label">General Process</div>
+            <p style="font-weight: 600;">Data → Training Model → Prediction</p>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d3">
+            <svg width="260" height="180" viewBox="0 0 260 180">
+              <text x="130" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Training & Prediction Pipeline</text>
+              <rect x="20" y="35" width="70" height="35" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+              <text x="55" y="57" text-anchor="middle" fill="#1A1A1A" font-size="9">Training Data</text>
+              <path d="M95 52 L115 52" stroke="#8B0000" stroke-width="1.5" marker-end="url(#arr)"/>
+              <rect x="120" y="35" width="70" height="35" rx="3" fill="#8B0000"/>
+              <text x="155" y="57" text-anchor="middle" fill="white" font-size="9">Train Model</text>
+              <rect x="20" y="100" width="70" height="35" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+              <text x="55" y="122" text-anchor="middle" fill="#1A1A1A" font-size="9">New Data</text>
+              <path d="M95 117 L115 117" stroke="#8B0000" stroke-width="1.5" marker-end="url(#arr)"/>
+              <rect x="120" y="100" width="70" height="35" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+              <text x="155" y="122" text-anchor="middle" fill="#1A1A1A" font-size="9">Trained Model</text>
+              <path d="M195 117 L210 117" stroke="#8B0000" stroke-width="1.5" marker-end="url(#arr)"/>
+              <rect x="215" y="100" width="40" height="35" rx="3" fill="#8B0000"/>
+              <text x="235" y="122" text-anchor="middle" fill="white" font-size="9">Predict</text>
+              <path d="M155 70 L155 100" stroke="#666" stroke-width="1" stroke-dasharray="3"/>
+              <text x="130" y="165" text-anchor="middle" fill="#666" font-size="9">Example: Customer Data → Churn / Not Churn</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 4 -->
+    <section class="slide" data-slide="4">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Real World Applications of Classification</h1>
+        <span class="slide-number">04 / 35</span>
+      </div>
+      <p style="margin-bottom: 1rem;">Classification is widely used across industries.</p>
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem;">
+        <div class="metric-card anim" style="text-align: center;">
+          <div class="figure-container" style="border: none; background: transparent; padding: 0.5rem;">
+            <svg width="48" height="48" viewBox="0 0 48 48">
+              <circle cx="24" cy="24" r="22" fill="#8B0000"/>
+              <path d="M24 14v20M29 18H21.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H19" stroke="white" stroke-width="2" fill="none"/>
+            </svg>
+          </div>
+          <h3 style="font-size: 1rem; margin: 0.5rem 0;">Finance</h3>
+          <ul class="bullet-list" style="font-size: 0.8rem; text-align: left;">
+            <li>Loan approval prediction</li>
+            <li>Fraud detection</li>
+          </ul>
+        </div>
+        <div class="metric-card anim d1" style="text-align: center;">
+          <div class="figure-container" style="border: none; background: transparent; padding: 0.5rem;">
+            <svg width="48" height="48" viewBox="0 0 48 48">
+              <circle cx="24" cy="24" r="22" fill="#8B0000"/>
+              <path d="M24 12l3 10h10l-8 6 3 10-8-6-8 6 3-10-8-6h10z" stroke="white" stroke-width="1.5" fill="none"/>
+            </svg>
+          </div>
+          <h3 style="font-size: 1rem; margin: 0.5rem 0;">Healthcare</h3>
+          <ul class="bullet-list" style="font-size: 0.8rem; text-align: left;">
+            <li>Disease diagnosis</li>
+            <li>Risk prediction</li>
+          </ul>
+        </div>
+        <div class="metric-card anim d2" style="text-align: center;">
+          <div class="figure-container" style="border: none; background: transparent; padding: 0.5rem;">
+            <svg width="48" height="48" viewBox="0 0 48 48">
+              <circle cx="24" cy="24" r="22" fill="#8B0000"/>
+              <circle cx="18" cy="36" r="3" stroke="white" stroke-width="1.5" fill="none"/>
+              <circle cx="32" cy="36" r="3" stroke="white" stroke-width="1.5" fill="none"/>
+              <path d="M14 18h6l2 10h10l2-8h-12" stroke="white" stroke-width="1.5" fill="none"/>
+            </svg>
+          </div>
+          <h3 style="font-size: 1rem; margin: 0.5rem 0;">Marketing</h3>
+          <ul class="bullet-list" style="font-size: 0.8rem; text-align: left;">
+            <li>Customer segmentation</li>
+            <li>Campaign response</li>
+          </ul>
+        </div>
+        <div class="metric-card anim d3" style="text-align: center;">
+          <div class="figure-container" style="border: none; background: transparent; padding: 0.5rem;">
+            <svg width="48" height="48" viewBox="0 0 48 48">
+              <circle cx="24" cy="24" r="22" fill="#8B0000"/>
+              <rect x="14" y="16" width="16" height="12" rx="1" stroke="white" stroke-width="1.5" fill="none"/>
+              <path d="M30 22h6l4 4v6h-10z" stroke="white" stroke-width="1.5" fill="none"/>
+              <circle cx="20" cy="34" r="2.5" stroke="white" stroke-width="1.5" fill="none"/>
+              <circle cx="34" cy="34" r="2.5" stroke="white" stroke-width="1.5" fill="none"/>
+            </svg>
+          </div>
+          <h3 style="font-size: 1rem; margin: 0.5rem 0;">E-commerce</h3>
+          <ul class="bullet-list" style="font-size: 0.8rem; text-align: left;">
+            <li>Product recommendation</li>
+            <li>Spam detection</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 5 -->
+    <section class="slide" data-slide="5">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Binary Classification</h1>
+        <span class="slide-number">05 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <div class="content-box anim">
+            <p>Binary classification predicts one of <span class="accent">two possible outcomes</span>.</p>
+          </div>
+          <p style="margin: 1rem 0;">Output variable takes only two values. Usually represented as:</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="metric-card anim d1" style="text-align: center;">
+              <div style="font-size: 0.7rem; color: var(--accent); text-transform: uppercase;">Class 1</div>
+              <div style="font-weight: 700;">Positive class</div>
+            </div>
+            <div class="metric-card anim d2" style="text-align: center;">
+              <div style="font-size: 0.7rem; color: var(--muted); text-transform: uppercase;">Class 0</div>
+              <div style="font-weight: 700;">Negative class</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="example-box anim d3">
+            <div class="example-label">Example: Spam Email Detection</div>
+            <div class="figure-container" style="background: transparent; border: none; margin-top: 0.5rem;">
+              <svg width="200" height="120" viewBox="0 0 200 120">
+                <rect x="70" y="10" width="60" height="30" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+                <text x="100" y="30" text-anchor="middle" fill="#1A1A1A" font-size="9">Email</text>
+                <path d="M100 40 L100 50" stroke="#8B0000" stroke-width="1.5"/>
+                <circle cx="100" cy="58" r="6" fill="#8B0000"/>
+                <path d="M94 64 L60 85" stroke="#8B0000" stroke-width="1.5"/>
+                <path d="M106 64 L140 85" stroke="#8B0000" stroke-width="1.5"/>
+                <rect x="30" y="85" width="50" height="25" rx="3" fill="#8B0000"/>
+                <text x="55" y="102" text-anchor="middle" fill="white" font-size="9">Spam (1)</text>
+                <rect x="120" y="85" width="50" height="25" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+                <text x="145" y="102" text-anchor="middle" fill="#1A1A1A" font-size="9">Not Spam (0)</text>
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 6 -->
+    <section class="slide" data-slide="6">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Example – Loan Approval Prediction</h1>
+        <span class="slide-number">06 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <p style="margin-bottom: 1rem;">Suppose a bank wants to predict loan approval.</p>
+          <div class="example-box anim">
+            <div class="example-label">Input Features</div>
+            <ul class="bullet-list">
+              <li>Income</li>
+              <li>Credit Score</li>
+              <li>Loan Amount</li>
+              <li>Employment Status</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d1">
+            <svg width="240" height="160" viewBox="0 0 240 160">
+              <text x="120" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Dataset → Prediction</text>
+              <rect x="20" y="30" width="90" height="80" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+              <text x="65" y="48" text-anchor="middle" fill="#666" font-size="8">Income | Credit | Amt</text>
+              <line x1="30" y1="55" x2="100" y2="55" stroke="#E8E8E8" stroke-width="1"/>
+              <text x="30" y="72" fill="#1A1A1A" font-size="8">75K    | 720   | 50K</text>
+              <text x="30" y="88" fill="#1A1A1A" font-size="8">45K    | 580   | 30K</text>
+              <text x="30" y="104" fill="#1A1A1A" font-size="8">60K    | 650   | 40K</text>
+              <path d="M115 70 L145 70" stroke="#8B0000" stroke-width="2" marker-end="url(#arr)"/>
+              <rect x="150" y="40" width="70" height="60" rx="3" fill="#8B0000"/>
+              <text x="185" y="65" text-anchor="middle" fill="white" font-size="9">Model</text>
+              <text x="185" y="85" text-anchor="middle" fill="white" font-size="8">Predict</text>
+              <rect x="150" y="115" width="32" height="25" rx="3" fill="#8B0000"/>
+              <text x="166" y="132" text-anchor="middle" fill="white" font-size="8">1</text>
+              <rect x="188" y="115" width="32" height="25" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+              <text x="204" y="132" text-anchor="middle" fill="#1A1A1A" font-size="8">0</text>
+              <text x="166" y="152" text-anchor="middle" fill="#666" font-size="7">Approved</text>
+              <text x="204" y="152" text-anchor="middle" fill="#666" font-size="7">Rejected</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 7 -->
+    <section class="slide" data-slide="7">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Algorithms Used for Classification</h1>
+        <span class="slide-number">07 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <p style="margin-bottom: 1rem;">Several machine learning algorithms can solve classification problems.</p>
+          <p style="font-weight: 600; margin-bottom: 0.5rem;">Common algorithms:</p>
+          <ul class="bullet-list anim">
+            <li>Logistic Regression</li>
+            <li>Support Vector Machines</li>
+            <li>Decision Trees</li>
+            <li>Random Forests</li>
+            <li>k-Nearest Neighbors</li>
+          </ul>
+        </div>
+        <div>
+          <div class="figure-container anim d1">
+            <svg width="220" height="140" viewBox="0 0 220 140">
+              <text x="110" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Algorithm Comparison</text>
+              <rect x="15" y="30" width="85" height="25" rx="3" fill="#F8F8F8" stroke="#E8E8E8" stroke-width="1"/>
+              <text x="57" y="47" text-anchor="middle" fill="#666" font-size="8">Logistic Reg.</text>
+              <rect x="120" y="30" width="85" height="25" rx="3" fill="#F8F8F8" stroke="#E8E8E8" stroke-width="1"/>
+              <text x="162" y="47" text-anchor="middle" fill="#666" font-size="8">SVM</text>
+              <rect x="15" y="60" width="85" height="25" rx="3" fill="#8B0000"/>
+              <text x="57" y="77" text-anchor="middle" fill="white" font-size="8" font-weight="600">Decision Trees</text>
+              <rect x="120" y="60" width="85" height="25" rx="3" fill="#8B0000"/>
+              <text x="162" y="77" text-anchor="middle" fill="white" font-size="8" font-weight="600">Random Forest</text>
+              <rect x="15" y="90" width="85" height="25" rx="3" fill="#F8F8F8" stroke="#E8E8E8" stroke-width="1"/>
+              <text x="57" y="107" text-anchor="middle" fill="#666" font-size="8">k-NN</text>
+              <rect x="120" y="90" width="85" height="25" rx="3" fill="#F8F8F8" stroke="#E8E8E8" stroke-width="1"/>
+              <text x="162" y="107" text-anchor="middle" fill="#666" font-size="8">Neural Nets</text>
+              <text x="110" y="132" text-anchor="middle" fill="#8B0000" font-size="9">Focus: Decision Trees & Random Forests</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 8 -->
+    <section class="slide" data-slide="8">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Evaluating Classification Models</h1>
+        <span class="slide-number">08 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <p style="margin-bottom: 1rem;">After training a model we must evaluate its performance.</p>
+          <p style="font-weight: 600; margin-bottom: 0.5rem;">Key metrics:</p>
+          <ul class="bullet-list anim">
+            <li>Accuracy</li>
+            <li>Precision</li>
+            <li>Recall</li>
+            <li>F1 Score</li>
+            <li>ROC Curve and AUC</li>
+          </ul>
+          <div class="content-box anim d1" style="margin-top: 1rem;">
+            <p>Different metrics help evaluate different types of errors.</p>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d2">
+            <svg width="200" height="160" viewBox="0 0 200 160">
+              <text x="100" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Confusion Matrix</text>
+              <text x="90" y="40" text-anchor="middle" fill="#666" font-size="8">Predicted +</text>
+              <text x="145" y="40" text-anchor="middle" fill="#666" font-size="8">Predicted -</text>
+              <text x="35" y="70" text-anchor="middle" fill="#666" font-size="8">Actual +</text>
+              <rect x="55" y="55" width="45" height="35" rx="2" fill="#4CAF50"/>
+              <text x="77" y="77" text-anchor="middle" fill="white" font-size="10" font-weight="600">TP</text>
+              <rect x="105" y="55" width="45" height="35" rx="2" fill="#8B0000"/>
+              <text x="127" y="77" text-anchor="middle" fill="white" font-size="10" font-weight="600">FP</text>
+              <text x="35" y="115" text-anchor="middle" fill="#666" font-size="8">Actual -</text>
+              <rect x="55" y="100" width="45" height="35" rx="2" fill="#8B0000"/>
+              <text x="77" y="122" text-anchor="middle" fill="white" font-size="10" font-weight="600">FN</text>
+              <rect x="105" y="100" width="45" height="35" rx="2" fill="#4CAF50"/>
+              <text x="127" y="122" text-anchor="middle" fill="white" font-size="10" font-weight="600">TN</text>
+              <text x="100" y="152" text-anchor="middle" fill="#666" font-size="8">True/False Positive/Negative</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 9 -->
+    <section class="slide" data-slide="9">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Accuracy</h1>
+        <span class="slide-number">09 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <p style="margin-bottom: 1rem;">Accuracy measures the proportion of correct predictions.</p>
+          <div class="formula-box anim">Accuracy = Correct / Total</div>
+          <div class="example-box anim d1" style="margin-top: 1rem;">
+            <div class="example-label">Example</div>
+            <ul class="bullet-list">
+              <li>100 loan predictions</li>
+              <li>Correct predictions = 92</li>
+              <li><strong>Accuracy = 92%</strong></li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d2">
+            <svg width="200" height="140" viewBox="0 0 200 140">
+              <text x="100" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Accuracy Formula</text>
+              <rect x="30" y="35" width="60" height="50" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+              <text x="60" y="55" text-anchor="middle" fill="#1A1A1A" font-size="9">Correct</text>
+              <text x="60" y="75" text-anchor="middle" fill="#8B0000" font-size="18" font-weight="700">92</text>
+              <text x="100" y="62" text-anchor="middle" fill="#1A1A1A" font-size="20">/</text>
+              <rect x="110" y="35" width="60" height="50" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+              <text x="140" y="55" text-anchor="middle" fill="#1A1A1A" font-size="9">Total</text>
+              <text x="140" y="75" text-anchor="middle" fill="#1A1A1A" font-size="18" font-weight="700">100</text>
+              <text x="100" y="110" text-anchor="middle" fill="#1A1A1A" font-size="16">=</text>
+              <text x="100" y="130" text-anchor="middle" fill="#8B0000" font-size="20" font-weight="700">92%</text>
+            </svg>
+          </div>
+          <div class="content-box anim d3" style="margin-top: 0.5rem;">
+            <p style="font-size: 0.9rem;">However accuracy can be misleading with <span class="accent">imbalanced data</span>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 10 -->
+    <section class="slide" data-slide="10">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Precision</h1>
+        <span class="slide-number">10 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <p style="margin-bottom: 1rem;">Precision measures the correctness of positive predictions.</p>
+          <div class="formula-box anim">Precision = TP / (TP + FP)</div>
+          <div class="example-box anim d1" style="margin-top: 1rem;">
+            <div class="example-label">Fraud Detection Example</div>
+            <ul class="bullet-list">
+              <li>Model predicts 20 fraud cases</li>
+              <li>Only 15 are actual fraud</li>
+              <li><strong>Precision = 15/20 = 75%</strong></li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d2">
+            <svg width="200" height="140" viewBox="0 0 200 140">
+              <text x="100" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Precision Visualization</text>
+              <rect x="30" y="30" width="140" height="50" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+              <text x="100" y="50" text-anchor="middle" fill="#666" font-size="8">Predicted Positive (20)</text>
+              <rect x="35" y="60" width="100" height="15" rx="2" fill="#4CAF50"/>
+              <text x="85" y="72" text-anchor="middle" fill="white" font-size="8">TP: 15</text>
+              <rect x="140" y="60" width="25" height="15" rx="2" fill="#8B0000"/>
+              <text x="152" y="72" text-anchor="middle" fill="white" font-size="7">FP:5</text>
+              <text x="100" y="105" text-anchor="middle" fill="#1A1A1A" font-size="10">Precision = 15/20</text>
+              <text x="100" y="125" text-anchor="middle" fill="#8B0000" font-size="14" font-weight="700">= 75%</text>
+            </svg>
+          </div>
+          <div class="content-box anim d3" style="margin-top: 0.5rem;">
+            <p style="font-size: 0.9rem;">High precision reduces <span class="accent">false alarms</span>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 11 -->
+    <section class="slide" data-slide="11">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Recall (Sensitivity)</h1>
+        <span class="slide-number">11 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <p style="margin-bottom: 1rem;">Recall measures how many actual positives are correctly detected.</p>
+          <div class="formula-box anim">Recall = TP / (TP + FN)</div>
+          <div class="example-box anim d1" style="margin-top: 1rem;">
+            <div class="example-label">Medical Diagnosis Example</div>
+            <ul class="bullet-list">
+              <li>100 patients have disease</li>
+              <li>Model detects 90</li>
+              <li><strong>Recall = 90%</strong></li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d2">
+            <svg width="200" height="140" viewBox="0 0 200 140">
+              <text x="100" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Recall Visualization</text>
+              <rect x="30" y="30" width="140" height="55" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+              <text x="100" y="48" text-anchor="middle" fill="#666" font-size="8">Actual Positive (100 patients)</text>
+              <rect x="35" y="55" width="125" height="25" rx="2" fill="#4CAF50"/>
+              <text x="97" y="72" text-anchor="middle" fill="white" font-size="9">Detected: 90</text>
+              <rect x="30" y="95" width="60" height="20" rx="2" fill="#8B0000"/>
+              <text x="60" y="109" text-anchor="middle" fill="white" font-size="8">Missed: 10</text>
+              <text x="140" y="109" text-anchor="middle" fill="#8B0000" font-size="12" font-weight="700">Recall = 90%</text>
+            </svg>
+          </div>
+          <div class="content-box anim d3" style="margin-top: 0.5rem;">
+            <p style="font-size: 0.9rem;">High recall reduces <span class="accent">missed cases</span>.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 12 -->
+    <section class="slide" data-slide="12">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">F1 Score</h1>
+        <span class="slide-number">12 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <p style="margin-bottom: 1rem;">F1 Score combines precision and recall.</p>
+          <div class="content-box anim">
+            <p>It is the <span class="accent">harmonic mean</span> of precision and recall.</p>
+          </div>
+          <div class="content-box anim d1" style="margin-top: 0.5rem;">
+            <p>F1 Score is useful when datasets are <span class="accent">imbalanced</span>.</p>
+          </div>
+          <div class="highlight-box anim d2" style="margin-top: 1rem;">
+            <p>A good F1 score indicates balanced model performance.</p>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d3">
+            <svg width="200" height="160" viewBox="0 0 200 160">
+              <text x="100" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">F1 Score Composition</text>
+              <circle cx="60" cy="55" r="35" fill="none" stroke="#8B0000" stroke-width="2"/>
+              <text x="60" y="52" text-anchor="middle" fill="#1A1A1A" font-size="9" font-weight="600">Precision</text>
+              <text x="60" y="65" text-anchor="middle" fill="#666" font-size="8">0.75</text>
+              <circle cx="140" cy="55" r="35" fill="none" stroke="#8B0000" stroke-width="2"/>
+              <text x="140" y="52" text-anchor="middle" fill="#1A1A1A" font-size="9" font-weight="600">Recall</text>
+              <text x="140" y="65" text-anchor="middle" fill="#666" font-size="8">0.90</text>
+              <path d="M75 85 L100 110" stroke="#8B0000" stroke-width="1.5"/>
+              <path d="M125 85 L100 110" stroke="#8B0000" stroke-width="1.5"/>
+              <circle cx="100" cy="120" r="25" fill="#8B0000"/>
+              <text x="100" y="117" text-anchor="middle" fill="white" font-size="9" font-weight="600">F1</text>
+              <text x="100" y="130" text-anchor="middle" fill="white" font-size="8">0.82</text>
+              <text x="100" y="152" text-anchor="middle" fill="#666" font-size="8">Harmonic Mean</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 13 -->
+    <section class="slide" data-slide="13">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">ROC Curve and AUC</h1>
+        <span class="slide-number">13 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <p style="margin-bottom: 1rem;">ROC curve shows tradeoff between:</p>
+          <ul class="bullet-list anim">
+            <li>True Positive Rate</li>
+            <li>False Positive Rate</li>
+          </ul>
+          <p style="margin: 1rem 0;">The Area Under Curve (AUC) measures model performance.</p>
+          <div class="example-box anim d1">
+            <div class="example-label">AUC Values</div>
+            <div style="display: flex; gap: 0.5rem; margin-top: 0.5rem;">
+              <div style="flex: 1; text-align: center; padding: 0.5rem; background: var(--accent); color: white;">
+                <div style="font-weight: 700;">1.0</div>
+                <div style="font-size: 0.7rem;">Perfect</div>
+              </div>
+              <div style="flex: 1; text-align: center; padding: 0.5rem; background: var(--card);">
+                <div style="font-weight: 700;">0.5</div>
+                <div style="font-size: 0.7rem;">Random</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d2">
+            <svg width="200" height="160" viewBox="0 0 200 160">
+              <text x="100" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">ROC Curve</text>
+              <line x1="40" y1="130" x2="180" y2="130" stroke="#E8E8E8" stroke-width="1"/>
+              <line x1="40" y1="130" x2="40" y2="30" stroke="#E8E8E8" stroke-width="1"/>
+              <text x="110" y="145" text-anchor="middle" fill="#666" font-size="7">False Positive Rate</text>
+              <text x="20" y="80" text-anchor="middle" fill="#666" font-size="7" transform="rotate(-90 20 80)">True Positive Rate</text>
+              <line x1="40" y1="130" x2="180" y2="30" stroke="#E8E8E8" stroke-width="1" stroke-dasharray="4"/>
+              <path d="M40 130 Q70 120 90 100 Q120 70 150 45 Q170 35 180 30" fill="none" stroke="#8B0000" stroke-width="2"/>
+              <path d="M40 130 Q70 120 90 100 Q120 70 150 45 Q170 35 180 30 L180 130 Z" fill="rgba(139,0,0,0.15)"/>
+              <circle cx="40" cy="130" r="3" fill="#8B0000"/>
+              <circle cx="180" cy="30" r="3" fill="#8B0000"/>
+              <text x="130" y="100" text-anchor="middle" fill="#8B0000" font-size="10" font-weight="600">AUC</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 14 -->
+    <section class="slide" data-slide="14">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Introduction to Decision Trees</h1>
+        <span class="slide-number">14 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <div class="content-box anim">
+            <p>Decision trees are one of the most <span class="accent">intuitive</span> machine learning models.</p>
+          </div>
+          <p style="margin: 1rem 0;">They represent decisions using a <strong>tree structure</strong>.</p>
+          <ul class="bullet-list anim d1">
+            <li>Each node represents a test on a feature</li>
+            <li>Each branch represents an outcome</li>
+            <li>Leaf nodes represent predictions</li>
+          </ul>
+          <div class="content-box anim d2" style="margin-top: 1rem;">
+            <p>Decision trees are <strong>easy to interpret and visualize</strong>.</p>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d3">
+            <svg width="220" height="180" viewBox="0 0 220 180">
+              <text x="110" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Decision Tree Structure</text>
+              <rect x="75" y="25" width="70" height="30" rx="3" fill="#8B0000"/>
+              <text x="110" y="45" text-anchor="middle" fill="white" font-size="9">Root Node</text>
+              <line x1="90" y1="55" x2="50" y2="80" stroke="#8B0000" stroke-width="1.5"/>
+              <line x1="130" y1="55" x2="170" y2="80" stroke="#8B0000" stroke-width="1.5"/>
+              <rect x="15" y="80" width="70" height="25" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+              <text x="50" y="97" text-anchor="middle" fill="#1A1A1A" font-size="8">Internal Node</text>
+              <rect x="135" y="80" width="70" height="25" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+              <text x="170" y="97" text-anchor="middle" fill="#1A1A1A" font-size="8">Internal Node</text>
+              <line x1="35" y1="105" x2="20" y2="130" stroke="#8B0000" stroke-width="1.5"/>
+              <line x1="65" y1="105" x2="80" y2="130" stroke="#8B0000" stroke-width="1.5"/>
+              <line x1="155" y1="105" x2="140" y2="130" stroke="#8B0000" stroke-width="1.5"/>
+              <line x1="185" y1="105" x2="200" y2="130" stroke="#8B0000" stroke-width="1.5"/>
+              <rect x="5" y="130" width="35" height="25" rx="3" fill="#4CAF50"/>
+              <text x="22" y="147" text-anchor="middle" fill="white" font-size="8">Leaf</text>
+              <rect x="55" y="130" width="35" height="25" rx="3" fill="#4CAF50"/>
+              <text x="72" y="147" text-anchor="middle" fill="white" font-size="8">Leaf</text>
+              <rect x="115" y="130" width="35" height="25" rx="3" fill="#4CAF50"/>
+              <text x="132" y="147" text-anchor="middle" fill="white" font-size="8">Leaf</text>
+              <rect x="175" y="130" width="35" height="25" rx="3" fill="#4CAF50"/>
+              <text x="192" y="147" text-anchor="middle" fill="white" font-size="8">Leaf</text>
+              <text x="50" y="172" text-anchor="middle" fill="#8B0000" font-size="8">Decision</text>
+              <text x="170" y="172" text-anchor="middle" fill="#4CAF50" font-size="8">Prediction</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 15 -->
+    <section class="slide" data-slide="15">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Structure of a Decision Tree</h1>
+        <span class="slide-number">15 / 35</span>
+      </div>
+      <p style="margin-bottom: 1rem;">A decision tree contains three main components.</p>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;">
+        <div class="metric-card anim" style="text-align: center;">
+          <svg width="60" height="60" viewBox="0 0 60 60" style="margin-bottom: 0.5rem;">
+            <circle cx="30" cy="30" r="25" fill="#8B0000"/>
+            <text x="30" y="35" text-anchor="middle" fill="white" font-size="10" font-weight="600">Root</text>
+          </svg>
+          <h3 style="font-size: 1rem; margin-bottom: 0.25rem;">Root Node</h3>
+          <p style="font-size: 0.8rem; color: var(--muted);">Represents the entire dataset</p>
+        </div>
+        <div class="metric-card anim d1" style="text-align: center;">
+          <svg width="60" height="60" viewBox="0 0 60 60" style="margin-bottom: 0.5rem;">
+            <circle cx="30" cy="30" r="25" fill="#8B0000"/>
+            <path d="M30 18v12M30 30l-6-6M30 30l6-6" stroke="white" stroke-width="2" fill="none"/>
+          </svg>
+          <h3 style="font-size: 1rem; margin-bottom: 0.25rem;">Internal Nodes</h3>
+          <p style="font-size: 0.8rem; color: var(--muted);">Decision points that split the data</p>
+        </div>
+        <div class="metric-card anim d2" style="text-align: center;">
+          <svg width="60" height="60" viewBox="0 0 60 60" style="margin-bottom: 0.5rem;">
+            <circle cx="30" cy="30" r="25" fill="#4CAF50"/>
+            <path d="M30 15l5 12h12l-9 7 3 12-11-8-11 8 3-12-9-7h12z" fill="white"/>
+          </svg>
+          <h3 style="font-size: 1rem; margin-bottom: 0.25rem;">Leaf Nodes</h3>
+          <p style="font-size: 0.8rem; color: var(--muted);">Final prediction or class label</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 16 -->
+    <section class="slide" data-slide="16">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">How Decision Trees Work</h1>
+        <span class="slide-number">16 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <div class="content-box anim">
+            <p>Decision trees work by <span class="accent">recursively splitting</span> data.</p>
+          </div>
+          <p style="margin: 1rem 0;"><strong>Goal:</strong> Create subsets where observations are similar.</p>
+          <p>Each split selects the feature that best separates classes.</p>
+          <div class="example-box anim d1" style="margin-top: 1rem;">
+            <div class="example-label">Example Decision Path</div>
+            <p><strong>Income > 50K ?</strong></p>
+            <p style="margin-top: 0.5rem;">Yes → Approved</p>
+            <p>No → Credit Score Check</p>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d2">
+            <svg width="220" height="180" viewBox="0 0 220 180">
+              <text x="110" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Decision Path Flowchart</text>
+              <rect x="60" y="25" width="100" height="30" rx="3" fill="#8B0000"/>
+              <text x="110" y="45" text-anchor="middle" fill="white" font-size="9">Income > 50K?</text>
+              <line x1="80" y1="55" x2="45" y2="85" stroke="#4CAF50" stroke-width="1.5"/>
+              <line x1="140" y1="55" x2="175" y2="85" stroke="#8B0000" stroke-width="1.5"/>
+              <text x="55" y="78" fill="#4CAF50" font-size="8">Yes</text>
+              <text x="160" y="78" fill="#8B0000" font-size="8">No</text>
+              <rect x="15" y="85" width="60" height="25" rx="3" fill="#4CAF50"/>
+              <text x="45" y="102" text-anchor="middle" fill="white" font-size="8">Approved</text>
+              <rect x="145" y="85" width="60" height="25" rx="3" fill="#8B0000"/>
+              <text x="175" y="102" text-anchor="middle" fill="white" font-size="8">Credit Check</text>
+              <line x1="160" y1="110" x2="130" y2="135" stroke="#8B0000" stroke-width="1.5"/>
+              <line x1="190" y1="110" x2="200" y2="135" stroke="#4CAF50" stroke-width="1.5"/>
+              <rect x="90" y="135" width="50" height="25" rx="3" fill="#8B0000"/>
+              <text x="115" y="152" text-anchor="middle" fill="white" font-size="7">Rejected</text>
+              <rect x="170" y="135" width="45" height="25" rx="3" fill="#4CAF50"/>
+              <text x="192" y="152" text-anchor="middle" fill="white" font-size="7">Approved</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 17 -->
+    <section class="slide" data-slide="17">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Decision Tree Example</h1>
+        <span class="slide-number">17 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <p style="margin-bottom: 1rem;"><strong>Predict whether a customer will buy a product.</strong></p>
+          <div class="example-box anim">
+            <div class="example-label">Decision Rules</div>
+            <ul class="bullet-list">
+              <li>Age < 30</li>
+              <li>Income > 40k</li>
+              <li>Previous Purchase = Yes</li>
+            </ul>
+          </div>
+          <div class="example-box anim d1" style="margin-top: 1rem;">
+            <div class="example-label">Decision Tree Path</div>
+            <p>Age < 30 → Yes</p>
+            <p>Income > 40k → Yes</p>
+            <p style="font-weight: 700; margin-top: 0.5rem;">Prediction → Buy Product</p>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d2">
+            <svg width="220" height="180" viewBox="0 0 220 180">
+              <text x="110" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Purchase Decision Tree</text>
+              <rect x="65" y="25" width="90" height="28" rx="3" fill="#8B0000"/>
+              <text x="110" y="44" text-anchor="middle" fill="white" font-size="8">Age < 30?</text>
+              <line x1="85" y1="53" x2="50" y2="75" stroke="#8B0000" stroke-width="1.5"/>
+              <line x1="135" y1="53" x2="170" y2="75" stroke="#4CAF50" stroke-width="1.5"/>
+              <text x="60" y="70" fill="#8B0000" font-size="7">Yes</text>
+              <text x="155" y="70" fill="#4CAF50" font-size="7">No</text>
+              <rect x="15" y="75" width="70" height="25" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+              <text x="50" y="92" text-anchor="middle" fill="#1A1A1A" font-size="7">Income > 40k?</text>
+              <rect x="135" y="75" width="70" height="25" rx="3" fill="#4CAF50"/>
+              <text x="170" y="92" text-anchor="middle" fill="white" font-size="7">Buy Product</text>
+              <line x1="35" y1="100" x2="25" y2="125" stroke="#8B0000" stroke-width="1.5"/>
+              <line x1="65" y1="100" x2="75" y2="125" stroke="#4CAF50" stroke-width="1.5"/>
+              <rect x="5" y="125" width="45" height="25" rx="3" fill="#8B0000"/>
+              <text x="27" y="142" text-anchor="middle" fill="white" font-size="7">No Buy</text>
+              <rect x="55" y="125" width="45" height="25" rx="3" fill="#4CAF50"/>
+              <text x="77" y="142" text-anchor="middle" fill="white" font-size="7">Buy</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 18 -->
+    <section class="slide" data-slide="18">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">How Trees Decide the Best Split</h1>
+        <span class="slide-number">18 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <p style="margin-bottom: 1rem;">Decision trees choose splits using <span class="accent">impurity measures</span>.</p>
+          <p style="font-weight: 600; margin-bottom: 0.5rem;">Two common criteria:</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="metric-card anim" style="text-align: center;">
+              <h3 style="font-size: 1rem;">Gini Impurity</h3>
+            </div>
+            <div class="metric-card anim d1" style="text-align: center;">
+              <h3 style="font-size: 1rem;">Entropy</h3>
+            </div>
+          </div>
+          <div class="content-box anim d2" style="margin-top: 1rem;">
+            <p><strong>Goal:</strong> Reduce impurity in each node.</p>
+          </div>
+          <div class="content-box anim d3" style="margin-top: 0.5rem;">
+            <p>The more <span class="accent">homogeneous</span> the node, the better the split.</p>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d4">
+            <svg width="200" height="150" viewBox="0 0 200 150">
+              <text x="100" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Node Purity Visualization</text>
+              <rect x="20" y="30" width="70" height="50" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+              <rect x="25" y="35" width="30" height="40" rx="2" fill="#8B0000" opacity="0.7"/>
+              <rect x="60" y="35" width="25" height="40" rx="2" fill="#4CAF50" opacity="0.7"/>
+              <text x="55" y="95" text-anchor="middle" fill="#8B0000" font-size="8">High Impurity</text>
+              <path d="M100 55 L120 55" stroke="#8B0000" stroke-width="2" marker-end="url(#arr)"/>
+              <rect x="130" y="30" width="30" height="50" rx="3" fill="#8B0000"/>
+              <text x="145" y="60" text-anchor="middle" fill="white" font-size="7">Pure A</text>
+              <rect x="165" y="30" width="25" height="50" rx="3" fill="#4CAF50"/>
+              <text x="177" y="60" text-anchor="middle" fill="white" font-size="7">Pure B</text>
+              <text x="160" y="95" text-anchor="middle" fill="#4CAF50" font-size="8">Low Impurity</text>
+              <text x="100" y="130" text-anchor="middle" fill="#666" font-size="8">Splitting reduces impurity</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 19 -->
+    <section class="slide" data-slide="19">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Gini Impurity</h1>
+        <span class="slide-number">19 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <p style="margin-bottom: 1rem;">Gini impurity measures how often a randomly chosen element would be misclassified.</p>
+          <p style="font-weight: 600; margin-bottom: 0.5rem;">Properties:</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+            <div class="metric-card anim">
+              <p style="text-align: center;"><strong>Gini = 0</strong></p>
+              <p style="text-align: center; font-size: 0.8rem; color: var(--muted);">Perfect purity</p>
+            </div>
+            <div class="metric-card anim d1">
+              <p style="text-align: center;"><strong>Higher value</strong></p>
+              <p style="text-align: center; font-size: 0.8rem; color: var(--muted);">Mixed classes</p>
+            </div>
+          </div>
+          <div class="content-box anim d2" style="margin-top: 1rem;">
+            <p>Lower Gini means <span class="accent">better split</span>.</p>
+          </div>
+          <div class="highlight-box anim d3" style="margin-top: 0.5rem;">
+            <p>Decision trees select the split that minimizes Gini impurity.</p>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d4">
+            <svg width="200" height="150" viewBox="0 0 200 150">
+              <text x="100" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Impurity Reduction</text>
+              <rect x="30" y="30" width="60" height="40" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+              <text x="60" y="45" text-anchor="middle" fill="#666" font-size="7">Before Split</text>
+              <text x="60" y="60" text-anchor="middle" fill="#8B0000" font-size="10" font-weight="600">Gini=0.5</text>
+              <path d="M95 50 L115 50" stroke="#8B0000" stroke-width="2" marker-end="url(#arr)"/>
+              <rect x="120" y="25" width="55" height="30" rx="3" fill="#4CAF50"/>
+              <text x="147" y="38" text-anchor="middle" fill="white" font-size="7">Node A</text>
+              <text x="147" y="50" text-anchor="middle" fill="white" font-size="8">Gini=0.1</text>
+              <rect x="120" y="60" width="55" height="30" rx="3" fill="#4CAF50"/>
+              <text x="147" y="73" text-anchor="middle" fill="white" font-size="7">Node B</text>
+              <text x="147" y="85" text-anchor="middle" fill="white" font-size="8">Gini=0.2</text>
+              <text x="100" y="120" text-anchor="middle" fill="#1A1A1A" font-size="9">Weighted: 0.15 < 0.5</text>
+              <text x="100" y="140" text-anchor="middle" fill="#4CAF50" font-size="8">Impurity Reduced!</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 20 -->
+    <section class="slide" data-slide="20">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Entropy</h1>
+        <span class="slide-number">20 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <p style="margin-bottom: 1rem;">Entropy measures disorder or uncertainty.</p>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+            <div class="metric-card anim">
+              <p style="text-align: center;"><strong>High entropy</strong></p>
+              <p style="text-align: center; font-size: 0.8rem; color: var(--muted);">Mixed classes</p>
+            </div>
+            <div class="metric-card anim d1">
+              <p style="text-align: center;"><strong>Low entropy</strong></p>
+              <p style="text-align: center; font-size: 0.8rem; color: var(--muted);">Pure node</p>
+            </div>
+          </div>
+          <div class="content-box anim d2" style="margin-top: 1rem;">
+            <p>Decision trees aim to <span class="accent">minimize entropy</span>.</p>
+          </div>
+          <div class="example-box anim d3" style="margin-top: 0.5rem;">
+            <div class="example-label">Information Gain</div>
+            <p>Reduction in entropy after split.</p>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d4">
+            <svg width="200" height="150" viewBox="0 0 200 150">
+              <text x="100" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Entropy Before vs After</text>
+              <defs>
+                <linearGradient id="entGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" style="stop-color:#4CAF50"/>
+                  <stop offset="100%" style="stop-color:#8B0000"/>
+                </linearGradient>
+              </defs>
+              <rect x="20" y="35" width="160" height="15" rx="3" fill="url(#entGrad)"/>
+              <text x="20" y="62" fill="#4CAF50" font-size="8">0 (Pure)</text>
+              <text x="180" y="62" text-anchor="end" fill="#8B0000" font-size="8">1 (Mixed)</text>
+              <rect x="30" y="75" width="60" height="30" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+              <text x="60" y="88" text-anchor="middle" fill="#666" font-size="7">Before</text>
+              <text x="60" y="100" text-anchor="middle" fill="#8B0000" font-size="9">H = 0.97</text>
+              <rect x="110" y="75" width="60" height="30" rx="3" fill="#4CAF50"/>
+              <text x="140" y="88" text-anchor="middle" fill="white" font-size="7">After</text>
+              <text x="140" y="100" text-anchor="middle" fill="white" font-size="9">H = 0.25</text>
+              <text x="100" y="130" text-anchor="middle" fill="#1A1A1A" font-size="9">Information Gain = 0.72</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 21 -->
+    <section class="slide" data-slide="21">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Problem with Decision Trees</h1>
+        <span class="slide-number">21 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <p style="margin-bottom: 1rem;">Decision trees are powerful but have a limitation.</p>
+          <div class="highlight-box anim" style="text-align: center;">
+            <p style="font-size: 1.1rem; font-weight: 700;">They can overfit the training data</p>
+          </div>
+          <div class="content-box anim d1" style="margin-top: 1rem;">
+            <p>Overfitting occurs when the tree becomes very deep and learns <span class="accent">noise</span> in the dataset.</p>
+          </div>
+          <div class="content-box anim d2" style="margin-top: 0.5rem;">
+            <p><strong>Result:</strong> Poor performance on new data.</p>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d3">
+            <svg width="220" height="160" viewBox="0 0 220 160">
+              <text x="110" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Overfitting vs Generalized</text>
+              <rect x="15" y="30" width="85" height="100" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+              <text x="57" y="45" text-anchor="middle" fill="#8B0000" font-size="8" font-weight="600">Overfitted</text>
+              <circle cx="35" cy="60" r="4" fill="#8B0000"/>
+              <circle cx="55" cy="55" r="4" fill="#4CAF50"/>
+              <circle cx="75" cy="65" r="4" fill="#8B0000"/>
+              <circle cx="45" cy="75" r="4" fill="#4CAF50"/>
+              <circle cx="65" cy="70" r="4" fill="#8B0000"/>
+              <path d="M30 80 Q50 50 80 90" stroke="#8B0000" stroke-width="1" fill="none" stroke-dasharray="2"/>
+              <text x="57" y="115" text-anchor="middle" fill="#666" font-size="7">Learns noise</text>
+              <text x="57" y="128" text-anchor="middle" fill="#8B0000" font-size="7">High variance</text>
+              <rect x="120" y="30" width="85" height="100" rx="3" fill="#F8F8F8" stroke="#4CAF50" stroke-width="1.5"/>
+              <text x="162" y="45" text-anchor="middle" fill="#4CAF50" font-size="8" font-weight="600">Generalized</text>
+              <circle cx="140" cy="60" r="4" fill="#8B0000"/>
+              <circle cx="160" cy="55" r="4" fill="#4CAF50"/>
+              <circle cx="180" cy="65" r="4" fill="#8B0000"/>
+              <circle cx="150" cy="75" r="4" fill="#4CAF50"/>
+              <circle cx="170" cy="70" r="4" fill="#8B0000"/>
+              <line x1="135" y1="85" x2="185" y2="55" stroke="#4CAF50" stroke-width="1.5"/>
+              <text x="162" y="115" text-anchor="middle" fill="#666" font-size="7">Captures pattern</text>
+              <text x="162" y="128" text-anchor="middle" fill="#4CAF50" font-size="7">Good balance</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 22 -->
+    <section class="slide" data-slide="22">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Pruning Decision Trees</h1>
+        <span class="slide-number">22 / 35</span>
+      </div>
+      <p style="margin-bottom: 1rem;">Pruning reduces tree complexity and prevents overfitting.</p>
+      <p style="font-weight: 600; margin-bottom: 0.5rem;">Two types:</p>
+      <div class="content-grid">
+        <div class="metric-card anim">
+          <h3 style="font-size: 1rem; margin-bottom: 0.5rem;">Pre-Pruning</h3>
+          <p style="margin-bottom: 0.5rem;">Stop tree growth early.</p>
+          <div class="example-box" style="margin-top: 0.5rem;">
+            <div class="example-label">Example</div>
+            <p style="font-size: 0.9rem;">Limit maximum depth</p>
+          </div>
+        </div>
+        <div class="metric-card anim d1">
+          <h3 style="font-size: 1rem; margin-bottom: 0.5rem;">Post-Pruning</h3>
+          <p style="margin-bottom: 0.5rem;">Grow full tree then remove unnecessary branches.</p>
+        </div>
+      </div>
+      <div class="figure-container anim d2" style="margin-top: 1rem;">
+        <svg width="300" height="80" viewBox="0 0 300 80">
+          <rect x="20" y="15" width="80" height="50" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+          <text x="60" y="35" text-anchor="middle" fill="#8B0000" font-size="7">Full Tree</text>
+          <text x="60" y="50" text-anchor="middle" fill="#666" font-size="7">Complex</text>
+          <path d="M105 40 L145 40" stroke="#8B0000" stroke-width="2" marker-end="url(#arr)"/>
+          <text x="125" y="32" text-anchor="middle" fill="#8B0000" font-size="7">Prune</text>
+          <rect x="155" y="15" width="80" height="50" rx="3" fill="#4CAF50"/>
+          <text x="195" y="35" text-anchor="middle" fill="white" font-size="7">Pruned Tree</text>
+          <text x="195" y="50" text-anchor="middle" fill="white" font-size="7">Simplified</text>
+          <text x="270" y="45" text-anchor="middle" fill="#666" font-size="8">Better<br/>Generalization</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- SLIDE 23 -->
+    <section class="slide" data-slide="23">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">CART Algorithm</h1>
+        <span class="slide-number">23 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <div class="formula-box anim" style="font-size: 1.1rem;">Classification And Regression Trees</div>
+          <p style="font-weight: 600; margin: 1rem 0 0.5rem;">Key features:</p>
+          <ul class="bullet-list anim d1">
+            <li>Binary splits</li>
+            <li>Uses <strong>Gini impurity</strong> for classification</li>
+            <li>Uses <strong>MSE</strong> for regression</li>
+          </ul>
+          <div class="content-box anim d2" style="margin-top: 1rem;">
+            <p>CART is widely used due to <span class="accent">simplicity</span>.</p>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d3">
+            <svg width="200" height="150" viewBox="0 0 200 150">
+              <text x="100" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Binary Split Illustration</text>
+              <rect x="65" y="30" width="70" height="30" rx="3" fill="#8B0000"/>
+              <text x="100" y="50" text-anchor="middle" fill="white" font-size="8">Parent Node</text>
+              <line x1="85" y1="60" x2="55" y2="85" stroke="#8B0000" stroke-width="1.5"/>
+              <line x1="115" y1="60" x2="145" y2="85" stroke="#8B0000" stroke-width="1.5"/>
+              <text x="65" y="78" fill="#8B0000" font-size="7">Yes</text>
+              <text x="130" y="78" fill="#4CAF50" font-size="7">No</text>
+              <rect x="25" y="85" width="55" height="30" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+              <text x="52" y="105" text-anchor="middle" fill="#1A1A1A" font-size="7">Left Child</text>
+              <rect x="120" y="85" width="55" height="30" rx="3" fill="#F8F8F8" stroke="#4CAF50" stroke-width="1.5"/>
+              <text x="147" y="105" text-anchor="middle" fill="#1A1A1A" font-size="7">Right Child</text>
+              <text x="100" y="138" text-anchor="middle" fill="#666" font-size="8">Always binary splits</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 24 -->
+    <section class="slide" data-slide="24">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Limitations of Single Decision Trees</h1>
+        <span class="slide-number">24 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <p style="font-weight: 600; margin-bottom: 0.5rem;">Problems with single trees:</p>
+          <ul class="bullet-list anim">
+            <li>Overfitting</li>
+            <li>Sensitive to small data changes</li>
+            <li>High variance</li>
+          </ul>
+          <div class="highlight-box anim d1" style="margin-top: 1rem;">
+            <p><strong>Solution:</strong> Ensemble learning methods.</p>
+          </div>
+          <div class="content-box anim d2" style="margin-top: 0.5rem;">
+            <p>The most popular method is <span class="accent">Random Forest</span>.</p>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d3">
+            <svg width="200" height="150" viewBox="0 0 200 150">
+              <text x="100" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Single vs Multiple Trees</text>
+              <rect x="15" y="35" width="60" height="80" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+              <polygon points="45,50 25,85 65,85" fill="#8B0000"/>
+              <rect x="35" y="85" width="20" height="20" fill="#666"/>
+              <text x="45" y="125" text-anchor="middle" fill="#8B0000" font-size="8">Single Tree</text>
+              <text x="45" y="140" text-anchor="middle" fill="#666" font-size="7">High Variance</text>
+              <rect x="115" y="35" width="75" height="80" rx="3" fill="#F8F8F8" stroke="#4CAF50" stroke-width="1.5"/>
+              <polygon points="130,50 120,70 140,70" fill="#4CAF50"/>
+              <polygon points="160,50 150,70 170,70" fill="#4CAF50"/>
+              <polygon points="180,55 172,72 188,72" fill="#4CAF50"/>
+              <text x="152" y="125" text-anchor="middle" fill="#4CAF50" font-size="8">Forest</text>
+              <text x="152" y="140" text-anchor="middle" fill="#666" font-size="7">Lower Variance</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 25 -->
+    <section class="slide" data-slide="25">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Introduction to Random Forest</h1>
+        <span class="slide-number">25 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <div class="content-box anim">
+            <p>Random Forest is an <span class="accent">ensemble</span> machine learning algorithm.</p>
+          </div>
+          <p style="margin: 1rem 0;">It combines multiple decision trees.</p>
+          <ul class="bullet-list anim d1">
+            <li>Each tree makes a prediction</li>
+            <li>Final prediction via <strong>majority voting</strong></li>
+          </ul>
+          <div class="highlight-box anim d2" style="margin-top: 1rem;">
+            <p><strong>Result:</strong> More accurate and robust model.</p>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d3">
+            <svg width="220" height="160" viewBox="0 0 220 160">
+              <text x="110" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Forest of Decision Trees</text>
+              <polygon points="40,35 25,70 55,70" fill="#4CAF50"/>
+              <rect x="33" y="70" width="15" height="15" fill="#8B4513"/>
+              <polygon points="90,30 72,65 108,65" fill="#4CAF50"/>
+              <rect x="82" y="65" width="15" height="18" fill="#8B4513"/>
+              <polygon points="140,35 122,70 158,70" fill="#4CAF50"/>
+              <rect x="132" y="70" width="15" height="15" fill="#8B4513"/>
+              <polygon points="185,32 168,65 202,65" fill="#4CAF50"/>
+              <rect x="177" y="65" width="15" height="18" fill="#8B4513"/>
+              <line x1="40" y1="90" x2="85" y2="105" stroke="#8B0000" stroke-width="1"/>
+              <line x1="90" y1="88" x2="100" y2="105" stroke="#8B0000" stroke-width="1"/>
+              <line x1="140" y1="90" x2="120" y2="105" stroke="#8B0000" stroke-width="1"/>
+              <line x1="185" y1="88" x2="135" y2="105" stroke="#8B0000" stroke-width="1"/>
+              <rect x="55" y="105" width="110" height="25" rx="3" fill="#8B0000"/>
+              <text x="110" y="122" text-anchor="middle" fill="white" font-size="9">Majority Voting</text>
+              <text x="110" y="148" text-anchor="middle" fill="#1A1A1A" font-size="9" font-weight="600">Final Prediction</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 26 -->
+    <section class="slide" data-slide="26">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">How Random Forest Works</h1>
+        <span class="slide-number">26 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <p style="margin-bottom: 1rem;">Random forest uses two main techniques:</p>
+          <div class="highlight-box anim">
+            <h3 style="font-size: 1rem;">Bagging (Bootstrap Sampling)</h3>
+          </div>
+          <div class="highlight-box anim d1" style="margin-top: 0.5rem;">
+            <h3 style="font-size: 1rem;">Random Feature Selection</h3>
+          </div>
+          <div class="content-box anim d2" style="margin-top: 1rem;">
+            <p>These introduce randomness and reduce overfitting.</p>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d3">
+            <svg width="200" height="150" viewBox="0 0 200 150">
+              <text x="100" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Random Forest Workflow</text>
+              <rect x="65" y="25" width="70" height="25" rx="3" fill="#8B0000"/>
+              <text x="100" y="42" text-anchor="middle" fill="white" font-size="8">Original Data</text>
+              <line x1="80" y1="50" x2="40" y2="70" stroke="#8B0000" stroke-width="1"/>
+              <line x1="100" y1="50" x2="100" y2="70" stroke="#8B0000" stroke-width="1"/>
+              <line x1="120" y1="50" x2="160" y2="70" stroke="#8B0000" stroke-width="1"/>
+              <rect x="15" y="70" width="50" height="20" rx="2" fill="#F8F8F8" stroke="#8B0000" stroke-width="1"/>
+              <text x="40" y="84" text-anchor="middle" fill="#1A1A1A" font-size="7">Sample 1</text>
+              <rect x="75" y="70" width="50" height="20" rx="2" fill="#F8F8F8" stroke="#8B0000" stroke-width="1"/>
+              <text x="100" y="84" text-anchor="middle" fill="#1A1A1A" font-size="7">Sample 2</text>
+              <rect x="135" y="70" width="50" height="20" rx="2" fill="#F8F8F8" stroke="#8B0000" stroke-width="1"/>
+              <text x="160" y="84" text-anchor="middle" fill="#1A1A1A" font-size="7">Sample 3</text>
+              <polygon points="40,95 30,115 50,115" fill="#4CAF50"/>
+              <polygon points="100,95 90,115 110,115" fill="#4CAF50"/>
+              <polygon points="160,95 150,115 170,115" fill="#4CAF50"/>
+              <rect x="60" y="120" width="80" height="20" rx="2" fill="#8B0000"/>
+              <text x="100" y="134" text-anchor="middle" fill="white" font-size="8">Aggregate</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 27 -->
+    <section class="slide" data-slide="27">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Bagging (Bootstrap Aggregation)</h1>
+        <span class="slide-number">27 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <p style="margin-bottom: 1rem;">Each tree is trained on a random subset of data.</p>
+          <p style="margin-bottom: 1rem;">Sampling is done <span class="accent">with replacement</span>.</p>
+          <p style="margin-bottom: 1rem;">This creates diverse training datasets.</p>
+          <div class="highlight-box anim">
+            <p><strong>Benefit:</strong> Reduces variance and improves stability.</p>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d1">
+            <svg width="200" height="150" viewBox="0 0 200 150">
+              <text x="100" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Bootstrap Samples</text>
+              <rect x="65" y="25" width="70" height="25" rx="3" fill="#8B0000"/>
+              <text x="100" y="42" text-anchor="middle" fill="white" font-size="8">Dataset [1,2,3,4,5]</text>
+              <line x1="75" y1="50" x2="40" y2="70" stroke="#8B0000" stroke-width="1"/>
+              <line x1="100" y1="50" x2="100" y2="70" stroke="#8B0000" stroke-width="1"/>
+              <line x1="125" y1="50" x2="160" y2="70" stroke="#8B0000" stroke-width="1"/>
+              <rect x="15" y="70" width="50" height="20" rx="2" fill="#F8F8F8" stroke="#4CAF50" stroke-width="1.5"/>
+              <text x="40" y="84" text-anchor="middle" fill="#1A1A1A" font-size="7">[1,2,2,4,5]</text>
+              <rect x="75" y="70" width="50" height="20" rx="2" fill="#F8F8F8" stroke="#4CAF50" stroke-width="1.5"/>
+              <text x="100" y="84" text-anchor="middle" fill="#1A1A1A" font-size="7">[1,3,3,5,5]</text>
+              <rect x="135" y="70" width="50" height="20" rx="2" fill="#F8F8F8" stroke="#4CAF50" stroke-width="1.5"/>
+              <text x="160" y="84" text-anchor="middle" fill="#1A1A1A" font-size="7">[2,2,4,4,1]</text>
+              <polygon points="40,95 30,115 50,115" fill="#4CAF50"/>
+              <polygon points="100,95 90,115 110,115" fill="#4CAF50"/>
+              <polygon points="160,95 150,115 170,115" fill="#4CAF50"/>
+              <text x="40" y="132" text-anchor="middle" fill="#666" font-size="7">Tree 1</text>
+              <text x="100" y="132" text-anchor="middle" fill="#666" font-size="7">Tree 2</text>
+              <text x="160" y="132" text-anchor="middle" fill="#666" font-size="7">Tree 3</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 28 -->
+    <section class="slide" data-slide="28">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Random Feature Selection</h1>
+        <span class="slide-number">28 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <p style="margin-bottom: 1rem;">At each split only a <span class="accent">random subset of features</span> is considered.</p>
+          <p style="margin-bottom: 1rem;">This ensures trees are different from each other.</p>
+          <div class="highlight-box anim">
+            <p><strong>Benefit:</strong> Reduces correlation among trees. Improves overall prediction accuracy.</p>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d1">
+            <svg width="200" height="150" viewBox="0 0 200 150">
+              <text x="100" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Feature Subset Selection</text>
+              <rect x="20" y="25" width="160" height="25" rx="3" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+              <text x="100" y="38" text-anchor="middle" fill="#666" font-size="7">All Features: [A, B, C, D, E]</text>
+              <rect x="25" y="30" width="18" height="15" rx="2" fill="#8B0000"/>
+              <rect x="47" y="30" width="18" height="15" rx="2" fill="#8B0000"/>
+              <rect x="69" y="30" width="18" height="15" rx="2" fill="#8B0000"/>
+              <rect x="91" y="30" width="18" height="15" rx="2" fill="#8B0000"/>
+              <rect x="113" y="30" width="18" height="15" rx="2" fill="#8B0000"/>
+              <text x="34" y="42" text-anchor="middle" fill="white" font-size="6">A</text>
+              <text x="56" y="42" text-anchor="middle" fill="white" font-size="6">B</text>
+              <text x="78" y="42" text-anchor="middle" fill="white" font-size="6">C</text>
+              <text x="100" y="42" text-anchor="middle" fill="white" font-size="6">D</text>
+              <text x="122" y="42" text-anchor="middle" fill="white" font-size="6">E</text>
+              <line x1="60" y1="52" x2="45" y2="70" stroke="#8B0000" stroke-width="1"/>
+              <line x1="100" y1="52" x2="100" y2="70" stroke="#8B0000" stroke-width="1"/>
+              <line x1="140" y1="52" x2="155" y2="70" stroke="#8B0000" stroke-width="1"/>
+              <rect x="15" y="70" width="55" height="35" rx="2" fill="#F8F8F8" stroke="#4CAF50" stroke-width="1.5"/>
+              <text x="42" y="82" text-anchor="middle" fill="#666" font-size="7">Tree 1</text>
+              <text x="42" y="98" text-anchor="middle" fill="#4CAF50" font-size="8">[A, C, E]</text>
+              <rect x="72" y="70" width="55" height="35" rx="2" fill="#F8F8F8" stroke="#4CAF50" stroke-width="1.5"/>
+              <text x="99" y="82" text-anchor="middle" fill="#666" font-size="7">Tree 2</text>
+              <text x="99" y="98" text-anchor="middle" fill="#4CAF50" font-size="8">[B, D, E]</text>
+              <rect x="129" y="70" width="55" height="35" rx="2" fill="#F8F8F8" stroke="#4CAF50" stroke-width="1.5"/>
+              <text x="156" y="82" text-anchor="middle" fill="#666" font-size="7">Tree 3</text>
+              <text x="156" y="98" text-anchor="middle" fill="#4CAF50" font-size="8">[A, B, D]</text>
+              <text x="100" y="130" text-anchor="middle" fill="#666" font-size="8">Each tree uses different feature subset</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 29 -->
+    <section class="slide" data-slide="29">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Advantages of Random Forest</h1>
+        <span class="slide-number">29 / 35</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.75rem;">
+        <div class="metric-card anim" style="display: flex; align-items: center; gap: 0.75rem;">
+          <svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4CAF50"/><path d="M8 12l3 3 5-6" stroke="white" stroke-width="2" fill="none"/></svg>
+          <span>High prediction accuracy</span>
+        </div>
+        <div class="metric-card anim d1" style="display: flex; align-items: center; gap: 0.75rem;">
+          <svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4CAF50"/><path d="M8 12l3 3 5-6" stroke="white" stroke-width="2" fill="none"/></svg>
+          <span>Less overfitting than single trees</span>
+        </div>
+        <div class="metric-card anim d2" style="display: flex; align-items: center; gap: 0.75rem;">
+          <svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4CAF50"/><path d="M8 12l3 3 5-6" stroke="white" stroke-width="2" fill="none"/></svg>
+          <span>Robust to noise and outliers</span>
+        </div>
+        <div class="metric-card anim d3" style="display: flex; align-items: center; gap: 0.75rem;">
+          <svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4CAF50"/><path d="M8 12l3 3 5-6" stroke="white" stroke-width="2" fill="none"/></svg>
+          <span>Works with large datasets</span>
+        </div>
+        <div class="metric-card anim d4" style="display: flex; align-items: center; gap: 0.75rem;">
+          <svg width="24" height="24" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#4CAF50"/><path d="M8 12l3 3 5-6" stroke="white" stroke-width="2" fill="none"/></svg>
+          <span>Handles many input features</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 30 -->
+    <section class="slide" data-slide="30">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Limitations of Random Forest</h1>
+        <span class="slide-number">30 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <ul class="bullet-list anim">
+            <li>Less interpretable than decision trees</li>
+            <li>Higher computational cost</li>
+            <li>Hard to visualize entire model</li>
+          </ul>
+          <div class="content-box anim d1" style="margin-top: 1rem;">
+            <p>Still widely used because of <span class="accent">strong predictive power</span>.</p>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d2">
+            <svg width="200" height="130" viewBox="0 0 200 130">
+              <text x="100" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Accuracy vs Interpretability</text>
+              <rect x="20" y="35" width="160" height="20" rx="3" fill="#E8E8E8"/>
+              <rect x="20" y="35" width="80" height="20" rx="3" fill="#8B0000"/>
+              <rect x="100" y="35" width="80" height="20" rx="3" fill="#4CAF50"/>
+              <text x="60" y="50" text-anchor="middle" fill="white" font-size="8">Interpretability</text>
+              <text x="140" y="50" text-anchor="middle" fill="white" font-size="8">Accuracy</text>
+              <circle cx="45" cy="80" r="12" fill="#8B0000"/>
+              <text x="45" y="84" text-anchor="middle" fill="white" font-size="7">DT</text>
+              <circle cx="155" cy="80" r="12" fill="#4CAF50"/>
+              <text x="155" y="84" text-anchor="middle" fill="white" font-size="7">RF</text>
+              <text x="45" y="105" text-anchor="middle" fill="#666" font-size="7">Easy to explain</text>
+              <text x="155" y="105" text-anchor="middle" fill="#666" font-size="7">Better performance</text>
+              <text x="100" y="125" text-anchor="middle" fill="#666" font-size="8">Trade-off between interpretability and accuracy</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 31 -->
+    <section class="slide" data-slide="31">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Feature Importance</h1>
+        <span class="slide-number">31 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <div class="content-box anim">
+            <p>Tree based models can measure <span class="accent">feature importance</span>.</p>
+          </div>
+          <p style="margin: 1rem 0;">Feature importance indicates how much each variable contributes to prediction.</p>
+          <div class="example-box anim d1">
+            <div class="example-label">Loan Prediction Model</div>
+            <ul class="bullet-list">
+              <li><strong>Credit Score</strong> → High importance</li>
+              <li><strong>Income</strong> → Medium importance</li>
+              <li><strong>Age</strong> → Low importance</li>
+            </ul>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d2">
+            <svg width="200" height="150" viewBox="0 0 200 150">
+              <text x="100" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Feature Importance Bar Chart</text>
+              <text x="40" y="45" text-anchor="end" fill="#1A1A1A" font-size="8">Credit Score</text>
+              <rect x="45" y="35" width="140" height="15" rx="2" fill="#4CAF50"/>
+              <text x="190" y="47" text-anchor="end" fill="#1A1A1A" font-size="7">0.45</text>
+              <text x="40" y="70" text-anchor="end" fill="#1A1A1A" font-size="8">Income</text>
+              <rect x="45" y="60" width="95" height="15" rx="2" fill="#8B0000"/>
+              <text x="145" y="72" text-anchor="end" fill="#1A1A1A" font-size="7">0.30</text>
+              <text x="40" y="95" text-anchor="end" fill="#1A1A1A" font-size="8">Loan Amount</text>
+              <rect x="45" y="85" width="50" height="15" rx="2" fill="#A3A3A3"/>
+              <text x="100" y="97" text-anchor="end" fill="#1A1A1A" font-size="7">0.15</text>
+              <text x="40" y="120" text-anchor="end" fill="#1A1A1A" font-size="8">Age</text>
+              <rect x="45" y="110" width="30" height="15" rx="2" fill="#666"/>
+              <text x="80" y="122" text-anchor="end" fill="#1A1A1A" font-size="7">0.10</text>
+              <text x="100" y="145" text-anchor="middle" fill="#666" font-size="8">Importance Score</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 32 -->
+    <section class="slide" data-slide="32">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Why Interpretability Matters</h1>
+        <span class="slide-number">32 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <p style="margin-bottom: 1rem;">In many industries we must explain predictions.</p>
+          <div class="example-box anim">
+            <div class="example-label">Examples</div>
+            <ul class="bullet-list">
+              <li><strong>Finance</strong> → Loan approval explanation</li>
+              <li><strong>Healthcare</strong> → Disease risk prediction</li>
+              <li><strong>Insurance</strong> → Claim approval</li>
+            </ul>
+          </div>
+          <div class="content-box anim d1" style="margin-top: 1rem;">
+            <p>Decision trees provide <span class="accent">transparent decision rules</span>.</p>
+          </div>
+        </div>
+        <div>
+          <div class="figure-container anim d2">
+            <svg width="200" height="150" viewBox="0 0 200 150">
+              <text x="100" y="15" text-anchor="middle" fill="#1A1A1A" font-size="10" font-weight="600">Explainable AI</text>
+              <rect x="30" y="30" width="140" height="90" rx="5" fill="#F8F8F8" stroke="#8B0000" stroke-width="1.5"/>
+              <rect x="45" y="45" width="110" height="25" rx="3" fill="#8B0000"/>
+              <text x="100" y="62" text-anchor="middle" fill="white" font-size="8">ML Model</text>
+              <path d="M100 70 L100 85" stroke="#8B0000" stroke-width="1.5" marker-end="url(#arr)"/>
+              <rect x="45" y="90" width="110" height="20" rx="3" fill="#4CAF50"/>
+              <text x="100" y="104" text-anchor="middle" fill="white" font-size="8">Explanation Output</text>
+              <text x="100" y="135" text-anchor="middle" fill="#666" font-size="8">Why this prediction?</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 33 -->
+    <section class="slide" data-slide="33">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Summary</h1>
+        <span class="slide-number">33 / 35</span>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem;">
+        <div class="content-box anim"><p>Binary classification predicts two outcomes.</p></div>
+        <div class="content-box anim d1"><p>Decision trees split data based on feature values.</p></div>
+        <div class="content-box anim d2"><p>Splitting uses Gini impurity or entropy.</p></div>
+        <div class="content-box anim d3"><p>Decision trees are interpretable but may overfit.</p></div>
+        <div class="content-box anim d4"><p>Random forests combine multiple trees to improve accuracy.</p></div>
+        <div class="content-box anim d4"><p>Feature importance helps understand model decisions.</p></div>
+      </div>
+      <div class="figure-container anim d4" style="margin-top: 1rem;">
+        <svg width="300" height="60" viewBox="0 0 300 60">
+          <circle cx="50" cy="30" r="20" fill="#8B0000"/>
+          <text x="50" y="35" text-anchor="middle" fill="white" font-size="8">Classification</text>
+          <line x1="75" y1="30" x2="105" y2="30" stroke="#8B0000" stroke-width="2"/>
+          <circle cx="130" cy="30" r="20" fill="#8B0000"/>
+          <text x="130" y="35" text-anchor="middle" fill="white" font-size="8">Trees</text>
+          <line x1="155" y1="30" x2="185" y2="30" stroke="#8B0000" stroke-width="2"/>
+          <circle cx="210" cy="30" r="20" fill="#8B0000"/>
+          <text x="210" y="35" text-anchor="middle" fill="white" font-size="8">Forest</text>
+          <line x1="235" y1="30" x2="265" y2="30" stroke="#8B0000" stroke-width="2"/>
+          <circle cx="280" cy="30" r="15" fill="#4CAF50"/>
+          <text x="280" y="34" text-anchor="middle" fill="white" font-size="7">Done</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- SLIDE 34 -->
+    <section class="slide" data-slide="34">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Classroom Activity</h1>
+        <span class="slide-number">34 / 35</span>
+      </div>
+      <div class="content-grid">
+        <div>
+          <div class="example-box anim">
+            <div class="example-label">Dataset</div>
+            <ul class="bullet-list">
+              <li>Student study hours</li>
+              <li>Attendance</li>
+              <li>Previous grades</li>
+            </ul>
+          </div>
+          <div class="highlight-box anim d1" style="margin-top: 1rem;">
+            <p><strong>Question:</strong> Will the student pass the exam?</p>
+          </div>
+        </div>
+        <div>
+          <div class="content-box anim d2">
+            <div class="example-label">Activity</div>
+            <p style="font-size: 1.1rem;">Build a decision tree and explain the decision rules.</p>
+          </div>
+          <div class="figure-container anim d3" style="margin-top: 1rem;">
+            <svg width="180" height="100" viewBox="0 0 180 100">
+              <rect x="55" y="10" width="70" height="25" rx="3" fill="#8B0000"/>
+              <text x="90" y="27" text-anchor="middle" fill="white" font-size="8">Activity</text>
+              <line x1="60" y1="35" x2="45" y2="55" stroke="#8B0000" stroke-width="1.5"/>
+              <line x1="120" y1="35" x2="135" y2="55" stroke="#8B0000" stroke-width="1.5"/>
+              <rect x="15" y="55" width="60" height="20" rx="2" fill="#F8F8F8" stroke="#4CAF50" stroke-width="1.5"/>
+              <text x="45" y="69" text-anchor="middle" fill="#1A1A1A" font-size="7">Build Tree</text>
+              <rect x="105" y="55" width="60" height="20" rx="2" fill="#F8F8F8" stroke="#4CAF50" stroke-width="1.5"/>
+              <text x="135" y="69" text-anchor="middle" fill="#1A1A1A" font-size="7">Explain Rules</text>
+              <text x="90" y="92" text-anchor="middle" fill="#666" font-size="8">Work in groups</text>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLIDE 35 -->
+    <section class="slide" data-slide="35">
+      <div class="slide-header">
+        <h1 style="font-size: 2rem;">Discussion Questions</h1>
+        <span class="slide-number">35 / 35</span>
+      </div>
+      <div style="display: grid; gap: 0.75rem;">
+        <div class="content-box anim"><p>Why are decision trees easy to interpret?</p></div>
+        <div class="content-box anim d1"><p>When would you prefer Random Forest over Decision Trees?</p></div>
+        <div class="content-box anim d2"><p>What problems arise when models become complex?</p></div>
+        <div class="content-box anim d3"><p>How does feature importance help businesses?</p></div>
+      </div>
+      <div style="text-align: center; margin-top: 2rem;">
+        <svg width="60" height="60" viewBox="0 0 60 60" class="anim d4">
+          <circle cx="30" cy="30" r="28" fill="#8B0000"/>
+          <circle cx="30" cy="22" r="8" fill="white"/>
+          <path d="M18 40 Q30 52 42 40" stroke="white" stroke-width="3" fill="none"/>
+          <circle cx="22" cy="20" r="2" fill="#8B0000"/>
+          <circle cx="38" cy="20" r="2" fill="#8B0000"/>
+        </svg>
+        <p class="anim d4" style="margin-top: 0.5rem; color: var(--muted);">Questions? Let's discuss!</p>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Slim Navigation Bar -->
+  <nav class="nav-bar">
+    <div class="nav-controls">
+      <button id="prevBtn" class="nav-btn" aria-label="Previous">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <span class="slide-counter"><span id="currentSlide">1</span> / 35</span>
+      <button id="nextBtn" class="nav-btn" aria-label="Next">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+    <button id="tocBtn" class="nav-btn" aria-label="Table of Contents">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/>
+      </svg>
+    </button>
+  </nav>
+
+  <!-- TOC Overlay -->
+  <div id="tocOverlay" class="toc-overlay">
+    <div class="toc-content">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <h2 style="color: white; font-size: 1.25rem;">Table of Contents</h2>
+        <button id="closeToc" class="nav-btn" style="background: rgba(255,255,255,0.2);" aria-label="Close">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+      </div>
+      <div id="tocList"></div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize variables
+    const slides = document.querySelectorAll('.slide');
+    const totalSlidesCount = slides.length;
+    let currentSlideIndex = 1;
+    
+    // DOM elements
+    const progressBar = document.getElementById('progressBar');
+    const currentSlideEl = document.getElementById('currentSlide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const tocBtn = document.getElementById('tocBtn');
+    const tocOverlay = document.getElementById('tocOverlay');
+    const closeToc = document.getElementById('closeToc');
+    const tocList = document.getElementById('tocList');
+
+    // Slide titles
+    const slideTitles = [
+      'Introduction to Classification', 'Learning Objectives', 'What is Classification?',
+      'Real World Applications', 'Binary Classification', 'Loan Approval Prediction',
+      'Algorithms for Classification', 'Evaluating Models', 'Accuracy', 'Precision',
+      'Recall (Sensitivity)', 'F1 Score', 'ROC Curve and AUC', 'Introduction to Decision Trees',
+      'Structure of Decision Tree', 'How Decision Trees Work', 'Decision Tree Example',
+      'Best Split Criteria', 'Gini Impurity', 'Entropy', 'Problem with Decision Trees',
+      'Pruning Decision Trees', 'CART Algorithm', 'Limitations of Single Trees',
+      'Introduction to Random Forest', 'How Random Forest Works', 'Bagging',
+      'Random Feature Selection', 'Advantages of Random Forest', 'Limitations of Random Forest',
+      'Feature Importance', 'Why Interpretability Matters', 'Summary', 'Classroom Activity',
+      'Discussion Questions'
+    ];
+
+    // Initialize
+    showSlide(1);
+    buildToc();
+    updateProgress();
+
+    function showSlide(n) {
+      if (n < 1) n = 1;
+      if (n > totalSlidesCount) n = totalSlidesCount;
+      
+      const currentActive = document.querySelector('.slide.active');
+      if (currentActive) currentActive.classList.remove('active');
+      
+      const newSlide = document.querySelector(`[data-slide="${n}"]`);
+      if (newSlide) {
+        newSlide.classList.add('active');
+        const anims = newSlide.querySelectorAll('.anim');
+        anims.forEach(el => { el.style.animation = 'none'; el.offsetHeight; el.style.animation = null; });
+      }
+      
+      currentSlideIndex = n;
+      currentSlideEl.textContent = currentSlideIndex;
+      updateProgress();
+      updateButtons();
+    }
+
+    function nextSlide() { if (currentSlideIndex < totalSlidesCount) showSlide(currentSlideIndex + 1); }
+    function prevSlide() { if (currentSlideIndex > 1) showSlide(currentSlideIndex - 1); }
+    function updateProgress() { progressBar.style.width = (currentSlideIndex / totalSlidesCount) * 100 + '%'; }
+    function updateButtons() { prevBtn.disabled = currentSlideIndex <= 1; nextBtn.disabled = currentSlideIndex >= totalSlidesCount; }
+
+    function buildToc() {
+      tocList.innerHTML = slideTitles.map((title, i) => 
+        `<button class="toc-item" data-slide="${i+1}"><span style="opacity:0.5;margin-right:0.5rem;">${String(i+1).padStart(2,'0')}</span>${title}</button>`
+      ).join('');
+      tocList.querySelectorAll('.toc-item').forEach(item => {
+        item.addEventListener('click', () => { showSlide(parseInt(item.dataset.slide, 10)); tocOverlay.classList.remove('open'); });
+      });
+    }
+
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+    tocBtn.addEventListener('click', () => tocOverlay.classList.add('open'));
+    closeToc.addEventListener('click', () => tocOverlay.classList.remove('open'));
+    tocOverlay.addEventListener('click', e => { if (e.target === tocOverlay) tocOverlay.classList.remove('open'); });
+
+    document.addEventListener('keydown', e => {
+      if (tocOverlay.classList.contains('open')) { if (e.key === 'Escape') tocOverlay.classList.remove('open'); return; }
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); nextSlide(); }
+      else if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+      else if (e.key === 'Home') { e.preventDefault(); showSlide(1); }
+      else if (e.key === 'End') { e.preventDefault(); showSlide(totalSlidesCount); }
+    });
+
+    let touchStartX = 0;
+    document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+    document.addEventListener('touchend', e => {
+      const diff = touchStartX - e.changedTouches[0].screenX;
+      if (Math.abs(diff) > 50) { diff > 0 ? nextSlide() : prevSlide(); }
+    }, { passive: true });
+  </script>
+</body>
+</html>
