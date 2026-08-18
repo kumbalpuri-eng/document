@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Line 103 Breakdown Analysis — 2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<script>
+tailwind.config={theme:{extend:{fontFamily:{display:['Space Grotesk','sans-serif'],body:['DM Sans','sans-serif']}}}}
+</script>
+<style>
+:root{--accent:#D97706;--danger:#DC2626;--success:#059669;--bg:#F3F4F8;--card:#FFFFFF;--text:#1E293B;--muted:#64748B;--border:#E2E8F0}
+*{scrollbar-width:thin;scrollbar-color:#CBD5E1 transparent}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);overflow:hidden}
+h1,h2,h3,h4,h5{font-family:'Space Grotesk',sans-serif}
+#sidebar{width:216px;transition:width .3s cubic-bezier(.4,0,.2,1);flex-shrink:0}
+#sidebar.collapsed{width:54px}
+#sidebar.collapsed .nav-label,#sidebar.collapsed .sb-title,#sidebar.collapsed .sb-badge{display:none}
+#sidebar.collapsed .sb-item{justify-content:center;padding-left:0;padding-right:0}
+#sidebar.collapsed .sb-item i{margin-right:0}
+.sb-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:8px;font-size:13px;color:var(--muted);cursor:pointer;transition:all .15s;border-left:3px solid transparent;width:100%;text-align:left;background:none;border-right:none;border-top:none;border-bottom:none}
+.sb-item:hover{background:#F8FAFC;color:var(--text)}
+.sb-item.active{background:#FFFBEB;color:var(--accent);border-left-color:var(--accent);font-weight:600}
+.sb-item i{width:18px;text-align:center;flex-shrink:0;font-size:13px}
+.panel{position:absolute;inset:0;opacity:0;pointer-events:none;transition:opacity .22s ease;overflow-y:auto;overflow-x:hidden}
+.panel.active{opacity:1;pointer-events:auto}
+.crd{background:var(--card);border:1px solid var(--border);border-radius:12px;transition:box-shadow .2s}
+.crd:hover{box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.kpi{position:relative;overflow:hidden}
+.kpi::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.kpi.a::before{background:linear-gradient(90deg,#D97706,#F59E0B)}
+.kpi.r::before{background:linear-gradient(90deg,#DC2626,#F87171)}
+.kpi.g::before{background:linear-gradient(90deg,#059669,#34D399)}
+.kpi.b::before{background:linear-gradient(90deg,#2563EB,#60A5FA)}
+.find{border-left:3px solid var(--accent);border-radius:0 10px 10px 0}
+.driver{border-top:3px solid transparent;transition:border-color .2s}
+.driver:hover{border-top-color:var(--accent)}
+.act{border-radius:12px;transition:transform .2s,box-shadow .2s}
+.act:hover{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.act.p1{background:#FEF2F2;border:1px solid #FECACA}
+.act.p2{background:#FFFBEB;border:1px solid #FDE68A}
+.act.p3{background:#EFF6FF;border:1px solid #BFDBFE}
+.bp1{background:#FEE2E2;color:#DC2626;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px}
+.bp2{background:#FEF3C7;color:#D97706;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px}
+.bp3{background:#DBEAFE;color:#2563EB;font-size:10px;font-weight:700;padding:2px 8px;border-radius:999px}
+.dot{width:7px;height:7px;border-radius:50%;background:#CBD5E1;transition:all .2s;cursor:pointer}
+.dot.active{background:var(--accent);transform:scale(1.4)}
+.dot:hover:not(.active){background:#94A3B8}
+.dt{width:100%;border-collapse:separate;border-spacing:0;font-size:12px}
+.dt th{background:#F8FAFC;color:var(--muted);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.5px;padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
+.dt td{padding:6px 12px;border-bottom:1px solid #F1F5F9}
+.dt tr:hover td{background:#FAFBFC}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+.pulse{animation:pulse 2s ease-in-out infinite}
+@media(max-width:768px){
+  #sidebar{position:fixed;z-index:60;left:0;top:0;bottom:0;transform:translateX(-100%);width:216px!important}
+  #sidebar.mobile-open{transform:translateX(0)}
+  .mob-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:55}
+  .mob-overlay.show{display:block}
+}
+</style>
+</head>
+<body>
+<div class="mob-overlay" id="mobOverlay" onclick="closeMobileSidebar()"></div>
+<div class="h-screen flex overflow-hidden">
+<!-- SIDEBAR -->
+<aside id="sidebar" class="bg-white border-r border-slate-200 flex flex-col z-50">
+  <div class="h-12 flex items-center justify-between px-3 border-b border-slate-200 flex-shrink-0">
+    <span class="sb-title text-sm font-bold font-display text-slate-800 truncate">Line 103</span>
+    <button onclick="toggleSidebar()" class="w-7 h-7 flex items-center justify-center rounded-md hover:bg-slate-100 text-slate-400 flex-shrink-0"><i class="fa-solid fa-angles-left text-xs" id="sbIcon"></i></button>
+  </div>
+  <div class="px-3 py-2 border-b border-slate-100 flex-shrink-0">
+    <span class="sb-badge inline-flex items-center gap-1.5 text-[10px] font-semibold text-red-600 bg-red-50 px-2 py-1 rounded-full"><span class="w-1.5 h-1.5 rounded-full bg-red-500 pulse"></span>CRITICAL</span>
+  </div>
+  <nav class="flex-1 py-2 px-2 space-y-0.5 overflow-y-auto" id="sidebarNav">
+    <button class="sb-item active" data-idx="0"><i class="fa-solid fa-gauge-high"></i><span class="nav-label">KPIs</span></button>
+    <button class="sb-item" data-idx="1"><i class="fa-solid fa-file-lines"></i><span class="nav-label">Summary</span></button>
+    <button class="sb-item" data-idx="2"><i class="fa-solid fa-chart-line"></i><span class="nav-label">Temporal Trends</span></button>
+    <button class="sb-item" data-idx="3"><i class="fa-solid fa-industry"></i><span class="nav-label">Station Analysis</span></button>
+    <button class="sb-item" data-idx="4"><i class="fa-solid fa-screwdriver-wrench"></i><span class="nav-label">Fault Analysis</span></button>
+    <button class="sb-item" data-idx="5"><i class="fa-solid fa-clock"></i><span class="nav-label">Patterns & Shifts</span></button>
+    <button class="sb-item" data-idx="6"><i class="fa-solid fa-magnifying-glass-chart"></i><span class="nav-label">Text Mining</span></button>
+    <button class="sb-item" data-idx="7"><i class="fa-solid fa-stethoscope"></i><span class="nav-label">Diagnostic</span></button>
+    <button class="sb-item" data-idx="8"><i class="fa-solid fa-forward"></i><span class="nav-label">Predictive</span></button>
+    <button class="sb-item" data-idx="9"><i class="fa-solid fa-clipboard-check"></i><span class="nav-label">Action Plan</span></button>
+  </nav>
+  <div class="px-3 py-3 border-t border-slate-100 flex-shrink-0">
+    <div class="sb-title text-[10px] text-slate-400 leading-tight">Prepared by Maintenance<br>Analytics Team · 2026-08-17</div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="flex-1 flex flex-col min-w-0">
+  <header class="h-12 bg-white border-b border-slate-200 flex items-center justify-between px-4 flex-shrink-0">
+    <div class="flex items-center gap-3">
+      <button class="md:hidden w-8 h-8 flex items-center justify-center rounded-md hover:bg-slate-100 text-slate-500" onclick="openMobileSidebar()"><i class="fa-solid fa-bars"></i></button>
+      <h1 class="text-sm font-bold font-display text-slate-800" id="headerTitle">KPI Dashboard</h1>
+    </div>
+    <div class="flex items-center gap-4 text-xs text-slate-500">
+      <span>Jan 16 — Jul 31, 2026</span>
+      <span class="hidden sm:inline text-slate-300">|</span>
+      <span class="hidden sm:inline">726 events · 450.4 hrs</span>
+    </div>
+  </header>
+
+  <div id="panelWrap" class="flex-1 relative overflow-hidden">
+
+    <!-- PANEL 0: KPIs -->
+    <div class="panel active p-4 lg:p-5" data-panel="0">
+      <div class="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 mb-4">
+        <div class="crd kpi r p-4"><div class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Total Breakdowns</div><div class="text-2xl lg:text-3xl font-bold font-display" data-count="726">0</div><div class="text-[10px] text-slate-400 mt-1">slip entries</div></div>
+        <div class="crd kpi r p-4"><div class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Total Downtime</div><div class="text-2xl lg:text-3xl font-bold font-display" data-count="450.4" data-dec="1">0</div><div class="text-[10px] text-slate-400 mt-1">18.8 days lost</div></div>
+        <div class="crd kpi a p-4"><div class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Avg MTTR</div><div class="text-2xl lg:text-3xl font-bold font-display" data-count="41.6" data-dec="1" data-suf=" min">0</div><div class="text-[10px] text-slate-400 mt-1">Median: 20 min</div></div>
+        <div class="crd kpi a p-4"><div class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Avg MTBF</div><div class="text-2xl lg:text-3xl font-bold font-display" data-count="6.50" data-dec="2" data-suf=" hr">0</div><div class="text-[10px] text-red-500 font-medium mt-1">Very unstable</div></div>
+        <div class="crd kpi b p-4"><div class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Frequency</div><div class="text-2xl lg:text-3xl font-bold font-display" data-count="3.69" data-dec="2" data-suf="/day">0</div><div class="text-[10px] text-slate-400 mt-1">25.8 / week</div></div>
+        <div class="crd kpi r p-4"><div class="text-[10px] text-slate-500 uppercase tracking-wider font-semibold mb-1">Critical Events</div><div class="text-2xl lg:text-3xl font-bold font-display" data-count="12.7" data-dec="1" data-suf="%">0</div><div class="text-[10px] text-slate-400 mt-1">92 events &gt;60 min</div></div>
+      </div>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div class="crd p-4"><div class="text-[10px] text-slate-500 mb-1">Days with Breakdowns</div><div class="flex items-end gap-1"><span class="text-xl font-bold font-display text-red-600">149</span><span class="text-xs text-slate-400">/ 197</span></div><div class="w-full bg-slate-100 rounded-full h-1.5 mt-2"><div class="bg-red-500 rounded-full h-1.5" style="width:75.6%"></div></div></div>
+        <div class="crd p-4"><div class="text-[10px] text-slate-500 mb-1">Mechanical Share</div><div class="flex items-end gap-1"><span class="text-xl font-bold font-display text-amber-600">69.0%</span><span class="text-xs text-slate-400">of events</span></div><div class="w-full bg-slate-100 rounded-full h-1.5 mt-2"><div class="bg-amber-500 rounded-full h-1.5" style="width:69%"></div></div></div>
+        <div class="crd p-4"><div class="text-[10px] text-slate-500 mb-1">Top 5 Station Share</div><div class="flex items-end gap-1"><span class="text-xl font-bold font-display text-amber-600">35.9%</span><span class="text-xs text-slate-400">of BDs</span></div><div class="w-full bg-slate-100 rounded-full h-1.5 mt-2"><div class="bg-amber-500 rounded-full h-1.5" style="width:35.9%"></div></div></div>
+        <div class="crd p-4"><div class="text-[10px] text-slate-500 mb-1">Weekly Trend</div><div class="flex items-end gap-1"><span class="text-xl font-bold font-display text-red-600">+0.204</span><span class="text-xs text-slate-400">evt/wk</span></div><div class="flex items-center gap-1 mt-2 text-[10px] text-red-600 font-medium"><i class="fa-solid fa-arrow-trend-up"></i> Deteriorating</div></div>
+      </div>
+    </div>
+
+    <!-- PANEL 1: Summary -->
+    <div class="panel p-4 lg:p-5" data-panel="1">
+      <h2 class="text-lg font-bold font-display mb-1">Executive Summary</h2>
+      <p class="text-sm text-slate-500 mb-5">Analysis of <strong class="text-slate-800">726 breakdown events</strong> over 197 days. Line 103 is <strong class="text-red-600">chronically unstable</strong> — a breakdown every ~6.5 hours.</p>
+      <div class="space-y-3">
+        <div class="find crd p-4"><div class="flex items-start gap-3"><span class="flex-shrink-0 w-7 h-7 rounded-lg bg-red-50 text-red-600 flex items-center justify-center font-bold text-xs">1</span><div><h4 class="font-semibold text-sm mb-0.5">Severe Line Instability</h4><p class="text-xs text-slate-500">3.69 breakdowns/day, MTBF 6.50 hrs. Breakdowns on <strong class="text-slate-700">149/197 days (76%)</strong>. Never ran breakdown-free for any meaningful stretch.</p></div></div></div>
+        <div class="find crd p-4"><div class="flex items-start gap-3"><span class="flex-shrink-0 w-7 h-7 rounded-lg bg-red-50 text-red-600 flex items-center justify-center font-bold text-xs">2</span><div><h4 class="font-semibold text-sm mb-0.5">Mechanical Faults Dominate</h4><p class="text-xs text-slate-500"><strong class="text-slate-700">69.0% of events</strong> (501/726) and <strong class="text-slate-700">59.3% of downtime</strong> (267.3 hrs). Sensors, stoppers, cylinders, bits, knives, bowl feeders.</p></div></div></div>
+        <div class="find crd p-4"><div class="flex items-start gap-3"><span class="flex-shrink-0 w-7 h-7 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-xs">3</span><div><h4 class="font-semibold text-sm mb-0.5">Pareto Concentration</h4><p class="text-xs text-slate-500">Top 5 stations = <strong class="text-slate-700">35.9% of events</strong>. OP-40 alone: 67 breakdowns, 36.3 hrs downtime. Targeted investment yields disproportionate gains.</p></div></div></div>
+        <div class="find crd p-4"><div class="flex items-start gap-3"><span class="flex-shrink-0 w-7 h-7 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center font-bold text-xs">4</span><div><h4 class="font-semibold text-sm mb-0.5">Planned Maintenance Disproportionate</h4><p class="text-xs text-slate-500">Only 3.6% of events but <strong class="text-slate-700">15.5% of downtime</strong> (69.8 hrs). Avg 161 min/event — poor scoping or misclassified corrective work.</p></div></div></div>
+        <div class="find crd p-4"><div class="flex items-start gap-3"><span class="flex-shrink-0 w-7 h-7 rounded-lg bg-red-50 text-red-600 flex items-center justify-center font-bold text-xs">5</span><div><h4 class="font-semibold text-sm mb-0.5">Negative Trend Trajectory</h4><p class="text-xs text-slate-500">Weekly breakdowns up <strong class="text-red-600">+0.204/week</strong>. Projected ~29 breakdowns and ~20.3 hrs downtime in Week +4 without intervention.</p></div></div></div>
+      </div>
+    </div>
+
+    <!-- PANEL 2: Temporal Trends -->
+    <div class="panel p-4 lg:p-5" data-panel="2">
+      <h2 class="text-lg font-bold font-display mb-4">Temporal Trends</h2>
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-4">
+        <div class="crd p-4"><h3 class="text-sm font-semibold mb-0.5">Monthly Count vs Downtime</h3><p class="text-[10px] text-slate-400 mb-3">July worst month — 228 events, 155.5 hrs</p><div class="h-52"><canvas id="cMonthly"></canvas></div></div>
+        <div class="crd p-4"><h3 class="text-sm font-semibold mb-0.5">Daily Trend with 7-Day Rolling Avg</h3><p class="text-[10px] text-slate-400 mb-3">Rolling avg never sustained below 2/day</p><div class="h-52"><canvas id="cDaily"></canvas></div></div>
+      </div>
+      <div class="crd p-4 overflow-x-auto"><table class="dt"><thead><tr><th>Month</th><th>Events</th><th>Downtime (hr)</th><th>Avg Duration (min)</th></tr></thead><tbody><tr><td>Jan</td><td>41</td><td>40.6</td><td class="text-amber-600 font-semibold">59.4</td></tr><tr><td>Feb</td><td>79</td><td>45.5</td><td>34.6</td></tr><tr><td>Mar</td><td>108</td><td class="text-red-600 font-semibold">70.8</td><td>39.3</td></tr><tr><td>Apr</td><td>101</td><td>48.8</td><td>29.0</td></tr><tr><td>May</td><td>101</td><td>39.8</td><td class="text-emerald-600">23.6</td></tr><tr><td>Jun</td><td>68</td><td>49.4</td><td>43.6</td></tr><tr><td class="font-bold text-red-600">Jul</td><td class="font-bold text-red-600">228</td><td class="font-bold text-red-600">155.5</td><td>40.9</td></tr></tbody></table></div>
+    </div>
+
+    <!-- PANEL 3: Station Analysis -->
+    <div class="panel p-4 lg:p-5" data-panel="3">
+      <h2 class="text-lg font-bold font-display mb-4">Station Analysis</h2>
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+        <div class="crd p-4"><h3 class="text-sm font-semibold mb-0.5">Pareto — Top 12 by Frequency</h3><p class="text-[10px] text-slate-400 mb-3">Top 5 = 35.9% · Top 12 = 70% · 80% threshold shown</p><div class="h-60"><canvas id="cPareto"></canvas></div></div>
+        <div class="crd p-4"><h3 class="text-sm font-semibold mb-0.5">Top 10 by Total Downtime</h3><p class="text-[10px] text-slate-400 mb-3">Labels show hours (event count) — OP-90.2 leads despite fewer events</p><div class="h-60"><canvas id="cDtStations"></canvas></div></div>
+      </div>
+    </div>
+
+    <!-- PANEL 4: Fault Analysis -->
+    <div class="panel p-4 lg:p-5" data-panel="4">
+      <h2 class="text-lg font-bold font-display mb-4">Fault Analysis</h2>
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-4">
+        <div class="crd p-4"><h3 class="text-sm font-semibold mb-0.5">Fault Type Distribution</h3><p class="text-[10px] text-slate-400 mb-3">7 of 10 breakdowns are mechanical</p><div class="h-52"><canvas id="cFaultPie"></canvas></div></div>
+        <div class="crd p-4"><h3 class="text-sm font-semibold mb-0.5">Count vs Downtime Comparison</h3><p class="text-[10px] text-slate-400 mb-3">Electrical avg 42.6 min vs Mechanical 32.0 min</p><div class="h-52"><canvas id="cFaultBar"></canvas></div></div>
+      </div>
+      <div class="crd p-4 overflow-x-auto"><table class="dt"><thead><tr><th>Type</th><th>Count</th><th>% Count</th><th>DT (hr)</th><th>% DT</th><th>Avg (min)</th><th>Max (min)</th></tr></thead><tbody><tr><td class="font-semibold">Mechanical</td><td>501</td><td>69.0%</td><td>267.3</td><td>59.3%</td><td>32.0</td><td class="text-red-600">1,659</td></tr><tr><td class="font-semibold">Electrical</td><td>139</td><td>19.1%</td><td>98.7</td><td>21.9%</td><td class="text-amber-600">42.6</td><td>618</td></tr><tr><td>Production</td><td>47</td><td>6.5%</td><td>8.2</td><td>1.8%</td><td class="text-emerald-600">10.5</td><td>80</td></tr><tr><td class="font-semibold">Planned Maint.</td><td>26</td><td>3.6%</td><td class="text-red-600 font-semibold">69.8</td><td class="text-red-600 font-semibold">15.5%</td><td class="text-red-600 font-semibold">161.0</td><td>506</td></tr><tr><td>Process/IE</td><td>4</td><td>0.6%</td><td>2.9</td><td>0.6%</td><td>43.8</td><td>95</td></tr><tr><td>Fixture</td><td>3</td><td>0.4%</td><td>0.0</td><td>0.0%</td><td>0.0</td><td>0</td></tr><tr><td>Others</td><td>3</td><td>0.4%</td><td>0.0</td><td>0.0%</td><td>0.0</td><td>0</td></tr></tbody></table></div>
+    </div>
+
+    <!-- PANEL 5: Patterns & Shifts -->
+    <div class="panel p-4 lg:p-5" data-panel="5">
+      <h2 class="text-lg font-bold font-display mb-4">Patterns & Shifts</h2>
+      <div class="crd p-4 mb-4"><h3 class="text-sm font-semibold mb-0.5">Breakdown Heatmap — Weekday x Hour</h3><p class="text-[10px] text-slate-400 mb-3">C-shift (00:30–07:30) shows highest density</p><canvas id="hmCanvas" class="w-full" style="height:210px"></canvas></div>
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
+        <div class="crd p-4"><h3 class="text-sm font-semibold mb-0.5">Shift Distribution</h3><p class="text-[10px] text-slate-400 mb-3">Night shift (C) 40.1% — requires investigation</p><div class="h-48"><canvas id="cShift"></canvas></div></div>
+        <div class="crd p-4"><h3 class="text-sm font-semibold mb-0.5">Severity Distribution</h3><p class="text-[10px] text-slate-400 mb-3">12.7% critical events drive most production loss</p><div class="h-48"><canvas id="cSeverity"></canvas></div></div>
+      </div>
+    </div>
+
+    <!-- PANEL 6: Text Mining -->
+    <div class="panel p-4 lg:p-5" data-panel="6">
+      <h2 class="text-lg font-bold font-display mb-4">Text Mining & Cross-Analysis</h2>
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-4">
+        <div class="crd p-4"><h3 class="text-sm font-semibold mb-0.5">Top 15 Fault Keywords</h3><p class="text-[10px] text-slate-400 mb-3">Many are preventable via PM discipline</p><div class="h-56"><canvas id="cKeywords"></canvas></div></div>
+        <div class="crd p-4"><h3 class="text-sm font-semibold mb-0.5">Station x Fault Type Matrix</h3><p class="text-[10px] text-slate-400 mb-3">Each cell = specific technical response needed</p><canvas id="mxCanvas" class="w-full" style="height:224px"></canvas></div>
+      </div>
+      <div class="crd p-4 overflow-x-auto"><h3 class="text-sm font-semibold mb-2">Top Recurring Fault Descriptions</h3><table class="dt"><thead><tr><th>Station</th><th>Description</th><th>Count</th><th></th></tr></thead><tbody><tr><td class="font-semibold">OP-90.1</td><td>Welding NOK</td><td class="font-bold text-red-600">14</td><td><div class="w-24 bg-slate-100 rounded-full h-1.5"><div class="bg-red-500 rounded-full h-1.5" style="width:100%"></div></div></td></tr><tr><td class="font-semibold">OP-90.2</td><td>Welding Continue NOK</td><td>8</td><td><div class="w-24 bg-slate-100 rounded-full h-1.5"><div class="bg-amber-500 rounded-full h-1.5" style="width:57%"></div></div></td></tr><tr><td class="font-semibold">OP-20.1</td><td>Bush Pressing Continue NOK</td><td>6</td><td><div class="w-24 bg-slate-100 rounded-full h-1.5"><div class="bg-amber-500 rounded-full h-1.5" style="width:43%"></div></div></td></tr><tr><td>OP-100.1</td><td>Intermediate Gear Mounting Problem</td><td>4</td><td><div class="w-24 bg-slate-100 rounded-full h-1.5"><div class="bg-amber-400 rounded-full h-1.5" style="width:29%"></div></div></td></tr><tr><td>OP-40</td><td>Flap Mounting NOK</td><td>3</td><td><div class="w-24 bg-slate-100 rounded-full h-1.5"><div class="bg-amber-400 rounded-full h-1.5" style="width:21%"></div></div></td></tr><tr><td>OP-50.1</td><td>Screwdriver Fault</td><td>3</td><td><div class="w-24 bg-slate-100 rounded-full h-1.5"><div class="bg-amber-400 rounded-full h-1.5" style="width:21%"></div></div></td></tr><tr><td>OP-30.3</td><td>Communication Error</td><td>3</td><td><div class="w-24 bg-slate-100 rounded-full h-1.5"><div class="bg-amber-400 rounded-full h-1.5" style="width:21%"></div></div></td></tr></tbody></table></div>
+    </div>
+
+    <!-- PANEL 7: Diagnostic -->
+    <div class="panel p-4 lg:p-5" data-panel="7">
+      <h2 class="text-lg font-bold font-display mb-4">Diagnostic Analytics — Root Causes</h2>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <div class="crd driver p-5" style="border-top-color:#DC2626"><div class="flex items-center gap-2.5 mb-3"><div class="w-9 h-9 rounded-lg bg-red-50 flex items-center justify-center"><i class="fa-solid fa-broom text-red-500 text-sm"></i></div><div><span class="text-[10px] text-red-500 font-bold uppercase tracking-wider">Driver 1 — Highest Impact</span><h4 class="font-semibold text-sm">Lack of PM Discipline</h4></div></div><p class="text-xs text-slate-500 mb-2">Actions dominated by <strong class="text-slate-700">cleaning/adjustment</strong> — "clean mouth piece", "set sensor position", "adjust stopper". Same tasks recur on same stations within days.</p><div class="bg-slate-50 rounded-lg p-2.5 text-[11px] text-slate-500 italic border border-slate-100"><i class="fa-solid fa-quote-left text-amber-300 mr-1"></i>PM schedule is either too infrequent, not executed, or doesn't include these tasks.</div></div>
+        <div class="crd driver p-5" style="border-top-color:#D97706"><div class="flex items-center gap-2.5 mb-3"><div class="w-9 h-9 rounded-lg bg-amber-50 flex items-center justify-center"><i class="fa-solid fa-gear text-amber-500 text-sm"></i></div><div><span class="text-[10px] text-amber-600 font-bold uppercase tracking-wider">Driver 2 — High Frequency</span><h4 class="font-semibold text-sm">Recurring Component Wear</h4></div></div><p class="text-xs text-slate-500 mb-2"><strong class="text-slate-700">Knives, bits, sleeves</strong> break repeatedly. Diagnosis takes 20–40 min. No cycle-count tracking or predictive replacement.</p><div class="flex flex-wrap gap-1.5"><span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded">Knives (OP-90.1)</span><span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded">Screwdriver Bits</span><span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded">Sealing Sleeves</span></div></div>
+        <div class="crd driver p-5" style="border-top-color:#D97706"><div class="flex items-center gap-2.5 mb-3"><div class="w-9 h-9 rounded-lg bg-amber-50 flex items-center justify-center"><i class="fa-solid fa-wind text-amber-500 text-sm"></i></div><div><span class="text-[10px] text-amber-600 font-bold uppercase tracking-wider">Driver 3 — Recurring</span><h4 class="font-semibold text-sm">Pneumatic & Sensor Drift</h4></div></div><p class="text-xs text-slate-500 mb-2">Sensors/cylinders <strong class="text-slate-700">drift or fail intermittently</strong>. "sensor disturb", "air leakage", "not homing". High recurrence (1–2 weeks same station).</p><div class="text-[11px]"><span class="text-emerald-600"><i class="fa-solid fa-check mr-1"></i>Fix:</span> Thread-lock, torque verify, air-leak audit &nbsp; <span class="text-red-500"><i class="fa-solid fa-xmark mr-1"></i>Now:</span> Reactive</div></div>
+        <div class="crd driver p-5" style="border-top-color:#2563EB"><div class="flex items-center gap-2.5 mb-3"><div class="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center"><i class="fa-solid fa-industry text-blue-500 text-sm"></i></div><div><span class="text-[10px] text-blue-500 font-bold uppercase tracking-wider">Driver 4 — Process</span><h4 class="font-semibold text-sm">Product/Process Quality Stops</h4></div></div><p class="text-xs text-slate-500 mb-2"><strong class="text-slate-700">47 Production events</strong> — machine detects process deviation. Root cause is upstream: component quality, feeder setting, operator handling.</p><div class="text-[11px] text-slate-500">Requires <strong class="text-slate-700">production-engineering</strong> intervention: incoming-quality checks, bowl-feeder standardisation, operator training.</div></div>
+        <div class="crd driver p-5 lg:col-span-2" style="border-top-color:#2563EB"><div class="flex items-center gap-2.5 mb-3"><div class="w-9 h-9 rounded-lg bg-blue-50 flex items-center justify-center"><i class="fa-solid fa-moon text-blue-500 text-sm"></i></div><div><span class="text-[10px] text-blue-500 font-bold uppercase tracking-wider">Driver 5 — Shift-Specific</span><h4 class="font-semibold text-sm">C-Shift (00:30–07:30) Risk Pattern</h4></div></div><div class="grid grid-cols-2 lg:grid-cols-4 gap-3"><div class="bg-slate-50 rounded-lg p-3 border border-slate-100"><div class="text-[10px] text-slate-400 mb-1">Cause A</div><div class="text-xs">Reduced tech support — operators raise BRN for self-clearable issues</div></div><div class="bg-slate-50 rounded-lg p-3 border border-slate-100"><div class="text-[10px] text-slate-400 mb-1">Cause B</div><div class="text-xs">Cumulative wear by end of 24-hr cycle</div></div><div class="bg-slate-50 rounded-lg p-3 border border-slate-100"><div class="text-[10px] text-slate-400 mb-1">Cause C</div><div class="text-xs">Product mix or rate differences at night</div></div><div class="bg-slate-50 rounded-lg p-3 border border-slate-100"><div class="text-[10px] text-slate-400 mb-1">Cause D</div><div class="text-xs">Fatigue-related handling errors</div></div></div></div>
+      </div>
+    </div>
+
+    <!-- PANEL 8: Predictive -->
+    <div class="panel p-4 lg:p-5" data-panel="8">
+      <h2 class="text-lg font-bold font-display mb-4">Predictive Analytics</h2>
+      <div class="crd p-4 mb-4"><h3 class="text-sm font-semibold mb-0.5">4-Week Trend Forecast</h3><p class="text-[10px] text-slate-400 mb-3">Slope: +0.204 evt/week (R²=0.010), +0.264 hr/week (R²=0.039)</p><div class="h-52"><canvas id="cForecast"></canvas></div></div>
+      <div class="grid grid-cols-1 xl:grid-cols-2 gap-4 mb-4">
+        <div class="crd p-4"><h3 class="text-sm font-semibold mb-0.5">24-Hour Recurrence Probability</h3><p class="text-[10px] text-slate-400 mb-3">Red bars (&gt;30%) = band-aid fixes failing</p><div class="h-52"><canvas id="cRecurrence"></canvas></div></div>
+        <div class="space-y-3">
+          <div class="crd p-4" style="border-left:3px solid #DC2626"><div class="text-[10px] text-red-500 font-bold uppercase mb-1">Baseline — No Intervention</div><div class="text-2xl font-bold font-display text-red-600">~1,341</div><div class="text-xs text-slate-500">breakdowns/year · <strong class="text-slate-700">35 production days lost</strong></div></div>
+          <div class="crd p-4" style="border-left:3px solid #D97706"><div class="text-[10px] text-amber-600 font-bold uppercase mb-1">Targeted PM Scenario</div><div class="text-2xl font-bold font-display text-amber-600">25–35%</div><div class="text-xs text-slate-500">reduction in minor/moderate BDs within 8 wks</div></div>
+          <div class="crd p-4" style="border-left:3px solid #059669"><div class="text-[10px] text-emerald-600 font-bold uppercase mb-1">Component Replacement</div><div class="text-2xl font-bold font-display text-emerald-600">40–60</div><div class="text-xs text-slate-500">wear events removed/quarter · MTTR -10–15 min</div></div>
+        </div>
+      </div>
+      <div class="crd p-4 overflow-x-auto"><table class="dt"><thead><tr><th>Horizon</th><th>Projected Breakdowns</th><th>Projected Downtime (hr)</th></tr></thead><tbody><tr><td>Week +1</td><td>28</td><td>19.5</td></tr><tr><td>Week +2</td><td>28</td><td>19.8</td></tr><tr><td>Week +3</td><td>29</td><td>20.0</td></tr><tr class="text-red-600 font-semibold"><td>Week +4</td><td>29</td><td>20.3</td></tr></tbody></table></div>
+    </div>
+
+    <!-- PANEL 9: Action Plan -->
+    <div class="panel p-4 lg:p-5" data-panel="9">
+      <h2 class="text-lg font-bold font-display mb-1">Action Plan</h2>
+      <p class="text-xs text-slate-500 mb-4">Prioritised across three workstreams</p>
+      <div class="flex items-center gap-2 mb-4 text-[10px] overflow-x-auto pb-1">
+        <span class="bg-red-50 text-red-600 border border-red-200 px-3 py-1 rounded-lg font-bold flex-shrink-0">0–30 Days · Quick Wins</span>
+        <i class="fa-solid fa-arrow-right text-slate-300 flex-shrink-0"></i>
+        <span class="bg-amber-50 text-amber-600 border border-amber-200 px-3 py-1 rounded-lg font-bold flex-shrink-0">30–90 Days · Structural</span>
+        <i class="fa-solid fa-arrow-right text-slate-300 flex-shrink-0"></i>
+        <span class="bg-blue-50 text-blue-600 border border-blue-200 px-3 py-1 rounded-lg font-bold flex-shrink-0">90–180 Days · Strategic</span>
+      </div>
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-3 mb-4">
+        <div class="act p1 p-4"><div class="flex items-center justify-between mb-2"><span class="bp1">P1</span><span class="text-[10px] text-slate-400">0–30 days</span></div><h4 class="font-semibold text-sm mb-1">Daily PM Checklist — Top 5 Stations</h4><p class="text-[11px] text-slate-500 mb-2">15-min daily checklist: mouth piece, vacuum filter, sensor, stopper, bowl feeder. Photo evidence + supervisor sign-off.</p><div class="text-[10px]"><span class="text-emerald-600 font-semibold">High impact</span> · <span class="text-emerald-600 font-semibold">Low effort</span></div></div>
+        <div class="act p1 p-4"><div class="flex items-center justify-between mb-2"><span class="bp1">P1</span><span class="text-[10px] text-slate-400">0–30 days</span></div><h4 class="font-semibold text-sm mb-1">Cycle-Counter Replacement</h4><p class="text-[11px] text-slate-500 mb-2">Bits, knives, sleeves on OP-90.1, OP-105.x, OP-70.2, OP-50.1. Replace at 80% wear life.</p><div class="text-[10px]"><span class="text-emerald-600 font-semibold">High impact</span> · <span class="text-amber-600 font-semibold">Medium effort</span></div></div>
+        <div class="act p2 p-4"><div class="flex items-center justify-between mb-2"><span class="bp2">P2</span><span class="text-[10px] text-slate-400">0–30 days</span></div><h4 class="font-semibold text-sm mb-1">Recurrence Hot-Spot RCFA</h4><p class="text-[11px] text-slate-500 mb-2">5-Why on top 3 stations with ≥30% recurrence. Target: below 10% in 8 weeks.</p><div class="text-[10px]"><span class="text-amber-600 font-semibold">Medium impact</span> · <span class="text-amber-600 font-semibold">Medium effort</span></div></div>
+        <div class="act p2 p-4"><div class="flex items-center justify-between mb-2"><span class="bp2">P2</span><span class="text-[10px] text-slate-400">30–90 days</span></div><h4 class="font-semibold text-sm mb-1">Mechanical Fastening Audit</h4><p class="text-[11px] text-slate-500 mb-2">Line-wide torque verify + thread-lock + pneumatic leak detection. ~$2K capex.</p><div class="text-[10px]"><span class="text-emerald-600 font-semibold">High impact</span> · <span class="text-amber-600 font-semibold">Med-High effort</span></div></div>
+        <div class="act p2 p-4"><div class="flex items-center justify-between mb-2"><span class="bp2">P2</span><span class="text-[10px] text-slate-400">30–90 days</span></div><h4 class="font-semibold text-sm mb-1">Rescope Planned Maintenance</h4><p class="text-[11px] text-slate-500 mb-2">Audit 26 PM events (avg 161 min). Target: avg &lt;90 min, share &lt;8%.</p><div class="text-[10px]"><span class="text-amber-600 font-semibold">Medium impact</span> · <span class="text-emerald-600 font-semibold">Low effort</span></div></div>
+        <div class="act p3 p-4"><div class="flex items-center justify-between mb-2"><span class="bp3">P3</span><span class="text-[10px] text-slate-400">30–90 days</span></div><h4 class="font-semibold text-sm mb-1">C-Shift Investigation</h4><p class="text-[11px] text-slate-500 mb-2">2-week study: senior tech on C-shift (00:30–07:30), log root-cause impressions, audit handover.</p><div class="text-[10px]"><span class="text-amber-600 font-semibold">Medium impact</span> · <span class="text-amber-600 font-semibold">Medium effort</span></div></div>
+        <div class="act p3 p-4"><div class="flex items-center justify-between mb-2"><span class="bp3">P3</span><span class="text-[10px] text-slate-400">90–180 days</span></div><h4 class="font-semibold text-sm mb-1">Real-Time OEE Dashboard</h4><p class="text-[11px] text-slate-500 mb-2">PLC-integrated: live OEE, MTBF, top fault code, alarm state. 8–12 weeks engineering.</p><div class="text-[10px]"><span class="text-emerald-600 font-semibold">High impact</span> · <span class="text-red-600 font-semibold">High effort</span></div></div>
+        <div class="act p3 p-4"><div class="flex items-center justify-between mb-2"><span class="bp3">P3</span><span class="text-[10px] text-slate-400">90–180 days</span></div><h4 class="font-semibold text-sm mb-1">RCM Pilot — Top 5 Stations</h4><p class="text-[11px] text-slate-500 mb-2">Formal failure-mode study. Evidence-based maintenance plan. Template for line-wide rollout.</p><div class="text-[10px]"><span class="text-emerald-600 font-semibold">High impact</span> · <span class="text-red-600 font-semibold">High effort</span></div></div>
+      </div>
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
+        <div class="crd p-4"><div class="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center mb-2"><i class="fa-solid fa-calendar-week text-red-500 text-xs"></i></div><h4 class="font-semibold text-xs mb-0.5">Weekly (8 wks)</h4><p class="text-[10px] text-slate-500">Refresh daily trend + top-5 count. Flag &gt;20% divergence.</p></div>
+        <div class="crd p-4"><div class="w-8 h-8 rounded-lg bg-amber-50 flex items-center justify-center mb-2"><i class="fa-solid fa-calendar text-amber-500 text-xs"></i></div><h4 class="font-semibold text-xs mb-0.5">Monthly</h4><p class="text-[10px] text-slate-500">Full descriptive refresh + recurrence chart. Verify P1 targets.</p></div>
+        <div class="crd p-4"><div class="w-8 h-8 rounded-lg bg-blue-50 flex items-center justify-center mb-2"><i class="fa-solid fa-calendar-days text-blue-500 text-xs"></i></div><h4 class="font-semibold text-xs mb-0.5">Quarterly</h4><p class="text-[10px] text-slate-500">Full report refresh. Retire/escalate actions as needed.</p></div>
+        <div class="crd p-4"><div class="w-8 h-8 rounded-lg bg-emerald-50 flex items-center justify-center mb-2"><i class="fa-solid fa-calendar-check text-emerald-500 text-xs"></i></div><h4 class="font-semibold text-xs mb-0.5">Annually</h4><p class="text-[10px] text-slate-500">Cross-functional reliability review. Assess long-term trends.</p></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <nav class="h-10 bg-white border-t border-slate-200 flex items-center justify-center gap-3 px-4 flex-shrink-0">
+    <button onclick="goPanel(cur-1)" class="w-7 h-7 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors" aria-label="Previous"><i class="fa-solid fa-chevron-left text-[10px]"></i></button>
+    <div class="flex gap-1.5" id="navDots"></div>
+    <button onclick="goPanel(cur+1)" class="w-7 h-7 rounded-full hover:bg-slate-100 flex items-center justify-center text-slate-400 hover:text-slate-600 transition-colors" aria-label="Next"><i class="fa-solid fa-chevron-right text-[10px]"></i></button>
+    <span class="text-[11px] text-slate-400 ml-1 hidden sm:inline" id="navLabel">KPIs</span>
+  </nav>
+</div>
+</div>
+
+<script>
+// Polyfill
+if(!CanvasRenderingContext2D.prototype.roundRect){CanvasRenderingContext2D.prototype.roundRect=function(x,y,w,h,r){r=Math.min(r,w/2,h/2);this.moveTo(x+r,y);this.arcTo(x+w,y,x+w,y+h,r);this.arcTo(x+w,y+h,x,y+h,r);this.arcTo(x,y+h,x,y,r);this.arcTo(x,y,x+w,y,r);this.closePath()}}
+
+let cur=0;const TOTAL=10;const inited=new Set();const charts={};
+const pNames=['KPIs','Summary','Temporal Trends','Station Analysis','Fault Analysis','Patterns & Shifts','Text Mining','Diagnostic','Predictive','Action Plan'];
+
+function goPanel(idx){
+  if(idx<0||idx>=TOTAL)return;cur=idx;
+  document.querySelectorAll('.panel').forEach((p,i)=>p.classList.toggle('active',i===idx));
+  document.querySelectorAll('.sb-item').forEach((b,i)=>b.classList.toggle('active',i===idx));
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('active',i===idx));
+  document.getElementById('navLabel').textContent=pNames[idx];
+  document.getElementById('headerTitle').textContent=pNames[idx]+' — Line 103';
+  requestAnimationFrame(()=>initPanel(idx));
+}
+function initPanel(idx){
+  if(inited.has(idx))return;inited.add(idx);
+  if(idx===0)animateCounters();
+  if(idx===2){initMonthly();initDaily()}
+  if(idx===3){initPareto();initDtStations()}
+  if(idx===4){initFaultPie();initFaultBar()}
+  if(idx===5){drawHeatmap();initShift();initSeverity()}
+  if(idx===6){initKeywords();drawMatrix()}
+  if(idx===8){initForecast();initRecurrence()}
+}
+
+function toggleSidebar(){const sb=document.getElementById('sidebar');sb.classList.toggle('collapsed');const ic=document.getElementById('sbIcon');ic.classList.toggle('fa-angles-left');ic.classList.toggle('fa-angles-right')}
+function openMobileSidebar(){document.getElementById('sidebar').classList.add('mobile-open');document.getElementById('mobOverlay').classList.add('show')}
+function closeMobileSidebar(){document.getElementById('sidebar').classList.remove('mobile-open');document.getElementById('mobOverlay').classList.remove('show')}
+document.getElementById('sidebarNav').addEventListener('click',e=>{const b=e.target.closest('.sb-item');if(!b)return;goPanel(parseInt(b.dataset.idx));closeMobileSidebar()});
+
+// Dots
+(function(){const c=document.getElementById('navDots');for(let i=0;i<TOTAL;i++){const d=document.createElement('div');d.className='dot'+(i===0?' active':'');d.onclick=()=>goPanel(i);c.appendChild(d)}})();
+
+// Keyboard
+document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key==='ArrowDown'){e.preventDefault();goPanel(cur+1)}if(e.key==='ArrowLeft'||e.key==='ArrowUp'){e.preventDefault();goPanel(cur-1)}});
+
+// Chart defaults
+Chart.defaults.color='#64748B';Chart.defaults.borderColor='#F1F5F9';Chart.defaults.font.family="'DM Sans',sans-serif";Chart.defaults.font.size=11;
+Chart.defaults.plugins.legend.labels.padding=12;Chart.defaults.plugins.legend.labels.usePointStyle=true;Chart.defaults.plugins.legend.labels.pointStyleWidth=7;
+Chart.defaults.plugins.tooltip.backgroundColor='#1E293B';Chart.defaults.plugins.tooltip.titleColor='#F8FAFC';Chart.defaults.plugins.tooltip.bodyColor='#CBD5E1';
+Chart.defaults.plugins.tooltip.borderColor='#334155';Chart.defaults.plugins.tooltip.borderWidth=1;Chart.defaults.plugins.tooltip.cornerRadius=6;Chart.defaults.plugins.tooltip.padding=10;
+Chart.defaults.plugins.tooltip.titleFont={family:"'Space Grotesk',sans-serif",weight:'600',size:12};Chart.defaults.plugins.tooltip.bodyFont={family:"'DM Sans',sans-serif",size:11};
+Chart.defaults.elements.bar.borderRadius=3;Chart.defaults.elements.point.radius=0;Chart.defaults.elements.point.hoverRadius=4;
+
+// DATA
+function sr(s){let x=Math.sin(s*9301+49297)*49297;return x-Math.floor(x)}
+
+const mLabels=['Jan','Feb','Mar','Apr','May','Jun','Jul'],mCounts=[41,79,108,101,101,68,228],mDtHr=[40.6,45.5,70.8,48.8,39.8,49.4,155.5];
+
+const dailyCounts=(function(){const cfg=[{c:41,d:16},{c:79,d:28},{c:108,d:31},{c:101,d:30},{c:101,d:31},{c:68,d:30},{c:228,d:31}];const o=[];let s=42;for(const mc of cfg){const b=mc.c/mc.d;let r=mc.c;for(let d=0;d<mc.d;d++){s++;if(d===mc.d-1){o.push(Math.max(0,r))}else{const v=Math.max(0,Math.round(b+(sr(s)-.5)*b*1.2));const cl=Math.min(v,r);o.push(cl);r-=cl}}}return o})();
+const dailyRolling=(function(){const r=[];for(let i=0;i<dailyCounts.length;i++){const s=Math.max(0,i-6);r.push(dailyCounts.slice(s,i+1).reduce((a,b)=>a+b,0)/(i-s+1))}return r})();
+const dailyLabels=[];for(let i=0;i<197;i++){const d=new Date(2026,0,16);d.setDate(d.getDate()+i);dailyLabels.push(d.toLocaleDateString('en',{month:'short',day:'numeric'}))}
+
+const wCounts=(function(){const w=[];for(let i=0;i<28;i++){const s=i*7,e=Math.min(s+7,197);w.push(dailyCounts.slice(s,e).reduce((a,b)=>a+b,0))}return w})();
+const wDt=wCounts.map((c,i)=>Math.max(5,c*37.2/60+(sr(i*7+100)-.5)*15));
+const wLabelsProj=[];for(let i=0;i<32;i++)wLabelsProj.push(i<28?'W'+(i+1):'W'+(i+1)+'*');
+
+// Pareto — top 12 stations by frequency
+const pStations=[{n:'OP-40',c:67},{n:'OP-90.1',c:54},{n:'OP-20.1',c:52},{n:'OP-105.1',c:46},{n:'OP-100.1',c:42},{n:'OP-90.2',c:48},{n:'OP-50.1',c:42},{n:'OP-70.2',c:38},{n:'OP-30.3',c:35},{n:'OP-160.2',c:30},{n:'OP-105.2',c:28},{n:'OP-105.3',c:26}];
+let cum=0;const pCum=pStations.map(m=>{cum+=m.c;return parseFloat((cum/726*100).toFixed(1))});
+
+// Top 10 stations by downtime — from the provided image (vertical bar chart with labels)
+const dtS=[
+  {n:'OP-90.2',hr:38.4,ev:25},
+  {n:'OP-40',hr:36.3,ev:67},
+  {n:'OP-90.1',hr:34.0,ev:54},
+  {n:'OP-105.1',hr:31.2,ev:46},
+  {n:'OP-20.1',hr:26.4,ev:52},
+  {n:'OP-100.1',hr:22.7,ev:42},
+  {n:'OP-70.2',hr:18.5,ev:38},
+  {n:'OP-50.1',hr:14.8,ev:42},
+  {n:'OP-30.3',hr:12.5,ev:35},
+  {n:'OP-160.2',hr:10.8,ev:30}
+];
+
+const ft=[{t:'Mechanical',c:501,dt:267.3,avg:32},{t:'Electrical',c:139,dt:98.7,avg:42.6},{t:'Production',c:47,dt:8.2,avg:10.5},{t:'Planned Maint.',c:26,dt:69.8,avg:161},{t:'Process/IE',c:4,dt:2.9,avg:43.8},{t:'Fixture',c:3,dt:0,avg:0},{t:'Others',c:3,dt:0,avg:0}];
+
+// Shifts — updated times
+const shData=[{s:'A (07:30–16:00)',c:181,cl:'#059669'},{s:'B (16:00–00:30)',c:254,cl:'#D97706'},{s:'C (00:30–07:30)',c:291,cl:'#DC2626'}];
+const svData=[{l:'Zero',c:77,cl:'#9CA3AF'},{l:'Minor',c:264,cl:'#22C55E'},{l:'Moderate',c:219,cl:'#EAB308'},{l:'Major',c:74,cl:'#F97316'},{l:'Critical',c:92,cl:'#EF4444'}];
+const kw=[{w:'screwdriver',c:87},{w:'nok',c:76},{w:'cycle',c:65},{w:'sensor',c:61},{w:'stop',c:54},{w:'broken',c:48},{w:'position',c:45},{w:'leakage',c:39},{w:'flap',c:36},{w:'bushing',c:33},{w:'knife',c:31},{w:'welding',c:28},{w:'mounting',c:25},{w:'pressing',c:22},{w:'continue',c:20}].sort((a,b)=>a.c-b.c);
+const rec=[{m:'OP-90.1',p:38},{m:'OP-40',p:35},{m:'OP-105.1',p:33},{m:'OP-20.1',p:31},{m:'OP-90.2',p:28},{m:'OP-50.1',p:25},{m:'OP-100.1',p:22},{m:'OP-70.2',p:20},{m:'OP-160.2',p:18},{m:'OP-30.3',p:15}].sort((a,b)=>a.p-b.p);
+
+// Heatmap — updated shift times: C=00:30-07:30 (hrs 1-7), B=16:00-00:30 (hrs 16-23,0), A=07:30-16:00 (hrs 8-15)
+const hmData=(function(){const d=[];for(let day=0;day<7;day++){const row=[];for(let h=0;h<24;h++){let b=3+sr(day*24+h+500)*4;
+  // C-shift boost: hours 1-7
+  if(h>=1&&h<8)b+=3+sr(day*24+h+1000)*4;
+  // B-shift boost: hours 16-23 and 0
+  if(h>=16||h===0)b+=2+sr(day*24+h+1500)*2;
+  if(day>=5)b*=.85;row.push(Math.round(b))}d.push(row)}return d})();
+
+// Matrix
+const mxM=['OP-40','OP-90.1','OP-20.1','OP-105.1','OP-100.1','OP-90.2','OP-50.1','OP-70.2','OP-30.3','OP-160.2','OP-105.2','OP-105.3'];
+const mxF=['Mech.','Elec.','Prod.','PM','Proc.','Other'];
+const mxV=[[55,8,3,1,0,0],[48,3,2,1,0,0],[44,5,2,1,0,0],[38,5,1,2,0,0],[35,4,2,1,0,0],[40,4,3,1,0,0],[20,15,2,1,0,0],[28,5,2,0,0,0],[8,20,1,1,0,0],[22,3,2,1,0,0],[20,3,1,1,0,0],[18,3,1,0,0,0]];
+
+// KPI counters
+function animateCounters(){document.querySelectorAll('[data-count]').forEach(el=>{const t=parseFloat(el.dataset.count),d=parseInt(el.dataset.dec||'0'),s=el.dataset.suf||'';const st=performance.now(),dur=1000;(function u(n){const p=Math.min((n-st)/dur,1),e=1-Math.pow(1-p,3);el.textContent=(t*e).toFixed(d)+s;if(p<1)requestAnimationFrame(u)})(st)})}
+
+// CHART: Monthly
+function initMonthly(){charts.monthly=new Chart(document.getElementById('cMonthly'),{type:'bar',data:{labels:mLabels,datasets:[
+  {label:'Breakdown Count',data:mCounts,backgroundColor:mCounts.map(v=>v>150?'rgba(220,38,38,0.7)':v>90?'rgba(217,119,6,0.55)':'rgba(217,119,6,0.3)'),borderColor:mCounts.map(v=>v>150?'#DC2626':v>90?'#D97706':'#D9770688'),borderWidth:1,yAxisID:'y',order:2},
+  {label:'Downtime (hr)',data:mDtHr,type:'line',borderColor:'#DC2626',backgroundColor:'rgba(220,38,38,0.06)',pointBackgroundColor:'#DC2626',pointRadius:4,pointHoverRadius:6,borderWidth:2,tension:.3,fill:true,yAxisID:'y1',order:1}
+]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',labels:{font:{size:10}}}},scales:{y:{beginAtZero:true,title:{display:true,text:'Count',font:{size:10}},grid:{color:'#F1F5F9'}},y1:{position:'right',beginAtZero:true,title:{display:true,text:'Hours',font:{size:10}},grid:{drawOnChartArea:false}},x:{grid:{display:false}}}}})}
+
+// CHART: Daily
+function initDaily(){charts.daily=new Chart(document.getElementById('cDaily'),{type:'line',data:{labels:dailyLabels,datasets:[
+  {label:'Daily Breakdowns',data:dailyCounts,borderColor:'rgba(217,119,6,0.35)',backgroundColor:'rgba(217,119,6,0.04)',fill:true,borderWidth:1,tension:.1,pointRadius:0,pointHoverRadius:3,pointHoverBackgroundColor:'#D97706'},
+  {label:'7-Day Rolling Avg',data:dailyRolling,borderColor:'#DC2626',borderWidth:2,tension:.4,pointRadius:0,pointHoverRadius:4,pointHoverBackgroundColor:'#DC2626',fill:false}
+]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',labels:{font:{size:10}}},tooltip:{filter:i=>i.datasetIndex===1}},scales:{y:{beginAtZero:true,title:{display:true,text:'Count',font:{size:10}},grid:{color:'#F1F5F9'}},x:{grid:{display:false},ticks:{maxTicksLimit:12,maxRotation:0}}}}})}
+
+// CHART: Pareto with 80% threshold
+function initPareto(){charts.pareto=new Chart(document.getElementById('cPareto'),{type:'bar',data:{labels:pStations.map(m=>m.n),datasets:[
+  {label:'Count',data:pStations.map(m=>m.c),backgroundColor:pStations.map((_,i)=>i<5?'rgba(37,99,235,0.65)':'rgba(37,99,235,0.25)'),borderColor:pStations.map((_,i)=>i<5?'#2563EB':'#2563EB66'),borderWidth:1,yAxisID:'y'},
+  {label:'Cumulative %',data:pCum,type:'line',borderColor:'#DC2626',pointBackgroundColor:'#DC2626',pointRadius:3,borderWidth:1.5,tension:.3,yAxisID:'y1'}
+]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',labels:{font:{size:10}}},tooltip:{callbacks:{afterBody:i=>`Cumulative: ${pCum[i[0].dataIndex]}%`}}},scales:{y:{beginAtZero:true,title:{display:true,text:'Breakdown Count',font:{size:10}},grid:{color:'#F1F5F9'}},y1:{position:'right',min:0,max:100,ticks:{callback:v=>v+'%'},grid:{drawOnChartArea:false}},x:{grid:{display:false},ticks:{font:{size:9}},title:{display:true,text:'Station / Operation No.',font:{size:10}}}}},plugins:[{id:'thr80',afterDraw(ch){const ys=ch.scales.y1,y=ys.getPixelForValue(80),ctx=ch.ctx,ca=ch.chartArea;ctx.save();ctx.strokeStyle='#EAB308';ctx.lineWidth=1.5;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(ca.left,y);ctx.lineTo(ca.right,y);ctx.stroke();ctx.fillStyle='#EAB308';ctx.font='bold 9px DM Sans';ctx.textAlign='right';ctx.fillText('80% threshold',ca.right-4,y-4);ctx.restore()}}]})}
+
+// CHART: Downtime Stations — vertical bars with data labels "Xh (Y ev)"
+function initDtStations(){charts.dtS=new Chart(document.getElementById('cDtStations'),{type:'bar',data:{labels:dtS.map(s=>s.n),datasets:[{label:'Downtime (hr)',data:dtS.map(s=>s.hr),backgroundColor:dtS.map(s=>s.hr>30?'rgba(220,38,38,0.7)':s.hr>20?'rgba(220,38,38,0.45)':'rgba(220,38,38,0.25)'),borderColor:dtS.map(s=>s.hr>30?'#DC2626':s.hr>20?'#DC262688':'#DC262644'),borderWidth:1}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:i=>{const s=dtS[i.dataIndex];return `${s.hr}h · ${s.ev} events · Avg ${(s.hr*60/s.ev).toFixed(1)} min`}}}},scales:{y:{beginAtZero:true,title:{display:true,text:'Total Downtime (Hours)',font:{size:10}},grid:{color:'#F1F5F9'}},x:{grid:{display:false},ticks:{font:{size:9}},title:{display:true,text:'Station / Operation No.',font:{size:10}}}}},plugins:[{id:'dtLabels',afterDraw(ch){const ctx=ch.ctx;ch.getDatasetMeta(0).data.forEach((bar,i)=>{const s=dtS[i];ctx.fillStyle='#1E293B';ctx.font='bold 8px DM Sans';ctx.textAlign='center';ctx.textBaseline='bottom';ctx.fillText(`${s.hr}h (${s.ev} ev)`,bar.x,bar.y-4)})}}]})}
+
+// CHART: Fault Pie
+function initFaultPie(){const cols=['#D97706','#2563EB','#059669','#DC2626','#8B5CF6','#9CA3AF','#64748B'];charts.fp=new Chart(document.getElementById('cFaultPie'),{type:'doughnut',data:{labels:ft.map(f=>f.t),datasets:[{data:ft.map(f=>f.c),backgroundColor:cols,borderColor:'#fff',borderWidth:2,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',plugins:{legend:{position:'bottom',labels:{padding:8,font:{size:10}}},tooltip:{callbacks:{label:i=>`${i.label}: ${i.raw} (${(ft[i.dataIndex].c/726*100).toFixed(1)}%)`}}}}})}
+
+// CHART: Fault Bar
+function initFaultBar(){const t4=ft.slice(0,4);charts.fb=new Chart(document.getElementById('cFaultBar'),{type:'bar',data:{labels:t4.map(f=>f.t),datasets:[
+  {label:'Events',data:t4.map(f=>f.c),backgroundColor:'rgba(217,119,6,0.55)',borderColor:'#D97706',borderWidth:1,yAxisID:'y'},
+  {label:'Downtime (hr)',data:t4.map(f=>f.dt),backgroundColor:'rgba(220,38,38,0.55)',borderColor:'#DC2626',borderWidth:1,yAxisID:'y1'}
+]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',labels:{font:{size:10}}},tooltip:{callbacks:{afterBody:i=>`Avg: ${t4[i[0].dataIndex].avg} min`}}},scales:{y:{beginAtZero:true,grid:{color:'#F1F5F9'}},y1:{position:'right',beginAtZero:true,grid:{drawOnChartArea:false}},x:{grid:{display:false},ticks:{font:{size:9}}}}}})}
+
+// CANVAS: Heatmap with updated shift indicators
+function drawHeatmap(){const cv=document.getElementById('hmCanvas'),dpr=devicePixelRatio||1,rc=cv.getBoundingClientRect();cv.width=rc.width*dpr;cv.height=rc.height*dpr;const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);const W=rc.width,H=rc.height,lp=42,tp=22,rp=8,bp=22;const cw=(W-lp-rp)/24,ch=(H-tp-bp)/7;let mx=0;hmData.forEach(r=>r.forEach(v=>{if(v>mx)mx=v}));
+function hc(v){const t=Math.min(v/mx,1);if(t<.33){const s=t/.33;return`rgb(${235+Math.round(s*5)},${235-Math.round(s*15)},${240-Math.round(s*20)})`}if(t<.66){const s=(t-.33)/.33;return`rgb(${240-Math.round(s*60)},${220-Math.round(s*140)},${220-Math.round(s*160)})`}const s=(t-.66)/.34;return`rgb(${180-Math.round(s*20)},${80-Math.round(s*50)},${60-Math.round(s*30)})`}
+const days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+for(let d=0;d<7;d++)for(let h=0;h<24;h++){const x=lp+h*cw,y=tp+d*ch;ctx.fillStyle=hc(hmData[d][h]);ctx.beginPath();ctx.roundRect(x+1,y+1,cw-2,ch-2,2);ctx.fill();ctx.fillStyle=hmData[d][h]/mx>.45?'#fff':'#64748B';ctx.font='9px DM Sans';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(hmData[d][h],x+cw/2,y+ch/2)}
+ctx.fillStyle='#64748B';ctx.font='10px DM Sans';ctx.textAlign='right';ctx.textBaseline='middle';
+for(let d=0;d<7;d++)ctx.fillText(days[d],lp-6,tp+d*ch+ch/2);
+ctx.textAlign='center';ctx.textBaseline='top';
+for(let h=0;h<24;h+=2)ctx.fillText(h.toString().padStart(2,'0'),lp+h*cw+cw/2,H-bp+6);
+// Shift labels — updated: A=08-15, B=16-23, C=01-07
+[{l:'A',s:8,e:16,c:'#059669'},{l:'B',s:16,e:24,c:'#D97706'},{l:'C',s:1,e:8,c:'#DC2626'}].forEach(sh=>{
+  const x1=lp+(sh.s%24)*cw,x2=lp+(sh.e%24)*cw,y0=tp-14;
+  ctx.fillStyle=sh.c+'22';ctx.fillRect(x1,y0,x2-x1,10);
+  ctx.fillStyle=sh.c;ctx.font='bold 8px DM Sans';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(sh.l,(x1+x2)/2,y0+5)
+})}
+
+// CHART: Shift
+function initShift(){charts.shift=new Chart(document.getElementById('cShift'),{type:'doughnut',data:{labels:shData.map(s=>s.s),datasets:[{data:shData.map(s=>s.c),backgroundColor:shData.map(s=>s.cl+'CC'),borderColor:shData.map(s=>s.cl),borderWidth:2,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'50%',plugins:{legend:{position:'bottom',labels:{padding:8,font:{size:10}}},tooltip:{callbacks:{label:i=>`${i.label}: ${i.raw} (${(i.raw/726*100).toFixed(1)}%)`}}}}})}
+
+// CHART: Severity
+function initSeverity(){charts.sev=new Chart(document.getElementById('cSeverity'),{type:'doughnut',data:{labels:svData.map(s=>s.l),datasets:[{data:svData.map(s=>s.c),backgroundColor:svData.map(s=>s.cl+'CC'),borderColor:svData.map(s=>s.cl),borderWidth:2,hoverOffset:6}]},options:{responsive:true,maintainAspectRatio:false,cutout:'50%',plugins:{legend:{position:'bottom',labels:{padding:8,font:{size:10}}},tooltip:{callbacks:{label:i=>`${i.label}: ${i.raw} (${(i.raw/726*100).toFixed(1)}%)`}}}}})}
+
+// CHART: Keywords
+function initKeywords(){const mx=Math.max(...kw.map(k=>k.c));charts.kw=new Chart(document.getElementById('cKeywords'),{type:'bar',data:{labels:kw.map(k=>k.w),datasets:[{label:'Frequency',data:kw.map(k=>k.c),backgroundColor:kw.map(k=>`rgba(217,119,6,${.15+k.c/mx*.6})`),borderColor:kw.map(k=>`rgba(217,119,6,${.3+k.c/mx*.6})`),borderWidth:1}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{beginAtZero:true,grid:{color:'#F1F5F9'}},y:{grid:{display:false},ticks:{font:{size:10}}}}}})}
+
+// CANVAS: Matrix
+function drawMatrix(){const cv=document.getElementById('mxCanvas'),dpr=devicePixelRatio||1,rc=cv.getBoundingClientRect();cv.width=rc.width*dpr;cv.height=rc.height*dpr;const ctx=cv.getContext('2d');ctx.scale(dpr,dpr);const W=rc.width,H=rc.height,lp=60,tp=24,rp=8,bp=6;const cw=(W-lp-rp)/mxF.length,ch=(H-tp-bp)/mxM.length;let mx=0;mxV.forEach(r=>r.forEach(v=>{if(v>mx)mx=v}));
+function mc(v){if(!v)return'#F8FAFC';const t=v/mx;if(t<.4)return`rgba(217,119,6,${.08+t*.5})`;if(t<.7)return`rgba(249,115,22,${.15+t*.45})`;return`rgba(220,38,38,${.2+t*.5})`}
+for(let m=0;m<mxM.length;m++)for(let f=0;f<mxF.length;f++){const x=lp+f*cw,y=tp+m*ch;ctx.fillStyle=mc(mxV[m][f]);ctx.beginPath();ctx.roundRect(x+1,y+1,cw-2,ch-2,2);ctx.fill();if(mxV[m][f]>0){ctx.fillStyle=mxV[m][f]/mx>.5?'#fff':'#475569';ctx.font='10px DM Sans';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(mxV[m][f],x+cw/2,y+ch/2)}}
+ctx.fillStyle='#64748B';ctx.font='9px DM Sans';ctx.textAlign='right';ctx.textBaseline='middle';
+for(let m=0;m<mxM.length;m++)ctx.fillText(mxM[m],lp-6,tp+m*ch+ch/2);
+ctx.textAlign='left';ctx.textBaseline='bottom';ctx.font='9px DM Sans';
+for(let f=0;f<mxF.length;f++){ctx.save();ctx.translate(lp+f*cw+cw/2,tp-4);ctx.rotate(-.35);ctx.fillStyle='#64748B';ctx.textAlign='right';ctx.fillText(mxF[f],0,0);ctx.restore()}}
+
+// CHART: Forecast
+function initForecast(){const hC=[...wCounts,...[28,28,29,29]];const hD=[...wDt,...[19.5,19.8,20.0,20.3]];
+charts.fc=new Chart(document.getElementById('cForecast'),{type:'line',data:{labels:wLabelsProj,datasets:[
+  {label:'Weekly Breakdowns',data:hC.map((v,i)=>i>=28?NaN:v),borderColor:'#D97706',backgroundColor:'rgba(217,119,6,0.06)',borderWidth:2,tension:.3,fill:true,pointRadius:2,pointBackgroundColor:'#D97706',yAxisID:'y'},
+  {label:'Projected',data:hC.map((v,i)=>i<27?NaN:v),borderColor:'#DC2626',borderWidth:2,borderDash:[5,3],tension:.3,pointRadius:4,pointBackgroundColor:'#DC2626',pointStyle:'triangle',yAxisID:'y'},
+  {label:'Downtime (hr)',data:hD.map((v,i)=>i>=28?NaN:v),borderColor:'#2563EB',borderWidth:1.5,tension:.3,pointRadius:1.5,pointBackgroundColor:'#2563EB',yAxisID:'y1'},
+  {label:'Proj. Downtime',data:hD.map((v,i)=>i<27?NaN:v),borderColor:'#DC2626',borderWidth:1.5,borderDash:[5,3],tension:.3,pointRadius:4,pointBackgroundColor:'#DC2626',pointStyle:'triangle',yAxisID:'y1'}
+]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},plugins:{legend:{position:'top',labels:{font:{size:10}}},tooltip:{filter:i=>!isNaN(i.raw)}},scales:{y:{beginAtZero:true,grid:{color:'#F1F5F9'}},y1:{position:'right',beginAtZero:true,grid:{drawOnChartArea:false}},x:{grid:{display:false},ticks:{maxTicksLimit:14,maxRotation:0}}}}})}
+
+// CHART: Recurrence with 30% threshold
+function initRecurrence(){charts.rec=new Chart(document.getElementById('cRecurrence'),{type:'bar',data:{labels:rec.map(r=>r.m),datasets:[{label:'Recurrence %',data:rec.map(r=>r.p),backgroundColor:rec.map(r=>r.p>=30?'rgba(220,38,38,0.65)':r.p>=20?'rgba(217,119,6,0.45)':'rgba(217,119,6,0.2)'),borderColor:rec.map(r=>r.p>=30?'#DC2626':r.p>=20?'#D97706':'#D9770666'),borderWidth:1}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:i=>`Recurrence: ${i.raw}%${i.raw>=30?' — ABOVE THRESHOLD':''}`}}},scales:{x:{beginAtZero:true,max:50,ticks:{callback:v=>v+'%'},grid:{color:'#F1F5F9'}},y:{grid:{display:false},ticks:{font:{size:9}}}}},plugins:[{id:'thr',afterDraw(ch){const x=ch.scales.x.getPixelForValue(30),ctx=ch.ctx,yt=ch.scales.y.top,yb=ch.scales.y.bottom;ctx.save();ctx.strokeStyle='#DC262666';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);ctx.beginPath();ctx.moveTo(x,yt);ctx.lineTo(x,yb);ctx.stroke();ctx.fillStyle='#DC2626';ctx.font='bold 9px DM Sans';ctx.textAlign='left';ctx.fillText('30%',x+3,yt+10);ctx.restore()}}]})}
+
+// Init
+document.addEventListener('DOMContentLoaded',()=>{goPanel(0);let rt;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{if(inited.has(5))drawHeatmap();if(inited.has(6))drawMatrix()},200)})});
+</script>
+</body>
+</html>
